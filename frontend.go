@@ -54,6 +54,10 @@ func serveFrontend(w http.ResponseWriter, r *http.Request, name string) {
 	}
 	w.Header().Set("Content-Type", kind)
 	w.Header().Set("X-Content-Type-Options", "nosniff")
+	// Assets are subresources, on which a CSP header is inert, but an SVG opened
+	// as a document would run in the dashboard origin with no policy at all. A
+	// sandboxed, source-less policy makes a future brand-asset swap inert.
+	w.Header().Set("Content-Security-Policy", "default-src 'none'; sandbox")
 	w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
 	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
 	if r.Method == http.MethodGet {

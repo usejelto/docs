@@ -30,7 +30,7 @@ function frontMatter(text, file) {
   for (const key of ['title', 'group', 'slug', 'summary']) {
     if (!meta[key] || (Array.isArray(meta[key]) && !meta[key].length)) fail(file, `missing ${key}`)
   }
-  // Traceability lives in the private backend (spec/docs-traceability.md), so a
+  // Traceability lives in the private backend (the backend's traceability spec), so a
   // public page must validate without it and must not reintroduce it: these keys
   // cite specifications a reader of this repository cannot open.
   for (const key of ['implements', 'verified']) {

@@ -131,6 +131,9 @@ func TestFrontendAssetsAreBoundedAndMatchHEAD(t *testing.T) {
 		if route == logo && (get.Header().Get("Content-Type") != "image/svg+xml" || !strings.Contains(get.Body.String(), "<svg")) {
 			t.Fatal("logo must be served as an SVG image")
 		}
+		if policy := get.Header().Get("Content-Security-Policy"); !strings.Contains(policy, "default-src 'none'") || !strings.Contains(policy, "sandbox") {
+			t.Fatalf("asset %s must carry a sandboxed CSP so an SVG opened as a document is inert, got %q", route, policy)
+		}
 	}
 	for _, route := range []string{"/docs/assets/../serve.go", "/docs/assets/a.svg", "/docs/dist/manifest.json", "/docs/assets/missing.js"} {
 		w := httptest.NewRecorder()

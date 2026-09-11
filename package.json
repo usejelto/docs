@@ -15,7 +15,7 @@
     "build": "vite build",
     "test": "vitest run",
     "check": "svelte-check --tsconfig ./tsconfig.json --fail-on-warnings",
-    "check:content": "node --test public-boundaries.test.mjs && node build-agent-twins.mjs --check",
+    "check:content": "node --test public-boundaries.test.mjs tests/*.test.mjs && node build-agent-twins.mjs --check",
     "build:agents": "node build-agent-twins.mjs"
   },
   "dependencies": {

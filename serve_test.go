@@ -15,6 +15,30 @@ import (
 	"testing"
 )
 
+// The handler casts goldmark's output to template.HTML, so the renderer must
+// never be constructed with html.WithUnsafe(). The embedded guides keep every
+// <script> inside a fenced block, which is why this test feeds the renderer
+// hostile Markdown of its own instead of relying on the content.
+func TestMarkdownRendererOmitsRawHTMLAndUnsafeLinks(t *testing.T) {
+	source := []byte("# Title\n\n<script>alert(1)</script>\n\n[x](javascript:alert(1))\n\n<img src=x onerror=alert(1)>\n\n[y](data:text/html,boom)\n\n<a href=\"https://ok.example\" onclick=\"alert(1)\">z</a>\n")
+	var out bytes.Buffer
+	if err := newRenderer().Convert(source, &out); err != nil {
+		t.Fatal(err)
+	}
+	body := out.String()
+	if !strings.Contains(body, "<!-- raw HTML omitted -->") {
+		t.Errorf("raw HTML was rendered instead of omitted:\n%s", body)
+	}
+	for _, forbidden := range []string{"<script", "javascript:", "onerror", "onclick", "data:text/html"} {
+		if strings.Contains(body, forbidden) {
+			t.Errorf("rendered Markdown still contains %q:\n%s", forbidden, body)
+		}
+	}
+	if !strings.Contains(body, "<h1 id=\"title\">Title</h1>") {
+		t.Errorf("ordinary Markdown no longer renders:\n%s", body)
+	}
+}
+
 func TestEmbeddedGuidesRenderAndStayBounded(t *testing.T) {
 	handler := NewHandler()
 	for _, path := range []string{"/docs/", "/docs/web/configuration.md", "/docs/api/website.md", "/docs/integrations/github.md", "/docs/sdk/crawler.md", "/docs/payments/browser-attribution"} {
@@ -78,7 +102,7 @@ func TestDocumentationImagesAndSecurity(t *testing.T) {
 			t.Fatalf("invalid asset HEAD: %s", asset)
 		}
 	}
-	for _, path := range []string{"/docs/images/missing.png", "/docs/images/../README.md", "/docs/images/subdir/test.png", "/docs/styles.css", "/docs/shell.html", "/docs/images/file.svg", "/docs/images/../../go.mod", "/docs/images/%2e%2e/README.md", "/docs/agents/../../go.mod", "/docs/navigation.json", "/docs/content/navigation.json", "/docs/content/start/quickstart.md", "/docs/ops/runbook.md"} {
+	for _, path := range []string{"/docs/images/missing.png", "/docs/images/../README.md", "/docs/images/subdir/test.png", "/docs/styles.css", "/docs/shell.html", "/docs/images/file.svg", "/docs/images/../../go.mod", "/docs/images/%2e%2e/README.md", "/docs/agents/../../go.mod", "/docs/navigation.json", "/docs/content/navigation.json", "/docs/content/start/quickstart.md", "/docs/operations/handbook.md"} {
 		w := httptest.NewRecorder()
 		handler.ServeHTTP(w, httptest.NewRequest("GET", path, nil))
 		if w.Code != 404 {

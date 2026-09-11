@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Verify this component's vendored snapshots against their own manifests.
 //
-// spec/repository-boundaries.md §2: an ordinary build checks the installed
+// The repository-boundaries contract (§2): an ordinary build checks the installed
 // snapshot, and does so without reading the producer. This script is
 // deliberately self-contained so it works in a standalone checkout with no
 // dependencies installed; refreshing a pin is a separate, explicit operation.

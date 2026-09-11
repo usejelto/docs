@@ -27,3 +27,34 @@ test('allows customer integrations, SDK contracts, privacy outcomes and public A
     'Set a CNAME in Cloudflare DNS for your custom tracking domain.',
   ]) assert.deepEqual(publicBoundaryViolations(text), [], text)
 })
+
+// The whole repository is public, not only content/. build-agent-twins.mjs scans
+// the guides; this scans everything else that is tracked, so a private path in a
+// Go comment, a test fixture or a build script fails the same gate.
+test('every tracked file outside content/ stays inside the public boundary', async () => {
+  const { execFileSync } = await import('node:child_process')
+  const { readFileSync } = await import('node:fs')
+  // The scanner and its two tests must spell out the private terms they reject;
+  // they are the rule, not prose, and are excluded by name rather than by pattern.
+  const scanner = new Set(['public-boundaries.mjs', 'public-boundaries.test.mjs', 'public_boundary_test.go'])
+  // Two reviewed literals: the pinned @jelto/ui and font snapshots cite the private
+  // dashboard and design-system specs in comments. They are produced in the backend and refreshed
+  // only by `make inputs`, so the fix lands at the producer; until it does, only
+  // those exact literals are tolerated, and only inside web/vendor/.
+  const allowed = [
+    { literal: 'spec/dashboard.md', under: 'web/vendor/' },
+    { literal: 'spec/design-system.md', under: 'web/vendor/' },
+  ]
+  const files = execFileSync('git', ['ls-files', '-z'], { encoding: 'utf8' }).split('\0').filter(Boolean)
+  const violations = []
+  for (const file of files) {
+    if (file.startsWith('content/') || scanner.has(file)) continue
+    let text
+    try { text = readFileSync(file, 'utf8') } catch { continue }
+    if (text.slice(0, 1024).includes('\0')) continue
+    for (const { literal, under } of allowed) if (file.startsWith(under)) text = text.split(literal).join('')
+    const found = publicBoundaryViolations(text)
+    if (found.length) violations.push(`${file}: ${found.join(', ')}`)
+  }
+  assert.deepEqual(violations, [], violations.join('\n'))
+})

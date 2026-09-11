@@ -98,8 +98,17 @@ func navigation(current string) []navGroup {
 
 // Only checked-in Markdown is rendered. Raw HTML and unsafe link schemes stay
 // disabled in goldmark; neither templates nor filesystem paths come from users.
+// newRenderer builds the one goldmark instance every guide is rendered with.
+// Raw HTML and unsafe link schemes stay disabled because html.WithUnsafe() is
+// never passed; that is what makes the template.HTML cast of its output safe
+// inside the dashboard's origin. TestMarkdownRendererOmitsRawHTMLAndUnsafeLinks
+// pins it, so adding WithUnsafe() for any reason is a red test.
+func newRenderer() goldmark.Markdown {
+	return goldmark.New(goldmark.WithExtensions(extension.Table), goldmark.WithParserOptions(parser.WithAutoHeadingID()))
+}
+
 func NewHandler() http.Handler {
-	renderer := goldmark.New(goldmark.WithExtensions(extension.Table), goldmark.WithParserOptions(parser.WithAutoHeadingID()))
+	renderer := newRenderer()
 	shell := template.Must(template.New("docs").Parse(document))
 	styles := bytes.Join([][]byte{styles, footerStyles}, []byte("\n"))
 	hash := sha256.Sum256(styles)

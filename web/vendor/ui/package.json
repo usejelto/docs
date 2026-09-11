@@ -1,0 +1,19 @@
+{
+  "name": "@jelto/ui",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./ui/index.ts",
+    "./styles.css": "./styles.css",
+    "./highlightCode": "./ui/highlightCode.ts",
+    "./ImagePreview.svelte": "./ui/ImagePreview.svelte",
+    "./test-setup": "./test-setup.ts"
+  },
+  "peerDependencies": {
+    "@lucide/svelte": "^1.39.0",
+    "bits-ui": "^2.19.0",
+    "shiki": "^4.4.3",
+    "svelte": "^5.57.0"
+  }
+}

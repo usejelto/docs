@@ -1,0 +1,180 @@
+/* Shared trigger, list and option paint for Select and Combobox. */
+.card-select__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  min-block-size: var(--control-select);
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  background: var(--control-fill);
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: start;
+  touch-action: manipulation;
+}
+
+.card-select__trigger[data-appearance='field'] {
+  min-block-size: var(--control-default);
+  inline-size: 100%;
+  padding-inline: var(--space-3);
+  border-color: var(--control-edge);
+  font-size: var(--text-base);
+}
+.card-select__trigger:disabled { opacity: 0.5; cursor: default; }
+
+.card-select__trigger[data-appearance='pill'] {
+  min-block-size: var(--control-compact);
+  padding-inline: var(--space-3);
+  border-color: transparent;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.card-select__trigger[data-active],
+.card-select__trigger[data-state='open'] {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.card-select__trigger[aria-invalid='true'] { border-block-end-color: var(--bad); }
+
+.card-select__value {
+  min-inline-size: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.card-select__icon,
+.card-select__chevron {
+  flex: none;
+  display: inline-flex;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.card-select__chevron {
+  margin-inline-start: auto;
+}
+
+.card-select__trigger[data-state='open'] .card-select__chevron {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+.card-select__menu {
+  z-index: var(--layer-menu);
+  display: flex;
+  flex-direction: column;
+  inline-size: max-content;
+  min-inline-size: min(12rem, var(--bits-select-content-available-width));
+  max-inline-size: min(24rem, var(--bits-select-content-available-width));
+  max-block-size: min(20rem, var(--bits-select-content-available-height));
+  overflow: hidden;
+  padding: var(--space-1);
+  border-radius: var(--radius-popover);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-pop);
+}
+
+.card-select__viewport {
+  min-block-size: 0;
+  overscroll-behavior: contain;
+}
+
+.card-select__scroll {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 24px;
+  color: var(--muted);
+}
+
+.card-select__heading {
+  padding: var(--space-2) var(--space-2) var(--space-1);
+  color: var(--muted);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.card-select__option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-block-size: var(--control-select);
+  padding: var(--space-2);
+  border-radius: var(--radius-control);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.card-select__option[data-selected] {
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+.card-select__option[data-highlighted] {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  background: var(--hover);
+}
+
+.card-select__option-label {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.card-select__check {
+  display: inline-flex;
+  flex: none;
+  inline-size: 1rem;
+  margin-inline-start: auto;
+  color: var(--accent);
+}
+
+@media (hover: hover) {
+  .card-select__trigger:hover:not(:disabled) {
+    background: var(--control-fill-hover);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card-select__trigger {
+    transition: background-color var(--motion-fast) var(--ease), border-color var(--motion-fast) var(--ease);
+  }
+  .card-select__chevron {
+    transition: transform var(--motion-fast) var(--ease);
+  }
+}
+
+@media (pointer: coarse) {
+  .card-select__trigger[data-appearance],
+  .card-select__option {
+    min-block-size: var(--control-touch);
+  }
+}
+
+@media (max-width: 639px) {
+  .card-select__trigger[data-appearance='field'] { font-size: var(--text-input-mobile); }
+}
+
+@media (forced-colors: active) {
+  .card-select__menu,
+  .card-select__trigger {
+    border: 1px solid ButtonText;
+  }
+  .card-select__option[data-highlighted] {
+    outline-color: Highlight;
+  }
+  .card-select__check { color: Highlight; }
+}

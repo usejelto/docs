@@ -1,0 +1,14 @@
+Jelto brand asset notice
+
+The Jelto name, logos, mascot and original brand artwork are excluded from
+open-source licenses that apply to Jelto software, including the MIT License.
+All rights in these assets are reserved by their respective rights holders.
+
+Including a brand asset in a source repository, dependency snapshot or built
+application does not grant permission to reuse, modify or redistribute it,
+or to use Jelto trademarks. Such uses require separate authorization unless
+permitted by applicable law. No endorsement or affiliation is granted.
+
+This notice applies to Jelto brand assets and their copies. It does not apply
+to software code or third-party assets, including fonts and third-party logos,
+which retain their own licenses and notices.

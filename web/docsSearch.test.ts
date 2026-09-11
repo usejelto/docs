@@ -1,0 +1,55 @@
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/svelte'
+import { afterEach, beforeEach, expect, test, vi } from 'vitest'
+import Search from './Search.svelte'
+
+beforeEach(() => {
+  vi.stubGlobal('HTMLDialogElement', HTMLDialogElement)
+  HTMLDialogElement.prototype.showModal = vi.fn(function (this: HTMLDialogElement) { this.open = true })
+  HTMLDialogElement.prototype.close = vi.fn(function (this: HTMLDialogElement) { this.open = false; this.dispatchEvent(new Event('close')) })
+})
+afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals() })
+const data = [{ title: 'Install tracking', category: 'Get started', heading: 'Verify', text: 'Verify checkout_started events.', url: '/docs/start/website#verify' }]
+
+test('loads on open, searches body text locally, navigates with arrows and restores focus', async () => {
+  const fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => data })
+  vi.stubGlobal('fetch', fetch)
+  render(Search)
+  expect(fetch).not.toHaveBeenCalled()
+  const button = screen.getByRole('button', { name: /Search docs/ })
+  button.focus()
+  await fireEvent.click(button)
+  const input = await screen.findByRole('combobox', { name: 'Search documentation' })
+  await waitFor(() => expect(input).toHaveFocus())
+  await fireEvent.input(input, { target: { value: 'checkout' } })
+  const link = await screen.findByRole('link', { name: /Install tracking/ })
+  expect(link).toHaveAttribute('href', '/docs/start/website#verify')
+  await fireEvent.keyDown(input, { key: 'ArrowDown' })
+  expect(screen.getByRole('option')).toHaveAttribute('aria-selected', 'true')
+  await fireEvent.click(screen.getByRole('button', { name: 'Close dialog' }))
+  await waitFor(() => expect(button).toHaveFocus())
+  await fireEvent.keyDown(window, { key: 'k', ctrlKey: true })
+  await screen.findByRole('dialog')
+  expect(fetch).toHaveBeenCalledTimes(1)
+})
+
+test('failed index fetch waits for an explicit retry and reports no results', async () => {
+  const fetch = vi.fn().mockRejectedValueOnce(new Error('Offline')).mockResolvedValue({ ok: true, json: async () => data })
+  vi.stubGlobal('fetch', fetch)
+  render(Search)
+  await fireEvent.keyDown(window, { key: 'k', metaKey: true })
+  await fireEvent.click(await screen.findByRole('button', { name: 'Try again' }))
+  const input = screen.getByRole('combobox')
+  await fireEvent.input(input, { target: { value: 'missing' } })
+  await screen.findByText(/No guides found/)
+  expect(fetch).toHaveBeenCalledTimes(2)
+  await fireEvent.click(screen.getByRole('button', { name: 'Clear search' }))
+  expect(input).toHaveValue('')
+  expect(input).toHaveFocus()
+  await screen.findByText('Suggested guides')
+  expect(screen.queryByText(/No guides found/)).toBeNull()
+  expect(screen.queryByRole('button', { name: 'Clear search' })).toBeNull()
+  expect(fetch).toHaveBeenCalledTimes(2)
+  await fireEvent.input(input, { target: { value: 'missing' } })
+  await fireEvent.keyDown(input, { key: 'Escape' })
+  await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+})

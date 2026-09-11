@@ -1,0 +1,20 @@
+{
+  "name": "docs-fonts",
+  "version": "0.1.0",
+  "producer": "frontend",
+  "producer_commit": "841ba836f835d6bb065c5ca219bf077ba629af71",
+  "files": {
+    "dm-sans-latin.woff2": {
+      "source": "src/shared/assets/fonts/dm-sans-latin.woff2",
+      "sha256": "aa530716b0d351866af7dbfa3eee4120fb36f2d071baff8c234185141865c7ff"
+    },
+    "dm-sans.css": {
+      "source": "src/shared/assets/fonts/dm-sans.css",
+      "sha256": "1574d8c4484d6cdd9690b02d112c88552d8e1b9c68c109c1c74ba2100156434b"
+    },
+    "OFL-DM-Sans.txt": {
+      "source": "src/shared/assets/fonts/OFL-DM-Sans.txt",
+      "sha256": "9af36190332437f5ecd09974de43c1f7c77a310a996cdd8ceb25628b458840e1"
+    }
+  }
+}

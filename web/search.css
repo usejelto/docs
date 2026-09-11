@@ -1,0 +1,28 @@
+.docs-search-trigger { width: 100%; justify-content: flex-start; }
+.docs-search-key { font: inherit; font-size: 12px; color: var(--muted); margin-inline-start: auto; padding-inline-start: 24px; white-space: nowrap; }
+.docs-search-input { display: flex; align-items: center; gap: 8px; }
+.docs-search-input .ui-search-field { flex: 1; }
+.docs-search-input input::-webkit-search-cancel-button { display: none; }
+.docs-search-status { margin: 16px 0 8px; font-size: 12px; color: var(--muted); }
+.docs-search-results { list-style: none; padding: 2px; margin: 0 -2px; max-height: 52dvh; overflow: auto; overscroll-behavior: contain; }
+.docs-search-results li { border-radius: var(--radius-control); margin: 4px 0; }
+.docs-search-results li[aria-selected='true'] { background: var(--accent-soft); }
+.docs-page .docs-search-results a { display: block; padding: 14px; text-decoration: none; color: var(--ink); }
+.docs-result-category { display: block; font-size: 12px; color: var(--muted); margin-block-end: 4px; }
+.docs-search-results strong { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 15px; font-weight: 600; line-height: 1.5; }
+.docs-search-results svg { flex: none; align-self: center; color: var(--muted); }
+.docs-result-heading { display: block; font-size: 13px; margin-block-start: 2px; }
+.docs-result-excerpt { display: block; margin-block-start: 6px; font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+.docs-search-empty { font-size: 15px; padding: 16px 0; }
+.docs-search-help { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; margin: 16px 0 0; color: var(--muted); border-block-start: 1px solid var(--rule); padding-block-start: 16px; }
+.docs-page .ui-modal { overscroll-behavior: contain; }
+@media (max-width: 760px) {
+  .docs-search-key { display: none; }
+  .docs-search-trigger { min-height: 44px; }
+  .docs-page .ui-modal { padding: 16px; max-height: calc(100dvh - 32px); }
+  .docs-page .ui-modal .ui-icon-btn { min-width: 44px; min-height: 44px; }
+  .docs-page .ui-modal input { font-size: 16px; }
+}
+@media (max-width: 420px) { .docs-search-label { display: none; } }
+@media (pointer: coarse) { .docs-search-help { display: none; } }
+@media (forced-colors: active) { .docs-search-results li[aria-selected='true'] { outline: 2px solid Highlight; outline-offset: -2px; } }

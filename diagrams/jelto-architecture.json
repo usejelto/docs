@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Jelto system architecture",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1180,
+      700
+    ],
+    "views": [
+      {
+        "id": "ingest-path",
+        "label": "Ingest path",
+        "focus": [
+          "visitor",
+          "desktop",
+          "caddy",
+          "jelto",
+          "clickhouse",
+          "r2"
+        ],
+        "note": "Snippet and SDK post to one endpoint; the Go binary enriches, sessionizes and batch-writes."
+      },
+      {
+        "id": "read-path",
+        "label": "Read path",
+        "focus": [
+          "owner",
+          "jelto",
+          "clickhouse",
+          "postgres"
+        ],
+        "note": "The embedded dashboard queries through one filter engine; every number is an envelope with a state."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "visitor",
+      "type": "external",
+      "label": "Website visitor",
+      "sublabel": "jelto.js · 1.5 KB",
+      "pos": [
+        40,
+        180
+      ],
+      "size": [
+        156,
+        68
+      ]
+    },
+    {
+      "id": "desktop",
+      "type": "external",
+      "label": "Desktop app",
+      "sublabel": "Swift / Electron SDK",
+      "pos": [
+        40,
+        340
+      ],
+      "size": [
+        156,
+        68
+      ]
+    },
+    {
+      "id": "caddy",
+      "type": "security",
+      "label": "Caddy",
+      "sublabel": "TLS · trusted IP header",
+      "pos": [
+        300,
+        260
+      ],
+      "size": [
+        156,
+        68
+      ]
+    },
+    {
+      "id": "jelto",
+      "type": "backend",
+      "label": "jelto (Go)",
+      "sublabel": "ingest · API · cron · dashboard",
+      "pos": [
+        540,
+        260
+      ],
+      "size": [
+        190,
+        68
+      ]
+    },
+    {
+      "id": "clickhouse",
+      "type": "database",
+      "label": "ClickHouse",
+      "sublabel": "events · sessions · installs",
+      "pos": [
+        840,
+        180
+      ],
+      "size": [
+        170,
+        68
+      ]
+    },
+    {
+      "id": "postgres",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "products · users · billing",
+      "brand": "postgresql",
+      "pos": [
+        840,
+        340
+      ],
+      "size": [
+        170,
+        68
+      ]
+    },
+    {
+      "id": "r2",
+      "type": "cloud",
+      "label": "Cloudflare R2",
+      "sublabel": "raw batches · backups",
+      "brand": "cloudflare",
+      "pos": [
+        540,
+        520
+      ],
+      "size": [
+        190,
+        68
+      ]
+    },
+    {
+      "id": "owner",
+      "type": "external",
+      "label": "Product owner",
+      "sublabel": "dashboard · /api/v1",
+      "pos": [
+        540,
+        40
+      ],
+      "size": [
+        190,
+        68
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "One Hetzner host · docker compose",
+      "wraps": [
+        "caddy",
+        "jelto",
+        "clickhouse",
+        "postgres"
+      ],
+      "pad": 28
+    }
+  ],
+  "connections": [
+    {
+      "id": "visitor-to-caddy",
+      "from": "visitor",
+      "to": "caddy",
+      "label": "POST /v1/e"
+    },
+    {
+      "id": "desktop-to-caddy",
+      "from": "desktop",
+      "to": "caddy",
+      "label": "heartbeat · install"
+    },
+    {
+      "id": "caddy-to-jelto",
+      "from": "caddy",
+      "to": "jelto",
+      "label": "one IP header",
+      "variant": "emphasis"
+    },
+    {
+      "id": "jelto-to-clickhouse",
+      "from": "jelto",
+      "to": "clickhouse",
+      "label": "inserts · queries",
+      "labelAt": [
+        785,
+        240
+      ]
+    },
+    {
+      "id": "jelto-to-postgres",
+      "from": "jelto",
+      "to": "postgres",
+      "label": "pgx · sqlc"
+    },
+    {
+      "id": "jelto-to-r2",
+      "from": "jelto",
+      "to": "r2",
+      "label": "raw batch copy",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        635,
+        342
+      ]
+    },
+    {
+      "id": "owner-to-jelto",
+      "from": "owner",
+      "to": "jelto",
+      "label": "HTTPS",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        635,
+        122
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "One binary",
+      "items": [
+        "Ingest, API, cron and the Svelte dashboard in one Go process",
+        "SIGTERM: flush ≤ 10 s, spool the rest, snapshot live sessions"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Privacy invariants",
+      "items": [
+        "No IP is ever stored or logged",
+        "No row-level join key between web and app rows"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Honesty rules",
+      "items": [
+        "A failed query renders “query failed”, never 0",
+        "Rates are gated by sample floors; counts always shown"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@jelto/docs",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usejelto/docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/usejelto/docs/issues"
+  },
+  "homepage": "https://github.com/usejelto/docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "check": "svelte-check --tsconfig ./tsconfig.json --fail-on-warnings",
+    "check:content": "node --test public-boundaries.test.mjs && node build-agent-twins.mjs --check",
+    "build:agents": "node build-agent-twins.mjs"
+  },
+  "dependencies": {
+    "@jelto/ui": "file:web/vendor/ui",
+    "@lucide/svelte": "^1.39.0",
+    "bits-ui": "^2.19.1",
+    "shiki": "^4.4.3",
+    "svelte": "^5.57.0"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.1.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/svelte": "^5.4.2",
+    "@types/node": "^24.9.2",
+    "jsdom": "^26.1.0",
+    "svelte-check": "^4.3.3",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.3",
+    "vitest": "^5.0.0"
+  }
+}

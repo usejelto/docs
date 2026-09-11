@@ -1,0 +1,16 @@
+{
+  "name": "docs-brand",
+  "version": "0.1.0",
+  "producer": "jelto",
+  "producer_commit": "841ba836f835d6bb065c5ca219bf077ba629af71",
+  "files": {
+    "mascot-mark.svg": {
+      "source": "brand/assets/logos/02-logo-mascot-mark-pure-vector.svg",
+      "sha256": "b4c787f150fe76c559ba218d1ddf4546f1dd7c2e87bb005cabfbf3f3a256579a"
+    },
+    "NOTICE.txt": {
+      "source": "brand/NOTICE.txt",
+      "sha256": "86da543c0f04a1f515401b716aabb05d9decb308ab218759b398187f1c8f52c3"
+    }
+  }
+}

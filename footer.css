@@ -1,0 +1,64 @@
+/* Shared by the static homepage and the server-rendered documentation shell. */
+.site-footer {
+  border-block-start: 1px solid var(--rule, GrayText);
+  color: var(--muted, CanvasText);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.docs-page > .site-footer { margin-block-start: 64px; }
+
+.site-footer .site-footer-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) repeat(4, minmax(0, 1fr));
+  gap: 32px;
+  width: min(100% - 64px, 1200px);
+  margin-inline: auto;
+  padding-block: 64px 72px;
+}
+
+.site-footer .site-footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--ink, CanvasText);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.site-footer .site-footer-brand img { display: block; flex: none; width: 36px; height: 36px; }
+.site-footer p.site-footer-description { max-width: 30ch; margin: 16px 0 0; text-wrap: pretty; }
+.site-footer p.site-footer-copyright { margin: 20px 0 0; font-size: 12px; }
+.site-footer p.site-footer-credit { margin: 4px 0 0; font-size: 12px; }
+.site-footer h2.site-footer-heading { margin: 14px 0 14px; color: var(--muted, CanvasText); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; line-height: 16px; text-transform: uppercase; }
+.site-footer ul { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.site-footer li { margin: 0; padding: 0; }
+.site-footer li a { display: flex; align-items: center; width: fit-content; min-width: 44px; min-height: 44px; padding-block: 8px; color: var(--ink, CanvasText); text-decoration: none; overflow-wrap: anywhere; }
+.site-footer a:focus-visible { outline: 2px solid var(--accent, Highlight); outline-offset: 4px; border-radius: 2px; }
+
+@media (hover: hover) {
+  .site-footer li a:hover { color: var(--accent, LinkText); text-decoration: underline; text-underline-offset: 4px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-footer li a { transition: color 150ms cubic-bezier(0.2, 0, 0, 1); }
+}
+
+@media (max-width: 900px) {
+  .site-footer .site-footer-inner { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; padding-block: 48px; }
+  .site-footer .site-footer-about { grid-column: 1 / -1; }
+  .site-footer p.site-footer-description { max-width: 42ch; }
+}
+
+@media (max-width: 600px) {
+  .site-footer .site-footer-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 24px; width: calc(100% - 40px); padding-block: 40px; }
+  .site-footer h2.site-footer-heading { margin-block-start: 0; }
+}
+
+@media (max-width: 359px) {
+  .site-footer .site-footer-inner { width: calc(100% - 32px); gap: 28px 16px; }
+}

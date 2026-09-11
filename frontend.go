@@ -1,0 +1,62 @@
+package docs
+
+import (
+	"embed"
+	"encoding/json"
+	"io/fs"
+	"net/http"
+	"path"
+	"strconv"
+	"strings"
+)
+
+//go:embed dist
+var frontend embed.FS
+
+type frontendEntry struct {
+	File    string   `json:"file"`
+	CSS     []string `json:"css"`
+	IsEntry bool     `json:"isEntry"`
+}
+
+func frontendFiles() (string, []string, string) {
+	data, err := frontend.ReadFile("dist/manifest.json")
+	if err != nil {
+		return "", nil, ""
+	}
+	var manifest map[string]frontendEntry
+	if json.Unmarshal(data, &manifest) != nil {
+		return "", nil, ""
+	}
+	logo := ""
+	if entry, ok := manifest["web/vendor/brand/mascot-mark.svg"]; ok {
+		logo = "/docs/" + entry.File
+	}
+	for _, entry := range manifest {
+		if entry.IsEntry {
+			return "/docs/" + entry.File, entry.CSS, logo
+		}
+	}
+	return "", nil, logo
+}
+
+func serveFrontend(w http.ResponseWriter, r *http.Request, name string) {
+	contentTypes := map[string]string{".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".woff2": "font/woff2", ".svg": "image/svg+xml", ".txt": "text/plain; charset=utf-8"}
+	kind := contentTypes[path.Ext(name)]
+	if !fs.ValidPath(name) || strings.Count(name, "/") != 1 || kind == "" {
+		http.NotFound(w, r)
+		return
+	}
+	data, err := frontend.ReadFile("dist/" + name)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+	w.Header().Set("Content-Type", kind)
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
+	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
+	if r.Method == http.MethodGet {
+		_, _ = w.Write(data)
+	}
+}

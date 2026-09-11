@@ -1,0 +1,58 @@
+# Portable workflow: this component directory must be the repository root.
+name: docs checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: component-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CI: 'true'
+  GOFLAGS: -mod=readonly
+
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Vendored snapshots match their manifests
+        run: node vendor-check.mjs
+      - name: Public page, metadata, link and boundary checks
+        run: npm run check:content
+      - name: Build browser assets
+        run: npm run build
+      - name: Browser and type checks
+        run: npm test && npm run check
+      - name: Serving, search and content boundaries
+        # Assets are built first: the Go tests assert the rendered output.
+        run: go test ./... -count=1
+      - uses: actions/upload-artifact@v7
+        with:
+          name: docs-assets
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14

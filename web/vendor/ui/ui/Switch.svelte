@@ -1,0 +1,35 @@
+<script lang="ts">
+  // spec/dashboard.md §13 "Behaviour primitives" (v1.40): a boolean setting as
+  // a real switch — Bits UI's Switch renders <button role="switch"
+  // aria-checked> with roving keyboard support and a hidden input for forms;
+  // the look is app.css's .ui-switch, drawn from §13's tokens through the
+  // data-state attribute the primitive sets. The label and hint are ours, so
+  // the control's accessible name is the label text (label for= id).
+  import { Switch } from 'bits-ui'
+
+  let {
+    id,
+    checked = $bindable(false),
+    disabled = false,
+    label,
+    hint = undefined,
+    name = undefined,
+  }: {
+    id: string
+    checked?: boolean
+    disabled?: boolean
+    label: string
+    hint?: string
+    name?: string
+  } = $props()
+</script>
+
+<div class="ui-switch-row">
+  <Switch.Root {id} {name} bind:checked {disabled} class="ui-switch" aria-labelledby={`${id}-label`} aria-describedby={hint ? `${id}-hint` : undefined}>
+    <Switch.Thumb class="ui-switch__thumb" />
+  </Switch.Root>
+  <label class="ui-switch-row__text" for={id}>
+    <strong id={`${id}-label`}>{label}</strong>
+    {#if hint}<span id="{id}-hint">{hint}</span>{/if}
+  </label>
+</div>

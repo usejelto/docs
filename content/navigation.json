@@ -1,0 +1,171 @@
+[
+  {
+    "id": "start",
+    "title": "Get started",
+    "description": "Connect your first data source and check that it works.",
+    "pages": [
+      "start/quickstart",
+      "start/website",
+      "start/verify",
+      "start/apps"
+    ]
+  },
+  {
+    "id": "install",
+    "title": "Website installation",
+    "description": "Find the right place for the script in your website platform.",
+    "pages": [
+      "install/html",
+      "install/nextjs",
+      "install/react",
+      "install/vue",
+      "install/sveltekit",
+      "install/astro",
+      "install/django",
+      "install/laravel",
+      "install/google-tag-manager",
+      "install/wordpress",
+      "install/webflow",
+      "install/framer",
+      "install/ghost",
+      "install/bubble",
+      "install/wix",
+      "install/squarespace",
+      "install/shopify",
+      "install/woocommerce",
+      "install/podia",
+      "install/kajabi",
+      "install/lovable",
+      "install/bolt",
+      "install/v0",
+      "install/replit",
+      "web/configuration"
+    ]
+  },
+  {
+    "id": "sdk",
+    "title": "App installation",
+    "description": "Connect desktop apps and understand distribution coverage.",
+    "pages": [
+      "sdk/swift",
+      "sdk/electron-forge",
+      "sdk/electron-vite",
+      "sdk/tauri",
+      "sdk/dotnet",
+      "sdk/analytics",
+      "distribution/homebrew",
+      "distribution/winget",
+      "distribution/app-store"
+    ]
+  },
+  {
+    "id": "goals",
+    "title": "Goals and funnels",
+    "description": "Measure important actions and build a website journey.",
+    "pages": [
+      "goals/create-goal",
+      "goals/html-events",
+      "goals/forms-and-visibility",
+      "web/funnels",
+      "goals/funnel-examples"
+    ]
+  },
+  {
+    "id": "payments",
+    "title": "Revenue",
+    "description": "Connect payments, then check their marketing attribution.",
+    "pages": [
+      "payments/connect",
+      "payments/stripe",
+      "payments/lemon-squeezy",
+      "payments/polar",
+      "payments/paddle",
+      "payments/browser-attribution"
+    ]
+  },
+  {
+    "id": "integrations",
+    "title": "Integrations",
+    "description": "Bring search, commits, historical data and crawler activity into Jelto.",
+    "pages": [
+      "integrations/search-console",
+      "integrations/github",
+      "imports/plausible",
+      "sdk/crawler",
+      "integrations/tracking-domain",
+      "subdomain/cloudflare",
+      "subdomain/vercel",
+      "subdomain/caddy",
+      "subdomain/nginx"
+    ]
+  },
+  {
+    "id": "guides",
+    "title": "Understand your data",
+    "description": "Read your dashboard and answer questions about your audience.",
+    "pages": [
+      "guides/read-your-dashboard",
+      "guides/filter-your-data",
+      "guides/understand-your-traffic",
+      "guides/understand-app-usage",
+      "guides/explore-goals-and-funnels",
+      "guides/understand-revenue",
+      "guides/understand-bot-activity",
+      "analytics/segments",
+      "analytics/campaigns",
+      "analytics/kpi",
+      "analytics/cookies-and-domains"
+    ]
+  },
+  {
+    "id": "manage",
+    "title": "Manage your workspace",
+    "description": "Manage access, reports, sharing, usage and your data.",
+    "pages": [
+      "web/product-analytics",
+      "manage/team",
+      "manage/sharing",
+      "manage/reports",
+      "manage/api-keys",
+      "manage/usage",
+      "payments/bot-billing",
+      "manage/privacy-and-data"
+    ]
+  },
+  {
+    "id": "troubleshooting",
+    "title": "Troubleshooting",
+    "description": "Find the cause when data or a connection does not look right.",
+    "pages": [
+      "troubleshooting/no-data",
+      "troubleshooting/duplicate-pageviews",
+      "troubleshooting/events-and-funnels",
+      "troubleshooting/integrations",
+      "troubleshooting/origin-not-allowed",
+      "troubleshooting/all-visitors-one-country",
+      "troubleshooting/all-revenue-shows-direct"
+    ]
+  },
+  {
+    "id": "mcp",
+    "title": "AI assistants and MCP",
+    "description": "Connect an assistant and choose its product permissions.",
+    "pages": [
+      "mcp/introduction",
+      "mcp/setup",
+      "mcp/usage-examples",
+      "mcp/tools",
+      "mcp/best-practices-and-troubleshooting",
+      "mcp/oauth"
+    ]
+  },
+  {
+    "id": "api",
+    "title": "API reference",
+    "description": "Use scoped access for custom reporting and server integrations.",
+    "pages": [
+      "api/website",
+      "api/account-tokens"
+    ]
+  }
+]

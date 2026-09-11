@@ -1,0 +1,224 @@
+{
+  "name": "shared-ui",
+  "version": "1.0.0",
+  "producer": "frontend",
+  "producer_commit": "841ba836f835d6bb065c5ca219bf077ba629af71",
+  "files": {
+    "package.json": {
+      "source": "shared-ui.package.json",
+      "sha256": "58a8494f90ccc1301641e9073fa3582cccfddaa0f2e0e3e0bd774d666c020c7e"
+    },
+    "styles.css": {
+      "source": "src/shared/styles.css",
+      "sha256": "4b4caf887ee3f9a0a3c86c725b6cef35adfe7cd41814945f6b3ccd119b54af2b"
+    },
+    "test-setup.ts": {
+      "source": "src/test-setup.ts",
+      "sha256": "d1e5f7e7b46528d936c58ba98cad849e819bbe41c25afb8cf583558cc2cd5bb8"
+    },
+    "ui/Badge.svelte": {
+      "source": "src/shared/ui/Badge.svelte",
+      "sha256": "1b9b8d8b350950f39933ea50d5312ff03a262d107fc53947ac6f930f7a92571e"
+    },
+    "ui/Button.svelte": {
+      "source": "src/shared/ui/Button.svelte",
+      "sha256": "79eea6a3e3afda949e4f898d761bb7f26fe65e5928a8ee5e8cff1e83304333b0"
+    },
+    "ui/Callout.svelte": {
+      "source": "src/shared/ui/Callout.svelte",
+      "sha256": "92fd278a1d066a90a32ea0d09c14fd0d9eda8637b516faa7860febe81218684d"
+    },
+    "ui/Card.svelte": {
+      "source": "src/shared/ui/Card.svelte",
+      "sha256": "d5392aa3f92d252ced2c623efc0b5046dc360fabef9c96ba20bab3fac34b21f1"
+    },
+    "ui/CardHeader.svelte": {
+      "source": "src/shared/ui/CardHeader.svelte",
+      "sha256": "3968d02042ebe6a1bff35ad089b78849c472c2a5068b61d78cc76b8d7e5beb3f"
+    },
+    "ui/CardSelect.svelte": {
+      "source": "src/shared/ui/CardSelect.svelte",
+      "sha256": "164b7dcee3fb918d9594491e4c33ab28736b26505f7fd9d640235216989e1958"
+    },
+    "ui/ChartSplit.svelte": {
+      "source": "src/shared/ui/ChartSplit.svelte",
+      "sha256": "a720cb24019741e1075458fa905b9b163f016d7e733e0d192463a80108561b9a"
+    },
+    "ui/Checkbox.svelte": {
+      "source": "src/shared/ui/Checkbox.svelte",
+      "sha256": "7778b4d0cc08f7f60584cd3ea964f03d9ce53a7f11e2e728b1fd69bb4c2a4eac"
+    },
+    "ui/CodeBlock.svelte": {
+      "source": "src/shared/ui/CodeBlock.svelte",
+      "sha256": "ec258b7f02b7f1f155254c5f5e90e8cfc768c2198da4a32b049bceeb653de38b"
+    },
+    "ui/Combobox.svelte": {
+      "source": "src/shared/ui/Combobox.svelte",
+      "sha256": "aad5de33071de89d2d3bbda9a7a45b5ed067565aae7c0ad94d81b36f917e09fa"
+    },
+    "ui/ConfirmDialog.svelte": {
+      "source": "src/shared/ui/ConfirmDialog.svelte",
+      "sha256": "f8da5996211c1523c282e0f4f7ade4493491cc046056ed4d2eb3c47363c9705b"
+    },
+    "ui/CopyButton.svelte": {
+      "source": "src/shared/ui/CopyButton.svelte",
+      "sha256": "689c2b5bb9c06d54038e55d0b608f1df8f53dcd222e2c3a33eda0f0302384412"
+    },
+    "ui/Dialog.svelte": {
+      "source": "src/shared/ui/Dialog.svelte",
+      "sha256": "5bb9b7ad95360a3e69f24fa5d8ca46327ac13adb35167fbc4eeb8581e0300819"
+    },
+    "ui/Disclosure.svelte": {
+      "source": "src/shared/ui/Disclosure.svelte",
+      "sha256": "0c0710e1bf31ee8e2f8fc806f4e954ea47b59b66a073235d63f12fd1313d65fa"
+    },
+    "ui/EmptyState.svelte": {
+      "source": "src/shared/ui/EmptyState.svelte",
+      "sha256": "eafcdb22b6e9538da3bf49753b7a571bf354d9beb3c325995220cc2fde5a0392"
+    },
+    "ui/field.ts": {
+      "source": "src/shared/ui/field.ts",
+      "sha256": "0362a7218f05d377fe0a90fc3bd06fdf229faa35c10c4142569fdbbac8db52bb"
+    },
+    "ui/FilterChip.svelte": {
+      "source": "src/shared/ui/FilterChip.svelte",
+      "sha256": "ef44c666f379f2b9a414f5c7c4317de5158fc57d458a16906707e93a2ac10d3d"
+    },
+    "ui/FormField.svelte": {
+      "source": "src/shared/ui/FormField.svelte",
+      "sha256": "209e4a27c4b46a49009335f0e0491d7c2cedb79639d9ef501bfdf8f68863470e"
+    },
+    "ui/FormSection.svelte": {
+      "source": "src/shared/ui/FormSection.svelte",
+      "sha256": "2c4de56eb802b5b1a99127f37286951a18452a8c8c88aa9a7f397d59cb8ab0e9"
+    },
+    "ui/highlightCode.ts": {
+      "source": "src/shared/ui/highlightCode.ts",
+      "sha256": "73ef15772da1d5c455570e3bd74cb9ad46a398416fa3fdb12e56e37707fef622"
+    },
+    "ui/HoverCard.svelte": {
+      "source": "src/shared/ui/HoverCard.svelte",
+      "sha256": "24d901a83bcff5a79f6971fbee0d015808d73854c6a4d875e2f1b9615b1b64d4"
+    },
+    "ui/hoverCard.ts": {
+      "source": "src/shared/ui/hoverCard.ts",
+      "sha256": "c333e7ee05eb4122e50cf00e11cc96684f36036ba2688f5708b42484ac0c3576"
+    },
+    "ui/IconButton.svelte": {
+      "source": "src/shared/ui/IconButton.svelte",
+      "sha256": "5cec891fe80b07083abf88ba9a65f32d8b4960b36f5600da1e712fb2fda77c00"
+    },
+    "ui/ImagePreview.svelte": {
+      "source": "src/shared/ui/ImagePreview.svelte",
+      "sha256": "10b4a9111938b880a48c9670e85bf2ce021ebdb8c3a691b5e99b456a79429955"
+    },
+    "ui/index.ts": {
+      "source": "src/shared/ui/index.ts",
+      "sha256": "689e1ab427bb6af15eaa1522552ecae8029111ff2935e5cb90041b237c752f77"
+    },
+    "ui/LinkButton.svelte": {
+      "source": "src/shared/ui/LinkButton.svelte",
+      "sha256": "d622888f6bf6fd4ed12eddf876a6c162911f3492621d57c1d83a72de10f5ae84"
+    },
+    "ui/LoadingState.svelte": {
+      "source": "src/shared/ui/LoadingState.svelte",
+      "sha256": "829679e06d7fb85154eef23f39d96cfb2ab20e649ac3c1a444ec82acb5e25d2a"
+    },
+    "ui/measureHeight.ts": {
+      "source": "src/shared/ui/measureHeight.ts",
+      "sha256": "3a602748206f68ff92791b599b691dd5aa4aea8c274653b9147c11762ca8b797"
+    },
+    "ui/motion.ts": {
+      "source": "src/shared/ui/motion.ts",
+      "sha256": "7b5404051a82e09cb078c851740493756070da361848d64cbdb0b35048ee7163"
+    },
+    "ui/NativeSelect.svelte": {
+      "source": "src/shared/ui/NativeSelect.svelte",
+      "sha256": "6476b9255408b3be05a4eb9bafbb4e28898b38382dd41e7c18597021d574d8dc"
+    },
+    "ui/NavLink.svelte": {
+      "source": "src/shared/ui/NavLink.svelte",
+      "sha256": "7d7b3c0bfa531df36f98f454a1ac1536fb855cd5130d16024a5bd474fbed5237"
+    },
+    "ui/PageHeader.svelte": {
+      "source": "src/shared/ui/PageHeader.svelte",
+      "sha256": "4a542bad1489f460cd286957461374c61e14a6189496b8c5adcbc8f04fa14c89"
+    },
+    "ui/Popover.svelte": {
+      "source": "src/shared/ui/Popover.svelte",
+      "sha256": "47f0ac39cca2a247594be8e8b72f6858bb73e9129743ebc0d3d607829792fdc0"
+    },
+    "ui/RadioGroup.svelte": {
+      "source": "src/shared/ui/RadioGroup.svelte",
+      "sha256": "5223c80458841809d964ff04acef329f0a8914ab40fd7abfb9ac91553f783d1d"
+    },
+    "ui/SearchField.svelte": {
+      "source": "src/shared/ui/SearchField.svelte",
+      "sha256": "26ab653adef755398d079e89c21f5adfee2de9a2791114441f6465dff3b75e60"
+    },
+    "ui/Select.svelte": {
+      "source": "src/shared/ui/Select.svelte",
+      "sha256": "7a58cd73b934e7559971db2d392ba624be899276a0f79fd2b7c11df07b438a4e"
+    },
+    "ui/selection.css": {
+      "source": "src/shared/ui/selection.css",
+      "sha256": "b428fc66aa104c2317119cf580e5d96028f0f30592a5183ae75557bc8760f16d"
+    },
+    "ui/Skeleton.svelte": {
+      "source": "src/shared/ui/Skeleton.svelte",
+      "sha256": "65c7449ec1be13af4c9daf9c2a1534ae569b564364b82b5b41486a3f51b99c58"
+    },
+    "ui/StatusMessage.svelte": {
+      "source": "src/shared/ui/StatusMessage.svelte",
+      "sha256": "07613a67c37550f22b13892d4233af3e9998de92286be3717c7522c1abf88a8f"
+    },
+    "ui/Switch.svelte": {
+      "source": "src/shared/ui/Switch.svelte",
+      "sha256": "4465dd36c5d6731b42be250a9f5b33a9e92aee4f598791974f2d34bf39629a43"
+    },
+    "ui/TableContainer.svelte": {
+      "source": "src/shared/ui/TableContainer.svelte",
+      "sha256": "56e661d32f4b91a08af559f8e9a4719eb2ec3d52ef04ae1aeb2a4f34157cf7b7"
+    },
+    "ui/tabs.ts": {
+      "source": "src/shared/ui/tabs.ts",
+      "sha256": "e174f9a4f974e14751b0a37e8d0e5eae537014387ac50d1c73f84fe247e78164"
+    },
+    "ui/TabsContent.svelte": {
+      "source": "src/shared/ui/TabsContent.svelte",
+      "sha256": "3632e8eb6eb0304f5fb82a73e8ea60006227dfe9cfcf5f7e26f5d0110b67c2b1"
+    },
+    "ui/TabsList.svelte": {
+      "source": "src/shared/ui/TabsList.svelte",
+      "sha256": "de1ac465761dfd3ea616077c2091af7951c8aba2995e7cc3ea48992bba02f7bd"
+    },
+    "ui/TabsRoot.svelte": {
+      "source": "src/shared/ui/TabsRoot.svelte",
+      "sha256": "b3f476394805a57d99360324296ec4b2c7113e65b3fa66b703fae32688145ec7"
+    },
+    "ui/TabsTrigger.svelte": {
+      "source": "src/shared/ui/TabsTrigger.svelte",
+      "sha256": "fa061dd55bfe7542ca50d4ec4eae9e4a827da689491bbe345fb97d4c88cb7f26"
+    },
+    "ui/Textarea.svelte": {
+      "source": "src/shared/ui/Textarea.svelte",
+      "sha256": "bae095c435d3d93cb3721b3abf89605ab19422454952ace37a7940acc90bb810"
+    },
+    "ui/TextInput.svelte": {
+      "source": "src/shared/ui/TextInput.svelte",
+      "sha256": "c3f85e5a7ed345ef66b7a8b06e04d251e3f9e930f2338954209113c8ae9e2a02"
+    },
+    "ui/Toolbar.svelte": {
+      "source": "src/shared/ui/Toolbar.svelte",
+      "sha256": "452c409acae9dafe822ecb408162ff79f64dbe26608db06c480355b71a601b1f"
+    },
+    "ui/TooltipToggle.svelte": {
+      "source": "src/shared/ui/TooltipToggle.svelte",
+      "sha256": "d4382b469956a953ca1eb8578fb26ebd17475cc7efea73f89179fd74e8d5ef35"
+    },
+    "ui/types.ts": {
+      "source": "src/shared/ui/types.ts",
+      "sha256": "ff18402b0111449a05717429ac7c2e639fe7b9f11d64c7356d0151e528472643"
+    }
+  }
+}

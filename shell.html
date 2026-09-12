@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{{.Title}} · Jelto Documentation</title>
   {{if .Summary}}<meta name="description" content="{{.Summary}}">{{end}}
+  <link rel="canonical" href="{{.Canonical}}">
   {{range .CSS}}<link rel="stylesheet" href="/docs/{{.}}">{{end}}
   <style>{{.Styles}}</style>
   {{if .Script}}<script type="module" src="{{.Script}}"></script>{{end}}

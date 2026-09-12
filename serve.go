@@ -107,6 +107,20 @@ func newRenderer() goldmark.Markdown {
 	return goldmark.New(goldmark.WithExtensions(extension.Table), goldmark.WithParserOptions(parser.WithAutoHeadingID()))
 }
 
+// DocumentPaths lists the public address of every documentation guide, the
+// index first and the rest in navigation order. Search discovery is built from
+// this list so the advertised addresses always come from the same manifest that
+// renders the navigation, and cannot drift from the guides that actually exist.
+func DocumentPaths() []string {
+	paths := []string{"/docs/"}
+	for _, group := range navigation("") {
+		for _, page := range group.Pages {
+			paths = append(paths, page.Href)
+		}
+	}
+	return paths
+}
+
 func NewHandler() http.Handler {
 	renderer := newRenderer()
 	shell := template.Must(template.New("docs").Parse(document))
@@ -160,6 +174,12 @@ func NewHandler() http.Handler {
 		}
 		if data, ok := agentCopies[path]; ok {
 			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+			// An agent copy is a plain-text mirror of one HTML guide. Name that
+			// guide as the canonical address so the mirror is not indexed in its
+			// place; llms.txt mirrors no single guide and so declares nothing.
+			if slug, mirrored := strings.CutPrefix(path, "agents/"); mirrored {
+				w.Header().Set("Link", "<"+canonicalDocs+strings.TrimSuffix(slug, ".md")+">; rel=\"canonical\"")
+			}
 			w.Header().Set("X-Content-Type-Options", "nosniff")
 			w.Header().Set("Content-Security-Policy", policy)
 			w.Header().Set("Cache-Control", "no-cache")
@@ -203,6 +223,7 @@ func NewHandler() http.Handler {
 			http.NotFound(w, r)
 			return
 		}
+		summary := metadataValue(source, "summary")
 		source = publicBody(source)
 		title := guideTitle(source)
 		var content, out bytes.Buffer
@@ -236,6 +257,14 @@ func NewHandler() http.Handler {
 		rendered := strings.ReplaceAll(content.String(), "<table>", `<div class="docs-table" role="region" tabindex="0" aria-label="Scrollable reference table"><table>`)
 		rendered = strings.ReplaceAll(rendered, "<pre>", `<pre tabindex="0" aria-label="Code example">`)
 		rendered = strings.ReplaceAll(rendered, "</table>", `</table></div><p class="docs-table-note">Scroll horizontally to see more columns on smaller screens.</p>`)
+		// One indexable address per guide: the extensionless path on the public
+		// documentation host. The ".md" sibling of this path, and any other host
+		// that mounts this handler, render the same document, so they must not
+		// compete with it in search results.
+		canonical := canonicalDocs
+		if path != "README.md" {
+			canonical += strings.TrimSuffix(path, ".md")
+		}
 		if err = shell.Execute(&out, struct {
 			Title          string
 			Body           template.HTML
@@ -248,8 +277,9 @@ func NewHandler() http.Handler {
 			Logo           string
 			CSS            []string
 			Summary        string
+			Canonical      string
 			Styles         template.CSS
-		}{title, template.HTML(rendered), navigation(path), path == "README.md", headings, category, previous, next, script, logo, css, current.Summary, template.CSS(styles)}); err != nil {
+		}{title, template.HTML(rendered), navigation(path), path == "README.md", headings, category, previous, next, script, logo, css, summary, canonical, template.CSS(styles)}); err != nil {
 			http.Error(w, "Guide unavailable", http.StatusInternalServerError)
 			return
 		}

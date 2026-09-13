@@ -6,6 +6,8 @@
   <title>{{.Title}} · Jelto Documentation</title>
   {{if .Summary}}<meta name="description" content="{{.Summary}}">{{end}}
   <link rel="canonical" href="{{.Canonical}}">
+  {{if .IconFallback}}<link rel="icon" href="{{.IconFallback}}" sizes="64x64">{{end}}
+  {{if .Icon}}<link rel="icon" type="image/svg+xml" href="{{.Icon}}">{{end}}
   {{range .CSS}}<link rel="stylesheet" href="/docs/{{.}}">{{end}}
   <style>{{.Styles}}</style>
   {{if .Script}}<script type="module" src="{{.Script}}"></script>{{end}}

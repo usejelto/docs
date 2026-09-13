@@ -10,6 +10,8 @@ export default defineConfig({
       this.emitFile({ type: 'asset', fileName: 'PLACEHOLDER', source: 'Run npm run build in docs to build the documentation assets.\n' })
       for (const [name, source] of [
         ['mascot-mark.svg', 'brand/mascot-mark.svg'],
+        ['favicon.svg', 'brand/favicon.svg'],
+        ['favicon.ico', 'brand/favicon.ico'],
         ['JELTO-BRAND-NOTICE.txt', 'brand/NOTICE.txt'],
         ['OFL-DM-Sans.txt', 'fonts/OFL-DM-Sans.txt'],
       ]) {

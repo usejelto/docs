@@ -127,6 +127,7 @@ func NewHandler() http.Handler {
 	styles := bytes.Join([][]byte{styles, footerStyles}, []byte("\n"))
 	hash := sha256.Sum256(styles)
 	script, css, logo := frontendFiles()
+	icon, iconFallback := frontendIcons()
 	policy := "default-src 'none'; img-src 'self'; style-src 'sha256-" + base64.StdEncoding.EncodeToString(hash[:]) + "'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'"
 	if script != "" {
 		policy += "; script-src 'self'; style-src-elem 'self' 'sha256-" + base64.StdEncoding.EncodeToString(hash[:]) + "'; font-src 'self'; connect-src 'self'"
@@ -279,7 +280,9 @@ func NewHandler() http.Handler {
 			Summary        string
 			Canonical      string
 			Styles         template.CSS
-		}{title, template.HTML(rendered), navigation(path), path == "README.md", headings, category, previous, next, script, logo, css, summary, canonical, template.CSS(styles)}); err != nil {
+			Icon           string
+			IconFallback   string
+		}{title, template.HTML(rendered), navigation(path), path == "README.md", headings, category, previous, next, script, logo, css, summary, canonical, template.CSS(styles), icon, iconFallback}); err != nil {
 			http.Error(w, "Guide unavailable", http.StatusInternalServerError)
 			return
 		}

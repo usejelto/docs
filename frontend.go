@@ -19,13 +19,21 @@ type frontendEntry struct {
 	IsEntry bool     `json:"isEntry"`
 }
 
-func frontendFiles() (string, []string, string) {
+func frontendManifest() map[string]frontendEntry {
 	data, err := frontend.ReadFile("dist/manifest.json")
 	if err != nil {
-		return "", nil, ""
+		return nil
 	}
 	var manifest map[string]frontendEntry
 	if json.Unmarshal(data, &manifest) != nil {
+		return nil
+	}
+	return manifest
+}
+
+func frontendFiles() (string, []string, string) {
+	manifest := frontendManifest()
+	if manifest == nil {
 		return "", nil, ""
 	}
 	logo := ""
@@ -40,8 +48,23 @@ func frontendFiles() (string, []string, string) {
 	return "", nil, logo
 }
 
+// frontendIcons names the browser icons: the SVG most browsers use and the ICO
+// that Safari, which ignores SVG icons, falls back to. Both are brand inputs
+// (web/vendor/brand, docs-brand in the backend's components.json) emitted with
+// content-hashed names; without a build the head declares no icon.
+func frontendIcons() (svg, ico string) {
+	manifest := frontendManifest()
+	if entry, ok := manifest["web/vendor/brand/favicon.svg"]; ok {
+		svg = "/docs/" + entry.File
+	}
+	if entry, ok := manifest["web/vendor/brand/favicon.ico"]; ok {
+		ico = "/docs/" + entry.File
+	}
+	return svg, ico
+}
+
 func serveFrontend(w http.ResponseWriter, r *http.Request, name string) {
-	contentTypes := map[string]string{".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".woff2": "font/woff2", ".svg": "image/svg+xml", ".txt": "text/plain; charset=utf-8"}
+	contentTypes := map[string]string{".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".woff2": "font/woff2", ".svg": "image/svg+xml", ".ico": "image/x-icon", ".txt": "text/plain; charset=utf-8"}
 	kind := contentTypes[path.Ext(name)]
 	if !fs.ValidPath(name) || strings.Count(name, "/") != 1 || kind == "" {
 		http.NotFound(w, r)

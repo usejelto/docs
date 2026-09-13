@@ -77,6 +77,28 @@ func TestGuideAnchorsAndHead(t *testing.T) {
 	}
 }
 
+func TestGuideHeadDeclaresTheBrandIcon(t *testing.T) {
+	svg, ico := frontendIcons()
+	if svg == "" || ico == "" {
+		t.Skip("documentation assets are not built")
+	}
+	handler := NewHandler()
+	page := httptest.NewRecorder()
+	handler.ServeHTTP(page, httptest.NewRequest("GET", "/docs/", nil))
+	for _, want := range []string{`<link rel="icon" href="` + ico + `" sizes="64x64">`, `<link rel="icon" type="image/svg+xml" href="` + svg + `">`} {
+		if !strings.Contains(page.Body.String(), want) {
+			t.Errorf("guide head lacks %s", want)
+		}
+	}
+	for path, kind := range map[string]string{svg: "image/svg+xml", ico: "image/x-icon"} {
+		w := httptest.NewRecorder()
+		handler.ServeHTTP(w, httptest.NewRequest("GET", path, nil))
+		if w.Code != 200 || w.Header().Get("Content-Type") != kind || w.Body.Len() == 0 {
+			t.Errorf("%s: code=%d type=%s bytes=%d", path, w.Code, w.Header().Get("Content-Type"), w.Body.Len())
+		}
+	}
+}
+
 func TestDocumentationImagesAndSecurity(t *testing.T) {
 	handler := NewHandler()
 	assets, err := fs.Glob(contentFiles, "content/images/*.png")

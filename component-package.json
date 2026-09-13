@@ -1,0 +1,16 @@
+{
+  "component": "docs",
+  "include": [
+    "dist",
+    "go.mod",
+    "go.sum",
+    "*.go",
+    "content",
+    "shell.html",
+    "styles.css",
+    "footer.css",
+    "LICENSE",
+    "LICENSE-DOCS.md",
+    "ASSET-LICENSES.md"
+  ]
+}

@@ -20,7 +20,7 @@ The prompt names the packages described below. See
 
 1. Install the JavaScript package from npm and the Rust plugin from crates.io.
 2. Register the plugin in your Rust builder and add its permission to the local window capability.
-3. Initialize once after the app permits telemetry, then send registered actions.
+3. Initialize once after the app permits telemetry, then send custom actions.
 4. Launch the packaged app and verify the results.
 
 ## Install
@@ -59,7 +59,7 @@ The `desktop` slug must be registered in **Settings → Installation → Apps**.
 
 ## Verify
 
-Launch the app after enabling telemetry in your own app. Register `export_finished` and its `format` property in **Settings → Events & funnels → Events** before sending the example. Trigger an export, then inspect the product's app activity and Goals for the current date. Allow up to one minute after changing event registration.
+Launch the app after enabling telemetry in your own app. Trigger an export, then inspect the product's app activity and Goals for the current date. Jelto discovers `export_finished` and its `format` property when it receives the event; no event registration is required.
 
 The SDK sends daily activity and queues the first install claim with a delay of up to six hours. A new integration can therefore send activity before an install appears. Release versions support version-adoption reporting; later version changes are reported without creating a new install. Retention requires elapsed time and a mature sample.
 

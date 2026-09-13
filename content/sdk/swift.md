@@ -2,12 +2,12 @@
 title: "Swift SDK"
 group: sdk
 slug: sdk/swift
-summary: "Initialize Jelto in a macOS app and send a registered action."
+summary: "Initialize Jelto in a macOS app and send a custom action."
 ---
 
 # Swift SDK
 
-Measure active macOS installs, app versions and registered actions from your app.
+Measure active macOS installs, app versions and custom actions from your app.
 
 ## Set up with AI
 
@@ -47,7 +47,7 @@ Calls before initialization do not start collection. The default ingestion endpo
 
 ## Verify
 
-Launch the app after enabling telemetry in your own app. Register `export_finished` and its `format` property in **Settings → Events & funnels → Events** before sending the example. Trigger an export, then inspect the product's app activity and Goals for the current date. Allow up to one minute after changing event registration.
+Launch the app after enabling telemetry in your own app. Trigger an export, then inspect the product's app activity and Goals for the current date. Jelto discovers `export_finished` and its `format` property when it receives the event; no event registration is required.
 
 The SDK sends daily activity and queues the first install claim with a delay of up to six hours. A new integration can therefore send activity before an install appears. Release versions support version-adoption reporting; later version changes are reported without creating a new install. Retention requires elapsed time and a mature sample.
 
@@ -57,4 +57,4 @@ If data is missing, check the product ID, registered app slug, collection permis
 
 Use `Jelto.disable()` when collection must stop and local analytics state should be wiped. `Jelto.reset()` rotates the install identity; it is not a routine startup call. `Jelto.installId` can support an app-data request. Do not use it to identify a website visitor.
 
-For onboarding milestones, `Jelto.onboarding("welcome", status: "ok")` reports an onboarding event; register the corresponding custom event and property keys first.
+For onboarding milestones, `Jelto.onboarding("welcome", status: "ok")` reports a built-in onboarding event with no event registration required.

@@ -2,17 +2,17 @@
 title: "Goals or funnels are missing"
 group: troubleshooting
 slug: troubleshooting/events-and-funnels
-summary: "Check event registration and ordered website evidence before changing a funnel."
+summary: "Check event delivery and ordered website evidence before changing a funnel."
 ---
 
 # Goals or funnels are missing
 
-A saved goal or funnel definition does not generate traffic. First verify the underlying pageviews and events.
+Opening the goal setup guide or saving a funnel definition does not generate traffic. First verify the underlying pageviews and events.
 
 ## Missing goal
 
-1. Confirm the event is saved under **Settings → Events & funnels → Events** and allow up to one minute.
-2. Match its spelling and case exactly in the sender. Check every sent property against **Allowed properties**.
+1. Send the event to the correct product. It and its property keys appear in **Settings → Events & funnels → Events** automatically after receipt.
+2. Match its spelling and case exactly in the sender. Check name spelling, reserved names and the limits of 100 custom events and 20 property keys per event.
 3. Perform the action after the tracker or SDK initializes. A guarded browser call made too early can do nothing.
 4. Check **Rejected in the last 7 days** and correct the reported reason.
 5. Open Goals for the correct product, surface and date range. Clear filters and check hidden-goal presentation settings.

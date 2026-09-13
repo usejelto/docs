@@ -2,7 +2,7 @@
 title: "Track clicks with HTML attributes"
 group: goals
 slug: goals/html-events
-summary: "Attach a registered event to an obvious button or link without adding a click handler."
+summary: "Attach a custom event to an obvious button or link without adding a click handler."
 ---
 
 # Track clicks with HTML attributes
@@ -11,7 +11,7 @@ Use HTML attributes when the action you want to count is a click. For a confirme
 
 ## Add the event
 
-1. [Register](create-goal.md) `pricing_clicked` with an allowed `location` property.
+1. Choose `pricing_clicked` as the event name and `location` as a property. Jelto [discovers them on receipt](create-goal.md).
 2. Find the actual link or button in your website's template or component.
 3. Add the event attributes and publish.
 
@@ -25,7 +25,7 @@ The core website script handles the click. Custom properties are literal values 
 
 ## Verify
 
-Open the published page and click the link. Find `pricing_clicked` in Goals, then check its `location` breakdown. Register the property before testing and allow up to one minute after saving.
+Open the published page and click the link. Find `pricing_clicked` in Goals, then check its `location` breakdown. The event and property appear automatically after receipt.
 
 ## Avoid double counting
 

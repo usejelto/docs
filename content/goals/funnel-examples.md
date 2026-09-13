@@ -17,7 +17,7 @@ Use these definitions as examples, then replace paths and event names with those
 | Signup page | Page | `/signup` with Equals | The visit reached the signup form. |
 | Account created | Goal | `signup` | Your browser received confirmation that account creation succeeded. |
 
-Register `signup` first. Call `window.jelto?.('event', 'signup')` in your application's successful account-creation handler. A click on Create account is a different event and should not stand in for successful signup.
+Call `window.jelto?.('event', 'signup')` in your application's successful account-creation handler. A click on Create account is a different event and should not stand in for successful signup.
 
 Perform this journey once in the same browser visit, then inspect each step in the chosen date range. If your site enters signup directly from a campaign, the homepage-first funnel will intentionally omit those visits; create a second funnel starting at `/signup` to answer that question.
 
@@ -29,7 +29,7 @@ Perform this journey once in the same browser visit, then inspect each step in t
 | Checkout started | Goal | `checkout_started` | Your app successfully opened or created checkout. |
 | Return page | Page | `/success` with Equals | The visit reached the tracked return page. |
 
-Register `checkout_started` and report it after checkout creation succeeds. Configure your provider's success URL to return to the real tracked success page. A return-page visit is a navigation signal; only your provider can establish that money was paid. Visitors who close the checkout without returning may have a recorded payment but no final pageview.
+Send `checkout_started` after checkout creation succeeds. Configure your provider's success URL to return to the real tracked success page. A return-page visit is a navigation signal; only your provider can establish that money was paid. Visitors who close the checkout without returning may have a recorded payment but no final pageview.
 
 ## Investigate drop-off
 

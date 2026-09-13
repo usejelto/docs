@@ -9,7 +9,7 @@ summary: "Use a verified checkout reference, server metadata, or a short-lived e
 
 Connect Stripe, Lemon Squeezy, or Polar in **Settings → Revenue** first. The
 connection retrieves payment amounts and refunds. Browser attribution supplies
-only an aggregate marketing channel; it never supplies revenue amounts.
+the marketing channel and an existing pageview reference; it never supplies revenue amounts.
 
 ## Install the optional helper
 
@@ -26,8 +26,8 @@ must be in that website's domain list. For a first-party proxy, serve both
 scripts and the configured payment endpoint through that proxy. Add
 `data-environment="test"` for sandbox payments; live and test matching are separate.
 
-The helper remembers only the aggregate channel in `sessionStorage` for up to
-30 minutes. It stores no email or checkout reference there. Set
+The helper remembers the channel and existing pageview UUID in `sessionStorage` for up to
+30 minutes, scoped to the product and browser tab. It stores no email or provider checkout reference there. Set
 `data-payment-memory="off"` to disable that memory. Without remembered context,
 a provider return page does not manufacture Direct attribution. Explicitly
 observed Direct traffic is supported.
@@ -55,6 +55,37 @@ success, merchant, environment, and selected products before changing any
 attribution. Repeated callbacks and webhooks resolve to the same monetary
 record. A claim that arrives before payment success is retried for up to
 24 hours. Known server metadata and app installation attribution take priority.
+
+## Website conversion and funnels
+
+Use `window.jeltoCheckoutMetadata?.() ?? {}` when starting checkout. Forward its
+`jelto_cohort`, `jelto_jt`, `jelto_entry_page` and `jelto_pageview` fields to the
+provider's documented metadata location. `jelto_pageview` is the existing
+pageview event UUID. It introduces no new cookie or cross-device identity.
+For Stripe subscriptions, copy metadata to both the Checkout Session and
+`subscription_data.metadata`; hosted Stripe Payment Links carry the reference
+in `client_reference_id` while preserving any reference your application set.
+
+Jelto links a verified payment or subscription goal only to an admitted pageview
+for the same product, preceding the goal, within the selected reporting range.
+Browser claims are also bound to their originating hostname. The goal uses the
+visit's existing visitor and session identities. Repeated payments increase
+**Completions** while **Linked visitors** counts the paying visitor once under
+the website's identity model. Conversion divides linked visitors by observed
+website visitors. **Unlinked completions** remain visible and are excluded
+from conversion and funnels. Mixed identity modes can withhold a unique count
+or rate while completions remain available.
+
+Add `payment`, `free_trial` or another automatic goal to a website funnel,
+choose it as the website KPI, or use **Filter by this goal**. Funnel steps must
+occur in order within the existing visit and 24-hour funnel window. No goal
+registration is needed. App payment goals remain completion-only.
+
+Without a usable reference, historical payments and later renewals still count
+as completions. An old checkout reference does not create a new visit for a
+renewal outside that checkout's reporting range. With checkout memory off,
+forward metadata before leaving your website; the return page cannot recover
+the original pageview on its own.
 
 ## Email fallback
 
@@ -85,7 +116,7 @@ Reference and email claims are temporary matching requests. Capacity limits or a
 
 Disconnecting stops matching for that connection and removes its temporary
 matching data. Deleting the product or account removes its matching data too.
-Analytics shows aggregate channel labels. Website visitors and app installations
+Analytics shows aggregate channel labels, linked visitor counts and funnel progress. Website visitors and app installations
 remain separate; this feature does not link their identities.
 
 ## Verify attribution

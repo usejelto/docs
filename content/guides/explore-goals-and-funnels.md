@@ -31,6 +31,6 @@ Find **Funnels** and choose a definition from the funnel selector. Read its step
 
 The **Conversion** figure is the share of entering visits that reached the final step. In this example, the path moves from `/pricing` to `/checkout`, then to the observed `checkout:completed` goal.
 
-A website funnel follows steps within a website visit. It does not connect an individual website visitor to an app install or a payment identity. A checkout-named browser goal is still a tracked action; payment revenue is reported separately.
+A website funnel follows steps within a website visit. Automatic payment and subscription goals can use a [verified checkout reference](../payments/browser-attribution.md) to join that visit. Only linked goals can advance the funnel. A checkout-named browser goal remains a tracked action; verified payments and money are reported separately. Website and app identities remain separate.
 
 To create or edit a definition, open **Settings → Events & funnels → Funnels**. See [the funnel setup guide](../web/funnels.md) for the available step types.

@@ -47,13 +47,13 @@ const checkout = await response.json()
 window.location.assign(checkout.url)
 ```
 
-3. In that server endpoint, preserve your existing authentication, CSRF protection, price selection and order validation. Accept only the documented aggregate attribution fields; never take an amount or product selection from untrusted browser metadata.
+3. In that server endpoint, preserve your existing authentication, CSRF protection, price selection and order validation. Accept only the documented checkout attribution fields; never take an amount or product selection from untrusted browser metadata.
 4. Copy those fields into the provider metadata location described below, create checkout with your server-held provider credential, and return its URL.
 5. Verify a payment and its channel separately. Omit attribution when the helper has no context; do not invent a source.
 
 ### Hosted payment links
 
-Add the checkout helper on the page containing the provider link. Keep the link as a real supported provider URL; the helper adds aggregate context without replacing unrelated metadata. For a verified return claim, configure the exact provider success parameter below and install the helper on the return page too.
+Add the checkout helper on the page containing the provider link. Keep the link as a real supported provider URL; the helper adds checkout context without replacing unrelated metadata. For a verified return claim, configure the exact provider success parameter below and install the helper on the return page too.
 
 ### Other checkout flows
 
@@ -70,7 +70,7 @@ https://your-site.example/thanks?checkout_id={CHECKOUT_ID}
 
 The helper submits that checkout reference. Jelto verifies the paid
 orders through the connected organization, checks the selected products and
-environment, and adds only the aggregate channel attribution. Pending checkouts
+environment, and adds the channel and original pageview reference. Pending checkouts
 retry for up to 24 hours. See [browser attribution](browser-attribution) for
 installation and controls.
 
@@ -84,14 +84,10 @@ It can match one recent initial purchase using the email on the paid order. Rene
 billing reasons are excluded. Ambiguous email matches remain unattributed.
 
 The account connection retrieves revenue. For channel attribution, forward
-only the aggregate context returned by the snippet:
+the context returned by the checkout helper, including its existing pageview reference:
 
 ```js
-const attribution = jelto('attribution');
-const metadata = {
-  jelto_cohort: attribution.cohort,
-  ...(attribution.first ? { jelto_jt: 'first' } : {}),
-};
+const metadata = window.jeltoCheckoutMetadata?.() ?? {};
 ```
 
 Pass `metadata` when your server creates a Polar checkout. Hosted checkout
@@ -104,7 +100,7 @@ checkout.searchParams.set('metadata', JSON.stringify(metadata));
 location.assign(checkout.href);
 ```
 
-Keep email, customer, session and visitor IDs out of metadata. Unlabelled
+Forward `jelto_pageview` from the helper to enable website conversion and funnels. Keep email, customer, session and visitor IDs out of metadata. Unlabelled
 orders remain unknown attribution. Renewal orders can use the subscription's
 aggregate metadata when the order does not repeat it.
 

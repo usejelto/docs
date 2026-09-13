@@ -53,3 +53,27 @@ Keep amounts and dates from the provider. Historical payments without attributio
 ## Read the result
 
 [Understand revenue](../guides/understand-revenue.md) explains the card and channel breakdown. Reporting currency and renewal preferences change presentation; provider amounts remain preserved. For missing labels, use [Revenue shows Direct](../troubleshooting/all-revenue-shows-direct.md).
+
+## Automatic goals
+
+Connecting Stripe, Lemon Squeezy or Polar enables these goals automatically. No event registration or client-side payment event is needed.
+
+| Goal | What it counts |
+| --- | --- |
+| `payment` | Successful positive payments, including one-time purchases and subscription payments. |
+| `free_trial`, `trial_started` | The start of a subscription trial. These are two views of the same milestone. |
+| `trial_converted` | A trial becoming a paid subscription. |
+| `subscription_started` | The start of a paid subscription. |
+| `subscription_upgraded`, `subscription_downgraded` | An increase or decrease in comparable monthly recurring value. |
+| `subscription_renewed` | A successful payment explicitly identified as a renewal. |
+| `subscription_cancel_scheduled` | Cancellation scheduled for the end of the current period. |
+| `subscription_reactivated` | A scheduled cancellation reversed, or an ended subscription resumed. |
+| `subscription_ended` | The subscription actually ending. |
+
+Find these in Goals and the read-only **Automatic payment and subscription goals** list in Events settings. Payment API receipts also produce `payment` and, when classified as a renewal, `subscription_renewed`. Refunds do not create payment goals. Test payments and subscriptions stay out of live analytics.
+
+Jelto extends existing managed webhook endpoints during synchronization. Credentials need subscription read access as well as the payment access described in each provider guide; Lemon Squeezy also uses prices and orders. If webhook updates are unavailable, subscription synchronization provides a fallback. Check the connection status if synchronization needs attention.
+
+History recovers milestones with provider dates. It cannot reconstruct every past plan change or cancellation reversal without an earlier observed state. Metered, tiered or otherwise incomparable prices do not produce guessed upgrade or downgrade goals.
+
+Use the [checkout helper](browser-attribution.md) to link verified goals to existing website visits. **Linked visitors** supports conversion, KPI selection, visitor filters and website funnel steps. **Completions** also includes payments without a usable reference; **Unlinked completions** shows that gap. App payment goals remain completion-only.

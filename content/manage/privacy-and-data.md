@@ -13,7 +13,7 @@ Use product settings to control what your site collects and how its data is mana
 
 Check **Settings → Traffic & usage** for website pause and traffic exclusions. Check **Installation** for the script and its cookie/memory choices. [Cookies and domains](../analytics/cookies-and-domains.md) explains their reporting effects.
 
-Avoid names, emails, IP addresses and personal identifiers in URLs, event names and custom properties. Use aggregate labels such as a plan or feature name. Do not introduce a shared website/app identity.
+Avoid names, emails, IP addresses and personal identifiers in URLs, event names and custom properties. Use aggregate labels such as a plan or feature name. Do not introduce a shared website/app identity. The optional checkout helper can retain the existing pageview UUID in product-scoped tab storage for 30 minutes and forward it to the payment provider to measure website conversions and funnels. It does not create a new visitor cookie; `data-payment-memory="off"` disables that checkout storage.
 
 ## Export and import
 

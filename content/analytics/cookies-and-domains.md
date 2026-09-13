@@ -21,7 +21,7 @@ To switch back, clear **Use cookie mode**, confirm, then replace the installed s
 
 ## First-touch and checkout memory
 
-`data-memory="on"` explicitly enables first-touch channel memory. The checkout helper has separate, short-lived tab memory for aggregate checkout context, controlled by `data-payment-memory="off"`. See [Script configuration](../web/configuration.md) and [Browser payment attribution](../payments/browser-attribution.md).
+`data-memory="on"` explicitly enables first-touch channel memory. The checkout helper has separate, short-lived tab memory for the checkout channel and existing pageview reference, controlled by `data-payment-memory="off"`. See [Script configuration](../web/configuration.md) and [Browser payment attribution](../payments/browser-attribution.md).
 
 ## Multiple website hosts
 

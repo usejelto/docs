@@ -47,7 +47,7 @@ failures rather than retrying in a tight loop.
 
 ## Manage funnel definitions
 
-Create a `funnels:write` key and register any goal used in the journey. The following request creates two ordered steps:
+Create a `funnels:write` key and send each custom event once so Jelto discovers any goal used in the journey. The following request creates two ordered steps:
 
 ```sh
 curl --fail-with-body 'https://app.example.com/api/v1/products/prd_acmedemo01/funnels' \

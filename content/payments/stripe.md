@@ -15,7 +15,7 @@ optional; website analytics can start before you connect a payment account.
 1. Choose **Live** for real payments or **Test** for sandbox verification.
 2. Create a restricted API key in your Stripe account for the selected
    environment. Grant read access to account identity, Charges (including refunds), PaymentIntents,
-   Checkout Sessions and line items, Products, and Invoices (including invoice
+   Checkout Sessions and line items, Products, Subscriptions, and Invoices (including invoice
    payments). Paste its `rk_live_…` or `rk_test_…` value. Unrestricted customer
    `sk_…` keys are not accepted.
 3. Select the merchant and products belonging to this website. An empty product
@@ -37,6 +37,7 @@ in Settings and paste its `whsec_…` signing secret. Subscribe to:
 - `charge.succeeded`, `charge.captured`, `charge.refunded`
 - `refund.created`, `refund.updated`, `refund.failed`
 - `payment_intent.succeeded`
+- `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`
 - `checkout.session.completed`, `checkout.session.async_payment_succeeded`
 - `invoice.paid`, `invoice.payment_succeeded`
 
@@ -63,13 +64,13 @@ const checkout = await response.json()
 window.location.assign(checkout.url)
 ```
 
-3. In that server endpoint, preserve your existing authentication, CSRF protection, price selection and order validation. Accept only the documented aggregate attribution fields; never take an amount or product selection from untrusted browser metadata.
+3. In that server endpoint, preserve your existing authentication, CSRF protection, price selection and order validation. Accept only the documented checkout attribution fields; never take an amount or product selection from untrusted browser metadata.
 4. Copy those fields into the provider metadata location described below, create checkout with your server-held provider credential, and return its URL.
 5. Verify a payment and its channel separately. Omit attribution when the helper has no context; do not invent a source.
 
 ### Hosted payment links
 
-Add the checkout helper on the page containing the provider link. Keep the link as a real supported provider URL; the helper adds aggregate context without replacing unrelated metadata. For a verified return claim, configure the exact provider success parameter below and install the helper on the return page too.
+Add the checkout helper on the page containing the provider link. Keep the link as a real supported provider URL; the helper adds checkout context without replacing unrelated metadata. For a verified return claim, configure the exact provider success parameter below and install the helper on the return page too.
 
 ### Other checkout flows
 
@@ -109,11 +110,7 @@ The connection retrieves money independently of browser tracking. To attribute
 payments, send the snippet's aggregate channel context to your checkout server:
 
 ```js
-const attribution = jelto('attribution');
-const metadata = {
-  jelto_cohort: attribution.cohort,
-  ...(attribution.first ? { jelto_jt: 'first' } : {}),
-};
+const metadata = window.jeltoCheckoutMetadata?.() ?? {};
 ```
 
 For one-time Checkout, use the metadata on both the Session and PaymentIntent:
@@ -132,7 +129,7 @@ const session = await stripe.checkout.sessions.create({
 For subscription Checkout, use `subscription_data: { metadata }` alongside
 Session metadata. For Elements, put metadata on the PaymentIntent and include
 `jelto_product_id` when assigning the payment to a selected Stripe product.
-Keep emails, customer IDs and visitor identifiers out of metadata. The optional
+Forward `jelto_pageview` from the helper to enable website conversion and funnels. Keep emails, customer IDs and analytics visitor/session identifiers out of metadata. The optional
 email fallback above is a separate, short-lived matching flow.
 
 For hosted Payment Links, add the optional `/jelto.checkout.js` helper to the

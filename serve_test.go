@@ -205,7 +205,7 @@ func TestManifestRoutesLinksAnchorsAndAgentCopies(t *testing.T) {
 		}
 	}
 	copy := get("/docs/agents/goals/create-goal.md").Body.String()
-	full := canonicalDocs + "images/15-goal-registration.png"
+	full := canonicalDocs + "images/16-goal-code.png"
 	if !strings.Contains(copy, "]("+full+")]("+full+")") {
 		t.Fatal("both linked-image destinations must be canonical")
 	}

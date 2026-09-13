@@ -47,7 +47,7 @@ const checkout = await response.json()
 window.location.assign(checkout.url)
 ```
 
-3. In that server endpoint, preserve your existing authentication, CSRF protection, price selection and order validation. Accept only the documented aggregate attribution fields; never take an amount or product selection from untrusted browser metadata.
+3. In that server endpoint, preserve your existing authentication, CSRF protection, price selection and order validation. Accept only the documented checkout attribution fields; never take an amount or product selection from untrusted browser metadata.
 4. Copy those fields into the provider metadata location described below, create checkout with your server-held provider credential, and return its URL.
 5. Verify a payment and its channel separately. Omit attribution when the helper has no context; do not invent a source.
 
@@ -90,18 +90,17 @@ Use the optional `/jelto.checkout.js` helper or the documented custom checkout
 parameters on a hosted checkout URL:
 
 ```js
-const attribution = jelto('attribution');
+const metadata = window.jeltoCheckoutMetadata?.() ?? {};
 const checkout = new URL('https://your-store.lemonsqueezy.com/buy/YOUR_VARIANT');
-checkout.searchParams.set('checkout[custom][jelto_cohort]', attribution.cohort);
-if (attribution.first) {
-  checkout.searchParams.set('checkout[custom][jelto_jt]', 'first');
+for (const [key, value] of Object.entries(metadata)) {
+  checkout.searchParams.set(`checkout[custom][${key}]`, value);
 }
 location.assign(checkout.href);
 ```
 
 For API-created checkouts, put the same fields in `checkout_data.custom`.
 Signed webhooks carry them in `meta.custom_data`. Renewal invoices can inherit
-the initial order's saved server metadata channel. Browser reference/email
+the initial order's saved server metadata, including `jelto_pageview`. Browser reference/email
 fallbacks are limited to the identified initial payment. Historical API reads may omit
 checkout custom data, so imported revenue can remain unattributed.
 

@@ -21,7 +21,7 @@ Keep your existing core tracker. Add this second tag immediately after it, using
 
 ## Track a form submission
 
-1. Register `contact_submitted` and its optional `form` property in Events settings.
+1. Choose `contact_submitted` and its optional `form` property. No registration is required.
 2. Add attributes to the form itself:
 
 ```html
@@ -38,7 +38,7 @@ The event means browser validation passed and a submit event occurred. It does *
 
 ## Track a visible section
 
-Register `pricing_seen`, then add:
+To send `pricing_seen`, add:
 
 ```html
 <section data-jelto-visible="pricing_seen"
@@ -54,4 +54,4 @@ A visibility event is passive: it does not turn a bounce into an engaged visit. 
 
 ## Verify
 
-Visit the page, scroll the section into view and keep it there for the delay. Find the event in Goals. If nothing arrives, verify the core tracker first, then helper order, event registration, element height and page exclusions.
+Visit the page, scroll the section into view and keep it there for the delay. Find the event in Goals. If nothing arrives, verify the core tracker first, then helper order, event spelling, element height and page exclusions.

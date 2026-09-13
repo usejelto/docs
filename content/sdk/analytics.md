@@ -40,7 +40,7 @@ const analytics = await initialize({
 analytics.track('signup', { plan: 'pro' })
 ```
 
-Register `signup` and `plan` first. `goals: true` loads explicit form-submit and visibility tracking. Automatic pageviews are enabled by default; do not send a manual pageview for the same navigation.
+Jelto discovers `signup` and `plan` on receipt; no registration is required. `goals: true` loads explicit form-submit and visibility tracking. Automatic pageviews are enabled by default; do not send a manual pageview for the same navigation.
 
 Identical repeated initialization shares the initial load, while conflicting options or an existing HTML installation fail. A failed script load requires a page reload before trying again. `scriptUrl` must end in `jelto.js` or `jelto.cookie.js`. Cookie mode and first-touch memory are separate explicit choices.
 

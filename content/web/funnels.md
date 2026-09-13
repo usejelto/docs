@@ -11,7 +11,7 @@ A funnel measures how website visits progress through a sequence, such as openin
 
 ## Before you start
 
-Install website tracking on the relevant hosts. [Register and send any custom goals](../goals/create-goal.md) used by the journey. Funnel steps use existing page paths and event names; creating a funnel does not start sending those events.
+Install website tracking on the relevant hosts. [Send any custom goals](../goals/create-goal.md) used by the journey. Funnel steps use existing page paths and event names; creating a funnel does not start sending those events.
 
 ## Choose a starting point
 
@@ -50,6 +50,6 @@ Install website tracking on the relevant hosts. [Register and send any custom go
 
 Steps must occur in order within the same website visit. Extra activity between steps does not by itself complete a step. A visitor returning in a different visit is not a continuation of the original journey. Imported daily totals cannot reconstruct individual ordered visits.
 
-A payment provider record is not automatically a website goal, and an app install is not a browser funnel step. Use a confirmed browser action or success-page visit when appropriate, then check money separately in Revenue. Jelto does not join a website visitor to an app install.
+Automatic goals such as `payment`, `free_trial` and `subscription_started` can be funnel steps when the [checkout helper](../payments/browser-attribution.md) links their verified provider record to an existing visit. The payment must happen after preceding steps. Unlinked completions stay in Goals and do not advance the funnel. An app install is not a browser funnel step; Jelto keeps website and app identities separate.
 
 See [two complete examples](../goals/funnel-examples.md) or [troubleshooting](../troubleshooting/events-and-funnels.md).

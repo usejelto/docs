@@ -2,7 +2,7 @@
 title: "Choose your primary metric"
 group: guides
 slug: analytics/kpi
-summary: "Make the overview emphasize the metric or registered goal that matters to you."
+summary: "Make the overview emphasize the metric or custom goal that matters to you."
 ---
 
 # Choose your primary metric
@@ -13,7 +13,7 @@ Choose the metric you use to judge the product. Changing this selection changes 
 
 1. Open **Settings → Overview**.
 2. In **Primary metric**, choose Visitors, Revenue, Installs, the available active/retained-install metric, or Goal.
-3. For **Goal**, enter its registered event name and select the website or app surface.
+3. For **Goal**, enter its discovered event name and select the website or app surface.
 4. Save, then return to the product overview and check the metric label.
 
 A display name edited on the Goals card is not a replacement for the event identifier. [Create the goal](../goals/create-goal.md) before using it as the KPI. To delete an event that is the current KPI, choose a different KPI first.

@@ -9,32 +9,28 @@ summary: "Register the Tauri 2 plugin and initialize analytics after your app pe
 
 Measure desktop app activity through the Tauri plugin and its local application bridge.
 
-> **Not published yet.** The SDK package is prepared but has no public installation address yet. Replace the uppercase installation placeholders below after publication. They are not working registry coordinates.
-
 ## Set up with AI
 
 For a copyable setup prompt with your app details, open **Settings → Installation
 → Apps**, expand your app's **SDK setup**, choose **Tauri** and select **Copy prompt**.
-The prompt uses the installation placeholders described below. See
+The prompt names the packages described below. See
 [Set up with AI](../start/apps.md#set-up-with-ai) for what to expect.
 
 ## Setup steps
 
-1. Install the published Rust and JavaScript packages.
+1. Install the JavaScript package from npm and the Rust plugin from crates.io.
 2. Register the plugin in your Rust builder and add its permission to the local window capability.
 3. Initialize once after the app permits telemetry, then send registered actions.
 4. Launch the packaged app and verify the results.
 
-## Install when published
+## Install
 
-This integration targets Tauri 2 on macOS, Windows and Linux. Use `REPLACE_WITH_PUBLISHED_TAURI_RUST_PACKAGE` and `REPLACE_WITH_PUBLISHED_TAURI_JS_PACKAGE` for the future Rust and JavaScript installation addresses. The prepared interfaces are `tauri-plugin-jelto` and `@jelto/tauri`.
-
-Run the following in your app project after replacing the placeholders:
+This integration targets Tauri 2 on macOS, Windows and Linux. The JavaScript bindings are published on npm as `@jelto/tauri` and the Rust plugin on crates.io as `tauri-plugin-jelto`; source and releases are at [usejelto/tauri-sdk](https://github.com/usejelto/tauri-sdk). Install matching current releases in your app project:
 
 ```sh
-npm install REPLACE_WITH_PUBLISHED_TAURI_JS_PACKAGE
+npm install @jelto/tauri
 cd src-tauri
-cargo add REPLACE_WITH_PUBLISHED_TAURI_RUST_PACKAGE
+cargo add tauri-plugin-jelto
 ```
 
 ## Register the plugin

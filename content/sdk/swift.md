@@ -9,24 +9,22 @@ summary: "Initialize Jelto in a macOS app and send a registered action."
 
 Measure active macOS installs, app versions and registered actions from your app.
 
-> **Not published yet.** The SDK package is prepared but has no public installation address yet. Replace the uppercase installation placeholders below after publication. They are not working registry coordinates.
-
 ## Set up with AI
 
 For a copyable setup prompt with your app details, open **Settings → Installation
 → Apps**, expand your app's **SDK setup**, choose **Swift** and select **Copy prompt**.
-The prompt uses the installation placeholders described below. See
+The prompt names the package described below. See
 [Set up with AI](../start/apps.md#set-up-with-ai) for what to expect.
 
 ## Setup steps
 
-1. Add the published **Jelto** Swift package to your app target.
+1. Add the **Jelto** Swift package to your app target.
 2. Initialize it once in the app startup flow, using the product ID and registered app slug.
 3. Send an event from the action that succeeds, then verify it in the dashboard.
 
-## Install when published
+## Install
 
-Requires macOS 12 or later. In Xcode, open **File → Add Package Dependencies**, enter `REPLACE_WITH_PUBLIC_SWIFT_PACKAGE_URL`, choose the published release, and add the **Jelto** product to your app target. The URL is a placeholder until publication.
+Requires macOS 12 or later. In Xcode, open **File → Add Package Dependencies**, enter `https://github.com/usejelto/swift-sdk`, choose the latest release, and add the **Jelto** product to your app target. In a `Package.swift` manifest, add the same URL as a package dependency and `Jelto` as a dependency of your app target. Releases are listed at [usejelto/swift-sdk](https://github.com/usejelto/swift-sdk/releases).
 
 ## Initialize in your app
 

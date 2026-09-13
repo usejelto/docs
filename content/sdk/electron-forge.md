@@ -9,31 +9,29 @@ summary: "Run Jelto in the Electron Forge main process and forward only declared
 
 Measure desktop app activity from the Electron main process.
 
-> **Not published yet.** The SDK package is prepared but has no public installation address yet. Replace the uppercase installation placeholders below after publication. They are not working registry coordinates.
-
 ## Set up with AI
 
 For a copyable setup prompt with your app details, open **Settings → Installation
 → Apps**, expand your app's **SDK setup**, choose **Electron** and select **Copy prompt**.
-The prompt uses the installation placeholders described below. See
+The prompt names the package described below. See
 [Set up with AI](../start/apps.md#set-up-with-ai) for what to expect.
 
 ## Setup steps
 
-1. Install the published runtime dependency.
+1. Install `@jelto/electron` as a runtime dependency.
 2. Add initialization to the main-process entry used by Electron Forge.
 3. Send declared actions from validated main-process handlers.
 4. Verify both development and packaged builds.
 
-## Install when published
+## Install
 
-Node.js 18 or later is required. Install the published runtime package in your app project, replacing the placeholder first:
+Node.js 18 or later is required. The package is published on npm as `@jelto/electron`; its source and releases are at [usejelto/electron-sdk](https://github.com/usejelto/electron-sdk). Install it in your app project:
 
 ```sh
-npm install REPLACE_WITH_PUBLISHED_JELTO_ELECTRON_PACKAGE
+npm install @jelto/electron
 ```
 
-The prepared package's import is `@jelto/electron`. Include it in your packaged app's runtime dependencies.
+Include it in your packaged app's runtime dependencies, not only in development dependencies.
 
 ## Initialize in the main process
 

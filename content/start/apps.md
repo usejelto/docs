@@ -9,10 +9,6 @@ summary: "Register an app slug, choose an SDK, and verify the first app activity
 
 Use an app SDK to measure active installs, versions and custom app events. Adding a website script does not instrument a desktop app.
 
-## Before you start
-
-**Not published yet:** SDK package and repository addresses are placeholders in these guides. The examples describe the supported interfaces, but package installation cannot be completed from the public registry until Jelto publishes them.
-
 ## Connect the app
 
 When adding a website, enable **This website also has an app** to include **Set up SDK** in the guided setup. You can register the app and copy its SDK prompt there, or skip it and return through Settings later.
@@ -36,11 +32,12 @@ to inspect your project, preserve telemetry choices, initialize once in the righ
 startup flow, check builds and explain how to verify app activity. It contains
 no secret server API key.
 
-**Installation placeholders are expected for now.** The prompt uses uppercase
-package-address and release placeholders while SDKs are unpublished. Your
-assistant can prepare the integration, but those values must be replaced before
-installing the dependency. It should report remaining placeholders and checks
-that could not run, without claiming installation succeeded.
+**Packages come from public registries.** The prompt names the published
+package for the selected SDK: the **Jelto** Swift package from GitHub,
+`@jelto/electron` on npm, `@jelto/tauri` on npm with `tauri-plugin-jelto` on
+crates.io, or `Jelto` on NuGet. Your assistant installs the current release with
+your project's package manager. It should report any installation error and the
+checks that could not run, without claiming a failed installation succeeded.
 
 **View prompt** shows selectable text for review or manual copying. **Install
 manually** shows the selected SDK's initialization example; use the linked SDK

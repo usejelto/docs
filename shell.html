@@ -48,7 +48,6 @@
                 <span class="directory-description">{{.Description}}</span>
                 {{template "chevron"}}
               </summary>
-              {{if eq .ID "sdk"}}<p class="directory-notice">SDK packages are <strong>not published yet</strong>. App guides include clearly marked installation placeholders.</p>{{end}}
               <ul>
                 {{range .Pages}}
                   <li><a href="{{.Href}}"><span class="guide-title">{{.Title}} <span aria-hidden="true">→</span></span><span class="guide-summary">{{.Summary}}</span></a></li>

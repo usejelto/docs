@@ -67,7 +67,6 @@
 .guide-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; color: var(--ink, CanvasText); font-size: 15px; font-weight: 500; }
 .guide-title > span { flex: none; color: var(--muted, GrayText); font-weight: 400; }
 .guide-summary { display: block; color: var(--muted, GrayText); font-size: 13px; margin-block-start: 4px; line-height: 1.5; text-wrap: pretty; }
-.directory-notice { margin: 0 12px 12px; padding: 12px 16px; background: var(--surface, Canvas); border-radius: var(--radius-control, 8px); color: var(--muted, GrayText); font-size: 13px; }
 
 /* Articles retain a comfortable measure and keep utility navigation together. */
 .docs-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; min-block-size: 44px; font-size: 12px; color: var(--muted, GrayText); margin: 0 0 16px; }

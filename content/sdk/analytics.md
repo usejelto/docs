@@ -9,21 +9,19 @@ summary: "Use typed wrappers for the website tracker or scoped server-side APIs.
 
 Use typed JavaScript helpers to install tracking in your website or call Jelto APIs from your application server. Both examples below belong in your own project.
 
-> **Not published yet.** The SDK package is prepared but has no public installation address yet. Replace the uppercase installation placeholders below after publication. They are not working registry coordinates.
-
 ## Setup steps
 
-1. Install the published package in your project.
+1. Install `@jelto/analytics` from npm.
 2. Choose the browser entry for website tracking or the server entry for scoped APIs.
 3. Initialize with the matching product and endpoint values.
 4. Verify a pageview or inspect the API result, following the relevant example below.
 
-## Install when published
+## Install
 
-Replace `REPLACE_WITH_PUBLISHED_JELTO_ANALYTICS_PACKAGE` with the future package address. The prepared package exposes `@jelto/analytics/browser` and `@jelto/analytics/server`. The server entry requires Node.js 22 or later.
+The package is published on npm as `@jelto/analytics`; its source and releases are at [usejelto/javascript-sdk](https://github.com/usejelto/javascript-sdk). It exposes `@jelto/analytics/browser` and `@jelto/analytics/server`. The server entry requires Node.js 22 or later.
 
 ```sh
-npm install REPLACE_WITH_PUBLISHED_JELTO_ANALYTICS_PACKAGE
+npm install @jelto/analytics
 ```
 
 ## Browser setup

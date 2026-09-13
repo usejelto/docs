@@ -1,5 +1,5 @@
 <script lang="ts">
-  // spec/dashboard.md §13 "Behaviour primitives" (v1.40): a boolean setting as
+  // the dashboard specification §13 "Behaviour primitives" (v1.40): a boolean setting as
   // a real switch — Bits UI's Switch renders <button role="switch"
   // aria-checked> with roving keyboard support and a hidden input for forms;
   // the look is app.css's .ui-switch, drawn from §13's tokens through the

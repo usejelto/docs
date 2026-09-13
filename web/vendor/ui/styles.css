@@ -1,4 +1,4 @@
-/* spec/dashboard.md §13 — design tokens. Normative; this file is the only
+/* the dashboard specification §13 — design tokens. Normative; this file is the only
  * place a token is defined, and the property name is §13's own name so that
  * tokens.test.ts checks the spec rather than a naming convention.
  *
@@ -12,7 +12,7 @@
 
 /* §13 v1.46: warm neutrals and a mint accent. Every text value below clears
  * 4.8:1 on both of its backgrounds AND 4.5:1 on its own 8 % badge fill —
- * spec/dashboard.md §13 records the measured contrast ratios. `rule` is the exempt hairline. */
+ * the dashboard specification §13 records the measured contrast ratios. `rule` is the exempt hairline. */
 /* Palette values live once; semantic roles select the theme. */
 /* @tokens:palette */
 :root {
@@ -92,7 +92,7 @@
   --on-accent: var(--palette-on-accent-dark);
 }
 
-/* spec/dashboard.md §13, v1.19 — the categorical series palette. Okabe-Ito
+/* the dashboard specification §13, v1.19 — the categorical series palette. Okabe-Ito
  * reordered to lead with the hue nearest `accent`; black and yellow dropped.
  *
  * Its own block, and NOT in the light/dark colour set, for two reasons that
@@ -326,7 +326,7 @@ code, kbd, samp, pre, .data-text {
 }
 
 /* ------------------------------------------------------------------------
- * Primitives — spec/dashboard.md §13. One definition each, so a card, a
+ * Primitives — the dashboard specification §13. One definition each, so a card, a
  * button, a pill and a field look the same on every screen. Components add
  * these classes and keep only their own layout in their <style>.
  * ---------------------------------------------------------------------- */
@@ -650,7 +650,7 @@ code, kbd, samp, pre, .data-text {
 }
 
 /* ------------------------------------------------------------------------
- * Behaviour primitives — spec/dashboard.md §13 (v1.40). Bits UI renders the
+ * Behaviour primitives — the dashboard specification §13 (v1.40). Bits UI renders the
  * elements and sets data-state / aria-checked; these rules are the whole of
  * their appearance. Global on purpose: the dialog is portalled to <body>, and
  * a class handed to a Bits part is a plain class, not a scoped one.
@@ -823,7 +823,7 @@ code, kbd, samp, pre, .data-text {
   }
 }
 
-/* spec/design-system.md — component recipes. Consumer classes own layout only. */
+/* the design-system specification — component recipes. Consumer classes own layout only. */
 .ui-card[data-density='default'] { padding: var(--space-5); }
 .ui-card[data-density='compact'] { padding: var(--space-4); }
 .ui-card__footer { margin-block-start: var(--space-4); }
@@ -912,7 +912,7 @@ code, kbd, samp, pre, .data-text {
   .ui-native-select--compact { font-size: var(--text-input-mobile); }
 }
 
-/* Shared compositions — spec/design-system.md v1.2. */
+/* Shared compositions — the design-system specification v1.2. */
 .ui-status-message { margin: 0; font-size: var(--text-sm); line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
 .ui-status-message[data-tone='success'] { color: var(--good); }
 .ui-status-message[data-tone='warning'] { color: var(--warn); }

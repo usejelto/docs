@@ -37,14 +37,10 @@ test('every tracked file outside content/ stays inside the public boundary', asy
   // The scanner and its two tests must spell out the private terms they reject;
   // they are the rule, not prose, and are excluded by name rather than by pattern.
   const scanner = new Set(['public-boundaries.mjs', 'public-boundaries.test.mjs', 'public_boundary_test.go'])
-  // Two reviewed literals: the pinned @jelto/ui and font snapshots cite the private
-  // dashboard and design-system specs in comments. They are produced in the backend and refreshed
-  // only by `make inputs`, so the fix lands at the producer; until it does, only
-  // those exact literals are tolerated, and only inside web/vendor/.
-  const allowed = [
-    { literal: 'spec/dashboard.md', under: 'web/vendor/' },
-    { literal: 'spec/design-system.md', under: 'web/vendor/' },
-  ]
+  // No tolerated literals: the pinned @jelto/ui and font snapshots once cited the
+  // private dashboard and design-system specs in comments; the producer now names
+  // them without a path, so vendored files are held to the same rule as the rest.
+  const allowed = []
   const files = execFileSync('git', ['ls-files', '-z'], { encoding: 'utf8' }).split('\0').filter(Boolean)
   const violations = []
   for (const file of files) {

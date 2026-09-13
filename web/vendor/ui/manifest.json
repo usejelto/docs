@@ -1,20 +1,20 @@
 {
   "name": "shared-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "producer": "frontend",
-  "producer_commit": "841ba836f835d6bb065c5ca219bf077ba629af71",
+  "producer_commit": "2d71475557e39567efe1bc58960946dc7d82aab3",
   "files": {
     "package.json": {
       "source": "shared-ui.package.json",
-      "sha256": "58a8494f90ccc1301641e9073fa3582cccfddaa0f2e0e3e0bd774d666c020c7e"
+      "sha256": "3e840a8fd0f839b5c4ebc37d2b7ec1eee18d33dbd9fdabe2d794ce55232b8583"
     },
     "styles.css": {
       "source": "src/shared/styles.css",
-      "sha256": "4b4caf887ee3f9a0a3c86c725b6cef35adfe7cd41814945f6b3ccd119b54af2b"
+      "sha256": "4a909c53394d4d1a76f54d2206a8abfc046c4061296e50d4131d758f3ac45cbb"
     },
     "test-setup.ts": {
       "source": "src/test-setup.ts",
-      "sha256": "d1e5f7e7b46528d936c58ba98cad849e819bbe41c25afb8cf583558cc2cd5bb8"
+      "sha256": "607ff53b05905ce6c3aa419f933948eefa3ba27a57ce3b778b5351d4a8075282"
     },
     "ui/Badge.svelte": {
       "source": "src/shared/ui/Badge.svelte",
@@ -46,7 +46,7 @@
     },
     "ui/Checkbox.svelte": {
       "source": "src/shared/ui/Checkbox.svelte",
-      "sha256": "7778b4d0cc08f7f60584cd3ea964f03d9ce53a7f11e2e728b1fd69bb4c2a4eac"
+      "sha256": "847d02e7db65ef7e66caac8250b84a8b593ac4274153685b0f9803e1baba97a7"
     },
     "ui/CodeBlock.svelte": {
       "source": "src/shared/ui/CodeBlock.svelte",
@@ -58,7 +58,7 @@
     },
     "ui/ConfirmDialog.svelte": {
       "source": "src/shared/ui/ConfirmDialog.svelte",
-      "sha256": "f8da5996211c1523c282e0f4f7ade4493491cc046056ed4d2eb3c47363c9705b"
+      "sha256": "731520947e0c732084d56baa9ff4ad832286e4d7d279f634fb6776ba9dfea609"
     },
     "ui/CopyButton.svelte": {
       "source": "src/shared/ui/CopyButton.svelte",
@@ -174,7 +174,7 @@
     },
     "ui/Switch.svelte": {
       "source": "src/shared/ui/Switch.svelte",
-      "sha256": "4465dd36c5d6731b42be250a9f5b33a9e92aee4f598791974f2d34bf39629a43"
+      "sha256": "0ed3022d66d8ded0e9701bf882a11359264d00d30cd55f7ecfc49db6ebd0212c"
     },
     "ui/TableContainer.svelte": {
       "source": "src/shared/ui/TableContainer.svelte",

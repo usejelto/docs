@@ -1,5 +1,5 @@
 <script lang="ts">
-  // spec/dashboard.md §13 "Behaviour primitives" (v1.40): Bits UI's Checkbox —
+  // the dashboard specification §13 "Behaviour primitives" (v1.40): Bits UI's Checkbox —
   // <button role="checkbox" aria-checked> with a hidden input for forms — drawn
   // as app.css's .ui-checkbox. The indicator is a lucide check, shown from the
   // primitive's own `checked` snippet prop, never from a second copy of state.

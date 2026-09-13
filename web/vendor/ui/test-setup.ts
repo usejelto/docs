@@ -10,7 +10,7 @@ afterAll(async () => {
 // ---------------------------------------------------------------------------
 // The two browser APIs jsdom does not implement and the hero chart needs.
 //
-// spec/dashboard.md §4's hero is LayerChart (§13 v1.48). Two things about it
+// the dashboard specification §4's hero is LayerChart (§13 v1.48). Two things about it
 // reach APIs jsdom lacks — measured, not assumed:
 //
 //   typeof window.matchMedia: undefined

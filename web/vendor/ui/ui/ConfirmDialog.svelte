@@ -1,5 +1,5 @@
 <script lang="ts">
-  // spec/dashboard.md §13 "Behaviour primitives" and §7 (v1.40): every
+  // the dashboard specification §13 "Behaviour primitives" and §7 (v1.40): every
   // destructive confirm is an AlertDialog — focus moves into it, Tab is trapped,
   // Escape and Cancel close it, the action carries `bad`. Bits UI's AlertDialog
   // renders role="alertdialog" with aria-labelledby / aria-describedby wired to

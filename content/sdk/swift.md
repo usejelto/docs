@@ -87,3 +87,7 @@ If data is missing, check the product ID, registered app slug, collection permis
 Use `Jelto.disable()` when collection must stop and local analytics state should be wiped. `Jelto.reset()` rotates the install identity; it is not a routine startup call. `Jelto.installId` can support an app-data request. Do not use it to identify a website visitor.
 
 For onboarding milestones, `Jelto.onboarding("welcome", status: "ok")` reports a built-in onboarding event with no event registration required.
+
+## Track updater outcomes
+
+Use the existing tracking API to send `app_update` stages, failures, and explicit postponements. They appear under **App updates → Update activity**, separately from version changes confirmed on launch. See [Track update activity](../guides/understand-app-usage.md#track-update-activity) for properties and updater callbacks.

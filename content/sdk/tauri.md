@@ -99,3 +99,7 @@ If data is missing, check the product ID, registered app slug, collection permis
 The asynchronous methods also include `setProps`, `onboarding`, `installId`, `reset` and `disable`. `disable` wipes local analytics state; `reset` rotates identity. Multiple app windows share one engine. Do not initialize separate products in different windows of the same process.
 
 If calls do nothing, check the plugin registration and the target window's capability before changing network settings.
+
+## Track updater outcomes
+
+Use the existing tracking API to send `app_update` stages, failures, and explicit postponements. They appear under **App updates → Update activity**, separately from version changes confirmed on launch. See [Track update activity](../guides/understand-app-usage.md#track-update-activity) for properties and updater callbacks.

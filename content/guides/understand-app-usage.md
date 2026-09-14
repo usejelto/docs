@@ -28,6 +28,65 @@ Find **Version adoption** in the app section. The card groups active installs by
 
 Use **Quiet · 14+ days** to explore installs that have stopped checking in, or **App updates** to inspect reported version changes. **View version data** opens the underlying breakdown.
 
+### Separate upgrades and downgrades
+
+Open **App updates → Version changes** and choose **Upgrades**, **Downgrades**, or **Other changes**. The selected direction applies to the event count, distinct updated installs, daily trend, and To/From version details. **All changes** includes every direction. One install can change version several times, so these two counts can differ.
+
+Direction is calculated for existing history as well as new events. Jelto compares one to four numeric components, with an optional `v` prefix and SemVer prerelease ordering. For example, `1.10.0` follows `1.9.0`, and `2.0.0` follows `2.0.0-rc.1`. Build metadata does not change precedence. Equal-precedence versions, opaque labels such as `Release Blue`, whitespace, and unsupported syntax appear under **Other changes**. The exact source and target labels remain visible.
+
+## Track update activity
+
+The automatic `app_updated` event confirms that a different version launched. To see what happened before that launch, connect your updater callbacks to the existing SDK `track` API and open **App updates → Update activity**. Appcast configuration supplies the published version; it does not observe downloads or installation on users' devices.
+
+Send `app_update` with `from_version`, `to_version`, and one of these `status` values:
+
+| Status | When to send |
+| --- | --- |
+| `download_started` | Your app starts a download operation; once per operation, not per progress tick |
+| `downloaded` | The updater reports that the download is ready |
+| `install_started` | Your app hands the downloaded update to the installer |
+| `download_failed` | A download operation reports failure |
+| `install_failed` | Installation reports failure to the app |
+| `failed` | The updater reports an error whose stage is unknown |
+| `postponed` | The user explicitly chooses to update later, or the host declines installation |
+
+Versions must be distinct, nonblank strings of at most 32 characters. An optional `reason` is a short category such as `network`, `permission`, or `remind_later`, using lowercase letters, digits, dots, underscores, or hyphens, up to 64 characters. Do not send exception messages, paths, URLs, or personal data.
+
+For Electron, after initializing Jelto in the main process:
+
+```ts
+import jelto from '@jelto/electron'
+
+jelto.track('app_update', {
+  from_version: '2.0.0',
+  to_version: '2.1.0',
+  status: 'install_failed',
+  reason: 'permission',
+})
+```
+
+Use the actual current and target versions from your updater. Tauri uses the same properties with `await jelto.track(...)` from `@jelto/tauri`. Swift uses `Jelto.track("app_update", props: [...])`. With the .NET SDK:
+
+```csharp
+Jelto.JeltoClient.Track("app_update", new Dictionary<string, object?> {
+    ["from_version"] = "2.0.0",
+    ["to_version"] = "2.1.0",
+    ["status"] = "postponed",
+    ["reason"] = "remind_later"
+});
+```
+
+No custom event registration or new SDK method is needed. Each call records a new observation; SDK delivery retries keep the same event ID and count once. Two real download attempts count twice. The stage selector lets you inspect installation failures or postponements separately, with daily, version, and reason details. These are observed events and distinct installs, not a success rate or a mandatory funnel.
+
+### Connect your updater
+
+- **electron-updater:** Obtain the target from `update-available`. When your app controls downloading, send `download_started` immediately before `downloadUpdate()` and `downloaded` when it resolves. Report a rejected download as `download_failed`. For automatic downloads, send start once on the first `download-progress` callback and completion on `update-downloaded`; cached downloads may have no progress callback. Track `install_started` before `quitAndInstall()`. Route `error` according to the operation in progress, and use one failure-reporting path to avoid counting the same error from both a callback and a rejected promise. Track your own “Later” action as `postponed`; `update-cancelled` alone does not establish that choice. See the [official events and methods](https://www.electron.build/docs/features/auto-update/).
+- **Tauri Updater:** After `check()` returns an update, use its `currentVersion` and `version`. Separate `download()` and `install()` calls to distinguish their failures: report start before each call, completion after download resolves, and the appropriate failure in each catch block. If using `downloadAndInstall()`, its download completion callback marks the boundary; a progress tick is not another start. On Windows, successful installer launch exits the app, so code after `install()` may never run. Use your app's explicit “Later” choice for postponement. See the [official updater API](https://v2.tauri.app/reference/javascript/updater/).
+- **WinSparkle:** `win_sparkle_set_update_postponed_callback` reports the “remind me later” action. The general error callback does not identify a stage; use `failed` unless your integration knows which operation failed. The general cancelled/dismissed callbacks cover several outcomes and must not all become postponements. `win_sparkle_set_user_run_installer_callback` exposes a downloaded payload and lets your app handle installer launch; retain its documented return behavior. Use your own operation boundary for download start and retain the known target version in your integration. The generic callbacks alone cannot supply every stage or the outcome of an external installer. See the [official callback declarations](https://github.com/vslavik/winsparkle/blob/master/include/winsparkle.h).
+- **Velopack:** After `CheckForUpdatesAsync()`, keep the returned target version. Surround `DownloadUpdatesAsync()` with start, completion, and failure observations. Send `install_started` before `ApplyUpdatesAndRestart()` or `ApplyUpdatesAndExit()`, which can exit immediately. Record the user's choice to defer separately; a pending package alone does not prove postponement. An external installation failure must be reported by code that actually receives that outcome. See the [official UpdateManager reference](https://docs.velopack.io/reference/cs/Velopack/UpdateManager).
+
+Delivery remains best effort under the SDK's queue and shutdown rules. Keep update operations working even when telemetry cannot be delivered. If an installer exposes an outcome only on a later launch, your app can persist and report that known outcome then, retaining the original source and target versions. An absent completion or a missing launch is not proof of failure. Past failures cannot be reconstructed from version-change history.
+
 ## Configure the published version
 
 **% on latest** compares activity with the published version configured for your product. It does not assume that the highest version observed in incoming events is your current release.

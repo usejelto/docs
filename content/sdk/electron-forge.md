@@ -101,3 +101,7 @@ If data is missing, check the product ID, registered app slug, collection permis
 `jelto.setProps({ license: 'paid' })` updates install properties. `jelto.disable()` wipes analytics state and stops subsequent collection until another authorized initialization. `jelto.reset()` rotates the install identity. Keep each running app process's analytics storage separate.
 
 Test both a development build and the packaged app: packaging can omit a runtime dependency even when development imports work.
+
+## Track updater outcomes
+
+Use the existing tracking API to send `app_update` stages, failures, and explicit postponements. They appear under **App updates → Update activity**, separately from version changes confirmed on launch. See [Track update activity](../guides/understand-app-usage.md#track-update-activity) for properties and updater callbacks.

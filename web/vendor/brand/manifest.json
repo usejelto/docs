@@ -2,7 +2,7 @@
   "name": "docs-brand",
   "version": "0.1.0",
   "producer": "jelto",
-  "producer_commit": "45928853cf8fa6f4cd3318e92db4f7b4816057f1",
+  "producer_commit": "a7f9b2ca5d18961f53309ab772a7b9248f9a99f9",
   "files": {
     "favicon.ico": {
       "source": "brand/exports/png/09-favicon.ico",

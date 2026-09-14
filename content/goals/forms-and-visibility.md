@@ -14,10 +14,10 @@ Use form goals to count validated browser submissions, or visibility goals to le
 Keep your existing core tracker. Add this second tag immediately after it, using the same script host as your installation:
 
 ```html
-<script defer src="YOUR_SCRIPT_HOST/jelto.goals.js"></script>
+<script defer src="https://app.jelto.io/jelto.goals.js"></script>
 ```
 
-`YOUR_SCRIPT_HOST` is a placeholder for the origin serving your Jelto scripts. Both tags must execute in order; keep `defer` and do not add `async`.
+The example uses Jelto's standard script host. If you use a custom tracking domain, load `/jelto.goals.js` from that same domain. Both tags must execute in order; keep `defer` and do not add `async`.
 
 ## Track a form submission
 

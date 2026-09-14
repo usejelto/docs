@@ -11,17 +11,17 @@ Create a `jt_` token in **Account settings → API / MCP**, then send it as `Aut
 
 ## Read analytics
 
-Set `JELTO_TOKEN` privately, then replace the host, product and date range:
+Set `JELTO_TOKEN` privately, then replace the example product ID `prd_acmedemo01` and date range. Jelto's REST API uses `https://app.jelto.io`:
 
 ```sh
-curl --fail-with-body --get 'https://YOUR_JELTO_HOST/api/v1/stats' \
+curl --fail-with-body --get 'https://app.jelto.io/api/v1/stats' \
   -H "Authorization: Bearer $JELTO_TOKEN" \
   --data-urlencode 'product=prd_acmedemo01' \
   --data-urlencode 'metric=visitors' \
   --data-urlencode 'from=2026-09-01' --data-urlencode 'to=2026-09-07'
 ```
 
-Discover metrics and their supported dimensions/filters at `/api/v1/stats/catalog?product=YOUR_PRODUCT_ID`. Dates use the product timezone unless `tz` is specified. REST responses retain their usual envelopes, units, retention and suppression states.
+Discover metrics and their supported dimensions/filters at `/api/v1/stats/catalog?product=prd_acmedemo01`, using your product ID. Dates use the product timezone unless `tz` is specified. REST responses retain their usual envelopes, units, retention and suppression states.
 
 ## Preview and confirm a write
 
@@ -29,7 +29,7 @@ For `jt_` requests, omitting the confirmation headers returns a preview without 
 
 ```sh
 curl --fail-with-body -X PATCH \
-  'https://YOUR_JELTO_HOST/api/v1/products/prd_acmedemo01' \
+  'https://app.jelto.io/api/v1/products/prd_acmedemo01' \
   -H "Authorization: Bearer $JELTO_TOKEN" \
   -H 'Content-Type: application/json' \
   -d '{"name":"My product"}'

@@ -17,11 +17,13 @@ Add the helper after the main Jelto snippet, on the page before checkout and
 the page customers return to:
 
 ```html
-<script defer src="https://analytics.example/jelto.checkout.js"
-  data-product="prd_yourkey123"></script>
+<script defer src="https://app.jelto.io/jelto.checkout.js"
+  data-product="YOUR_PRODUCT_ID"></script>
 ```
 
-Use your actual script hostname and product ID from Settings. `https://analytics.example` and `prd_yourkey123` above are placeholders. The return page's domain
+Replace `YOUR_PRODUCT_ID` with your public product ID from **Settings → Installation**.
+The example uses Jelto's standard script host. If you use a custom tracking domain,
+load `/jelto.checkout.js` from that same domain. The return page's domain
 must be in that website's domain list. For a first-party proxy, serve both
 scripts and the configured payment endpoint through that proxy. Add
 `data-environment="test"` for sandbox payments; live and test matching are separate.

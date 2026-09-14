@@ -39,8 +39,8 @@ the untouched body and its timestamp. Register this route **before** a global
 JSON body parser. See [Paddle signature verification](https://developer.paddle.com/webhooks/about/signature-verification/).
 
 Install `express` and `@paddle/paddle-node-sdk` in your Node.js server. Configure
-`PADDLE_API_KEY`, `PADDLE_WEBHOOK_SECRET`, `JELTO_KEY` and `JELTO_ORIGIN` (your
-Jelto dashboard's HTTPS origin). Use a separate Jelto product for sandbox tests:
+`PADDLE_API_KEY`, `PADDLE_WEBHOOK_SECRET` and `JELTO_KEY`, and set
+`JELTO_ORIGIN=https://app.jelto.io`. Use a separate Jelto product for sandbox tests:
 the custom Payments API records submitted payments in its live dataset.
 Subscribe your Paddle notification destination to `transaction.completed`,
 `adjustment.created` and `adjustment.updated`.

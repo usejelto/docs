@@ -27,11 +27,12 @@ key. Never put a `jk_` key in a page, extension content script, or distributed a
 
 ## Read a report
 
-Set `JELTO_KEY` privately in the environment. Replace the example Jelto API URL, product ID,
-and dates; the query defaults to the product's reporting timezone.
+Set `JELTO_KEY` privately in the environment. Jelto's REST API uses
+`https://app.jelto.io`. Replace the example product ID `prd_acmedemo01` and
+dates; the query defaults to the product's reporting timezone.
 
 ```sh
-curl --fail-with-body --get 'https://app.example.com/api/v1/stats' \
+curl --fail-with-body --get 'https://app.jelto.io/api/v1/stats' \
   -H "Authorization: Bearer $JELTO_KEY" \
   --data-urlencode 'product=prd_acmedemo01' \
   --data-urlencode 'from=2026-09-01' --data-urlencode 'to=2026-09-05' \
@@ -50,7 +51,7 @@ failures rather than retrying in a tight loop.
 Create a `funnels:write` key and send each custom event once so Jelto discovers any goal used in the journey. The following request creates two ordered steps:
 
 ```sh
-curl --fail-with-body 'https://app.example.com/api/v1/products/prd_acmedemo01/funnels' \
+curl --fail-with-body 'https://app.jelto.io/api/v1/products/prd_acmedemo01/funnels' \
   -H "Authorization: Bearer $JELTO_KEY" -H 'Content-Type: application/json' \
   -d '{"name":"Signup","steps":[{"kind":"page","value":"/signup","match":"equals"},{"kind":"goal","value":"signup"}]}'
 ```
@@ -68,7 +69,7 @@ Payments API for a custom provider such as [Paddle](../payments/paddle.md), with
 a key explicitly granted `payments:write`:
 
 ```sh
-curl --fail-with-body 'https://app.example.com/api/v1/payments' \
+curl --fail-with-body 'https://app.jelto.io/api/v1/payments' \
   -H "Authorization: Bearer $JELTO_KEY" -H 'Content-Type: application/json' \
   -d '{"transaction_id":"order-123","amount":"29.00","currency":"USD","occurred_at":"2026-09-05T12:00:00Z","cohort":"newsletter~email~launch"}'
 ```

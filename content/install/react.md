@@ -19,20 +19,20 @@ Register the published hostname in Jelto and copy the complete script from **Set
 2. Preserve the copied `data-product`, `data-endpoint` and `src` values.
 3. Build and deploy your app with its existing production command.
 
-The tag has this structure; uppercase values below must be replaced with the values from your own dashboard:
+This example uses Jelto’s standard cookieless script. Replace `YOUR_PRODUCT_ID` with your public product ID from **Settings → Installation**. If your copied tag uses a custom tracking domain, cookie mode or additional options, preserve those values:
 
 ```html
 <script defer
   data-product="YOUR_PRODUCT_ID"
-  data-endpoint="YOUR_INGEST_ENDPOINT"
-  src="YOUR_SCRIPT_URL"></script>
+  data-endpoint="https://app.jelto.io/v1/e"
+  src="https://app.jelto.io/jelto.js"></script>
 ```
 
 For React Router framework mode, the JSX equivalent goes inside your existing root `<head>`:
 
 ```tsx
 <script defer data-product="YOUR_PRODUCT_ID"
-  data-endpoint="YOUR_INGEST_ENDPOINT" src="YOUR_SCRIPT_URL" />
+  data-endpoint="https://app.jelto.io/v1/e" src="https://app.jelto.io/jelto.js" />
 ```
 
 ## Verify

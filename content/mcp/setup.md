@@ -13,7 +13,7 @@ Use OAuth to sign in from your assistant and select the products it can access. 
 
 You need a Jelto account with access to a product, and a client that supports remote MCP over **Streamable HTTP**. Your organization's client settings must allow custom MCP connections.
 
-Open **Account settings → API / MCP** in Jelto and copy **MCP server URL**. Replace `https://YOUR_JELTO_HOST/api/mcp` in the examples with that entire URL. No local Jelto server or package installation is needed.
+Jelto's MCP server URL is `https://app.jelto.io/api/mcp`. The examples below use this address directly. You can also copy it from **Account settings → API / MCP → MCP server URL**. No local Jelto server or package installation is needed.
 
 These examples follow the clients' documented configuration formats. Client versions and organization policies can affect sign-in and tool availability. The verification step below confirms access in your own client.
 
@@ -26,7 +26,7 @@ Choose your client, then [review the Jelto consent page](#approve-the-connection
 Run these commands in your terminal:
 
 ```sh
-codex mcp add jelto --url https://YOUR_JELTO_HOST/api/mcp
+codex mcp add jelto --url https://app.jelto.io/api/mcp
 codex mcp login jelto
 ```
 
@@ -37,7 +37,7 @@ Complete browser sign-in, then use `codex mcp list` to check the configuration. 
 Run this command in your terminal:
 
 ```sh
-claude mcp add --transport http jelto https://YOUR_JELTO_HOST/api/mcp
+claude mcp add --transport http jelto https://app.jelto.io/api/mcp
 ```
 
 Open Claude Code, enter `/mcp`, select Jelto and follow the authentication prompt. The default configuration applies to your current project. See [Claude Code's MCP documentation](https://code.claude.com/docs/en/mcp) for configuration scopes and connection management.
@@ -56,7 +56,7 @@ Add this entry to `~/.cursor/mcp.json` for personal use, or merge it into `.curs
 {
   "mcpServers": {
     "jelto": {
-      "url": "https://YOUR_JELTO_HOST/api/mcp"
+      "url": "https://app.jelto.io/api/mcp"
     }
   }
 }
@@ -73,7 +73,7 @@ Run **MCP: Add Server** from the Command Palette, choose an HTTP server and ente
   "servers": {
     "jelto": {
       "type": "http",
-      "url": "https://YOUR_JELTO_HOST/api/mcp"
+      "url": "https://app.jelto.io/api/mcp"
     }
   }
 }
@@ -113,7 +113,7 @@ Use the token as an `Authorization: Bearer` header. Keep it out of source contro
 For Codex, set `JELTO_TOKEN` privately, then add a token connection with:
 
 ```sh
-codex mcp add jelto-token --url https://YOUR_JELTO_HOST/api/mcp --bearer-token-env-var JELTO_TOKEN
+codex mcp add jelto-token --url https://app.jelto.io/api/mcp --bearer-token-env-var JELTO_TOKEN
 ```
 
 This uses a separate name so it does not overwrite an existing OAuth entry. Enable only the connection you intend to use. Codex also supports the `bearer_token_env_var` configuration field, as described in the [OpenAI MCP reference](https://learn.chatgpt.com/docs/extend/mcp?surface=cli).
@@ -124,7 +124,7 @@ For Cursor, add `headers` to the server entry:
 {
   "mcpServers": {
     "jelto": {
-      "url": "https://YOUR_JELTO_HOST/api/mcp",
+      "url": "https://app.jelto.io/api/mcp",
       "headers": {
         "Authorization": "Bearer ${env:JELTO_TOKEN}"
       }

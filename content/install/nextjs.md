@@ -30,16 +30,16 @@ export default function RootLayout({
       <body>
         {children}
         <Script id="jelto" strategy="afterInteractive"
-          src="YOUR_SCRIPT_URL"
+          src="https://app.jelto.io/jelto.js"
           data-product="YOUR_PRODUCT_ID"
-          data-endpoint="YOUR_INGEST_ENDPOINT" />
+          data-endpoint="https://app.jelto.io/v1/e" />
       </body>
     </html>
   )
 }
 ```
 
-Keep your existing layout content, providers and metadata. Replace the uppercase placeholders with your product's values. Additional `data-*` attributes are forwarded by Next.js to the script.
+Keep your existing layout content, providers and metadata. Replace `YOUR_PRODUCT_ID` with your public product ID from **Settings → Installation**. This example uses Jelto's standard cookieless script; preserve any custom tracking domain, cookie-mode script or additional options from your copied tag. Additional `data-*` attributes are forwarded by Next.js to the script.
 
 4. Build and deploy the application using your normal production workflow.
 

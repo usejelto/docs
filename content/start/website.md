@@ -47,13 +47,13 @@ not confirm that Jelto has received traffic.
 
 *Copy the script for this product, paste it into your website, and publish your changes.*
 
-Your copied tag has this shape. All three uppercase values below are placeholders; copy their actual values from your dashboard.
+This example uses Jelto's standard cookieless script. Replace `YOUR_PRODUCT_ID` with your public product ID from **Settings → Installation**. If your copied tag uses a custom tracking domain, cookie mode or additional options, preserve those values.
 
 ```html
 <script defer
   data-product="YOUR_PRODUCT_ID"
-  data-endpoint="YOUR_INGEST_ENDPOINT"
-  src="YOUR_SCRIPT_URL"></script>
+  data-endpoint="https://app.jelto.io/v1/e"
+  src="https://app.jelto.io/jelto.js"></script>
 ```
 
 The product ID is a public collection identifier. A secret `jk_` API key never belongs in this tag. Keep `data-endpoint` when your copied tag includes it, especially with a custom tracking domain.

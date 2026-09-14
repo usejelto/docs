@@ -28,13 +28,13 @@ To switch back, clear **Use cookie mode**, confirm, then replace the installed s
 Register every collecting hostname under **Settings → Installation → Allowed hostnames**. For aggregate channel propagation between your sites, load the optional cross-domain helper before the core tracker:
 
 ```html
-<script defer src="YOUR_SCRIPT_HOST/jelto.crossdomain.js"
+<script defer src="https://app.jelto.io/jelto.crossdomain.js"
   data-product="YOUR_PRODUCT_ID"
   data-domains="example.com,shop.example.com"></script>
 <!-- Your existing core Jelto script goes next. -->
 ```
 
-Use the same product and the script host from your dashboard. The helper decorates eligible links with aggregate channel context and preserves existing explicit UTM information. It does not move a browser cookie or join sessions across hosts. Visitor cookies remain host-only.
+Replace `YOUR_PRODUCT_ID` with your public product ID and `example.com,shop.example.com` with your registered hostnames. If you use a custom tracking domain, load `/jelto.crossdomain.js` from that same domain. The helper decorates eligible links with aggregate channel context and preserves existing explicit UTM information. It does not move a browser cookie or join sessions across hosts. Visitor cookies remain host-only.
 
 ## Verify
 

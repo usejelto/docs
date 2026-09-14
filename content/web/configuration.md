@@ -9,6 +9,8 @@ summary: "Choose script options for routes, exclusions, downloads and optional t
 
 Start with the complete tag from **Settings → Installation**. Keep one core tracker per document. This reference explains the optional changes to that tag; use [website installation](../start/website.md) for the first setup.
 
+The examples use Jelto's standard cookieless script at `https://app.jelto.io/jelto.js` and collection endpoint at `https://app.jelto.io/v1/e`. Replace `YOUR_PRODUCT_ID` with your public product ID, and preserve your dashboard's URLs if you use a custom tracking domain or cookie mode.
+
 ## Core options
 
 | Attribute | Default | Use it when |
@@ -33,7 +35,7 @@ For hash routes such as `/#/pricing`, add `data-hash` to include the fragment. F
 
 ```html
 <script defer data-product="YOUR_PRODUCT_ID"
-  src="YOUR_SCRIPT_URL" data-endpoint="YOUR_INGEST_ENDPOINT"
+  src="https://app.jelto.io/jelto.js" data-endpoint="https://app.jelto.io/v1/e"
   data-auto-pageview="off" data-spa="off"></script>
 ```
 
@@ -47,7 +49,7 @@ Do not add a manual pageview on top of automatic collection for the same navigat
 
 ```html
 <script defer data-product="YOUR_PRODUCT_ID"
-  src="YOUR_SCRIPT_URL" data-endpoint="YOUR_INGEST_ENDPOINT"
+  src="https://app.jelto.io/jelto.js" data-endpoint="https://app.jelto.io/v1/e"
   data-exclude="/admin/**,/preview/*"></script>
 ```
 

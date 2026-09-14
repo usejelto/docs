@@ -9,7 +9,7 @@ summary: "Implement resource-bound OAuth sign-in, refresh and revocation for Jel
 
 This reference is for developers building an MCP client. To connect an existing assistant, follow [MCP setup](setup.md); for sign-in problems, use [connection troubleshooting](best-practices-and-troubleshooting.md#connection-and-access-problems).
 
-Use the origin from your Jelto MCP URL throughout discovery and authorization. Tokens issued for one origin cannot authenticate a different server.
+Use `https://app.jelto.io` throughout discovery and authorization, with `https://app.jelto.io/api/mcp` as the resource. Tokens issued for one origin cannot authenticate a different server.
 
 | Endpoint | Purpose |
 | --- | --- |
@@ -55,12 +55,14 @@ Generate a random PKCE verifier of 43–128 unreserved ASCII characters. Send it
 response_type=code
 client_id=YOUR_CLIENT_ID
 redirect_uri=YOUR_EXACT_REGISTERED_CALLBACK
-resource=https://YOUR_JELTO_HOST/api/mcp
+resource=https://app.jelto.io/api/mcp
 code_challenge=YOUR_S256_CHALLENGE
 code_challenge_method=S256
 scope=products:read analytics:read
 state=YOUR_RANDOM_STATE
 ```
+
+Use the `client_id` from your metadata document or registration response and your registered callback URL. Generate a fresh PKCE verifier, challenge and random `state` for each authorization attempt; the uppercase values represent those client-specific inputs.
 
 Callbacks must match a registered HTTPS URL or HTTP loopback URL, with no fragment or embedded credentials. At authorization, HTTP callbacks on `localhost`, `127.0.0.1` or `[::1]` may use a different port; scheme, hostname, path and query must still match exactly. For example, Claude Code declares `http://localhost/callback` and may request `http://localhost:60965/callback`. HTTPS callbacks must match exactly, including the port. Use and verify `state`; verify the returned `iss` equals the discovered issuer. Consent expires in ten minutes and is bound to its initiating browser and signed-in account. Denial returns `error=access_denied` without a code.
 

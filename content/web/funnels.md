@@ -9,6 +9,8 @@ summary: "Build an ordered path of pages and goals and see where website visits 
 
 A funnel measures how website visits progress through a sequence, such as opening pricing, starting checkout and reaching a success page. Start with a short journey you can verify yourself.
 
+To measure ordered events across an app install’s lifetime, [create an app funnel](../app/funnels.md).
+
 ## Before you start
 
 Install website tracking on the relevant hosts. [Send any custom goals](../goals/create-goal.md) used by the journey. Funnel steps use existing page paths and event names; creating a funnel does not start sending those events.
@@ -50,6 +52,6 @@ Install website tracking on the relevant hosts. [Send any custom goals](../goals
 
 Steps must occur in order within the same website visit. Extra activity between steps does not by itself complete a step. A visitor returning in a different visit is not a continuation of the original journey. Imported daily totals cannot reconstruct individual ordered visits.
 
-Automatic goals such as `payment`, `free_trial` and `subscription_started` can be funnel steps when the [checkout helper](../payments/browser-attribution.md) links their verified provider record to an existing visit. The payment must happen after preceding steps. Unlinked completions stay in Goals and do not advance the funnel. An app install is not a browser funnel step; Jelto keeps website and app identities separate.
+Automatic goals such as `payment`, `free_trial` and `subscription_started` can be funnel steps when the [checkout helper](../payments/browser-attribution.md) links their verified provider record to an existing visit. The payment must happen after preceding steps. Unlinked completions stay in Goals and do not advance the funnel. An app install is not a browser funnel step; Jelto keeps website and app identities separate. An app event name used as a goal step is accepted by the API, but the app event never advances the website funnel; use an app funnel for an ordered app journey.
 
 See [two complete examples](../goals/funnel-examples.md) or [troubleshooting](../troubleshooting/events-and-funnels.md).

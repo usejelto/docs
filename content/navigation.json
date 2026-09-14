@@ -61,12 +61,13 @@
   {
     "id": "goals",
     "title": "Goals and funnels",
-    "description": "Measure important actions and build a website journey.",
+    "description": "Measure important actions and build website or app journeys.",
     "pages": [
       "goals/create-goal",
       "goals/html-events",
       "goals/forms-and-visibility",
       "web/funnels",
+      "app/funnels",
       "goals/funnel-examples"
     ]
   },

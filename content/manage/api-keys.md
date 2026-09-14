@@ -32,6 +32,10 @@ Create a replacement with the necessary scopes, update the server secret and ver
 
 If a request is unauthorized, check the key's product, scope and revocation state before widening its permissions.
 
+## Delete a revoked key
+
+In **Settings → Developer → API keys**, choose **Delete** next to a revoked key and confirm. The key is removed from the list and remains invalid. Active keys must be revoked before they can be deleted.
+
 ## Connect an assistant
 
 Use [MCP](../mcp/introduction.md) for analytics and authorized product tools. A product key grants only that product's basic metadata, analytics and funnels. For selected products, OAuth sign-in avoids manual credential handling. Account tokens beginning with `jt_` can additionally authorize product creation and scoped credential management; create them in **Account settings → API / MCP**.

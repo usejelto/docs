@@ -107,14 +107,20 @@ Writes require a Member or Owner role. Read the current settings before editing,
 
 ### Funnels
 
-These tools manage saved website funnel definitions. Use `jelto_analytics_query` with `analytics:read` to measure a funnel. OAuth/account-token writes require a Member or Owner role; product keys need `funnels:write`.
+These tools manage saved website and app funnel definitions. Use `jelto_analytics_query` with `analytics:read` to measure a funnel. OAuth/account-token writes require a Member or Owner role; product keys need `funnels:write`.
 
 | Tool | Access and required scope | What it does |
 | --- | --- | --- |
-| `jelto_funnels_list` | Read · `funnels:read` | Read saved funnel IDs, names and step definitions. |
-| `jelto_funnels_create` | Write · `funnels:write` | Create a website funnel from page or goal steps. |
-| `jelto_funnels_update` | Write · `funnels:write` | Replace a saved funnel’s name and steps. |
+| `jelto_funnels_list` | Read · `funnels:read` | Read saved funnel IDs, names, surfaces and step definitions. |
+| `jelto_funnels_create` | Write · `funnels:write` | Create a website funnel from page or goal steps, or an app funnel from goal steps. |
+| `jelto_funnels_update` | Write · `funnels:write` | Replace a saved funnel’s name, surface and ordered steps. |
 | `jelto_funnels_delete` | Write · `funnels:write` | Delete a saved funnel definition. |
+
+Set `body.surface` to `app` when creating or updating an app funnel. Omission defaults to `web`, including on update. App steps accept `kind: "goal"`, exact event names and `match: "equals"`; omit `hostname` entirely. Use custom app events or received `onboarding:<step>` names. Reserved install and heartbeat measurements cannot be steps.
+
+To read an app funnel, put `surface: "app"`, `metric: "funnel:<id>"` and `dimension: "funnel_step"` inside `query`. Optional `companions` is a comma-separated string: `funnel_first:<id>,funnel_prev:<id>`. Website funnel queries omit `surface`; a mismatched surface returns `unexpected_surface`.
+
+App funnel dates select entry at step 1, with later steps counting through the last completed day in the reporting timezone. Counts represent installs, and `withheld` and `below_floor` states must be preserved. Filters are `app`, `app_version`, `arch`, `install_age` and `os`; `funnel_step` is breakdown-only. See the [app funnel guide](../app/funnels.md) and [preview example](usage-examples.md#preview-a-new-app-funnel).
 
 ### Team access
 

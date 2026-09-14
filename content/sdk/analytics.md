@@ -67,6 +67,8 @@ if (result.ok) console.log(result.data.total)
 
 Use `analytics:read` for reporting, `funnels:read` or `funnels:write` for the respective funnel operations, and `payments:write` for verified payments. See [API keys](../manage/api-keys.md) and [Website API](../api/website.md).
 
+App funnel queries require `surface=app` with `funnel:<id>`, `funnel_first:<id>` or `funnel_prev:<id>`. For website funnel queries, omit `surface`. Use the saved definition's surface and ID; see the [app funnel API recipe](../api/website.md#query-an-app-funnel) for step counts, companion rates and date semantics.
+
 ## Verify and handle failure
 
 Use [website verification](../start/verify.md) for browser collection. On the server, inspect `result.ok` and the returned error details; preserve unavailable metric states rather than replacing them with zero. Requests do not automatically retry mutations. Reuse the same transaction ID when retrying a payment.

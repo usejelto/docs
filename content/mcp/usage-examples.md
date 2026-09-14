@@ -96,7 +96,9 @@ Read · `funnels:read` and `analytics:read`.
 List the saved funnels for prd_acmedemo01 and ask me to choose one. Show its steps and results for September 1–7, 2026, including where completion falls. Explain the counting method and any unavailable step results.
 ```
 
-Use `jelto_funnels_list`, then query `funnel:<id>` with the selected funnel's returned ID. Use `funnel_step` for a step breakdown. A funnel describes ordered activity within a website visit. See [funnel examples](../goals/funnel-examples.md) for page and goal matching.
+Use `jelto_funnels_list`, then query `funnel:<id>` with the selected funnel's returned ID. Use `funnel_step` for a step breakdown and the comma-separated `companions` value `funnel_first:<id>,funnel_prev:<id>` for rates. Inspect the saved surface: website funnel queries omit `surface`, while app funnel queries require `surface: "app"` inside `query`.
+
+A website funnel follows one visit. An app funnel follows an install, with entry dates selected by the range and later steps counted through the last completed day in the reporting timezone. See [website examples](../goals/funnel-examples.md) or the [app funnel example and query](../app/funnels.md#query-through-an-ai-assistant).
 
 ## Preview a product rename
 
@@ -137,6 +139,35 @@ List the existing funnels for prd_acmedemo01, then preview a funnel named "Prici
 ```
 
 Use `jelto_funnels_list` before `jelto_funnels_create`. Add `analytics:read` if you also want to query the saved funnel. A sequence of writes is not one transaction: review and confirm each change separately.
+
+## Preview a new app funnel
+
+Write · `funnels:read` and `funnels:write` with a Member or Owner role. Add `analytics:read` to discover app goals and report the saved funnel.
+
+```text
+For prd_acmedemo01, inspect the observed app goals and existing funnels. Preview an app funnel named "Onboarding to upgrade" with exact goal steps onboarding:complete and upgrade_click. Keep an existing equivalent definition if one is already saved. Show the surface and ordered steps, explain how entry dates and later conversions are counted, and wait for my approval before saving.
+```
+
+After checking for an equivalent definition with `jelto_funnels_list`, preview with `jelto_funnels_create`:
+
+```json
+{
+  "product": "prd_acmedemo01",
+  "body": {
+    "name": "Onboarding to upgrade",
+    "surface": "app",
+    "steps": [
+      { "kind": "goal", "value": "onboarding:complete", "match": "equals" },
+      { "kind": "goal", "value": "upgrade_click", "match": "equals" }
+    ]
+  },
+  "confirm": false
+}
+```
+
+The preview should show `surface: "app"` in `data.change`; it does not save a definition. After approval, repeat the same call with `confirm: true` and a unique `idempotency_key`, following the [write and retry rules](tools.md#write-previews-and-retries). Read back the saved definition, then use its returned ID with `surface: "app"` for analytics queries.
+
+This funnel measures an upgrade click after onboarding completion. An onboarding event matches regardless of `ok`, `fail` or `skip`, and an upgrade click does not prove payment. See [Create an app funnel](../app/funnels.md) for a longer onboarding journey.
 
 ## Preview a team invitation
 

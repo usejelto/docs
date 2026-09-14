@@ -9,6 +9,8 @@ summary: "Adapt two short journeys to the pages and events your website actually
 
 Use these definitions as examples, then replace paths and event names with those on your site. [Create the funnel](../web/funnels.md) only after its pages and goals send data.
 
+For a desktop app journey, see the [onboarding-to-upgrade example](../app/funnels.md#example-eqbase-onboarding-to-upgrade). App funnels follow installs across days and use exact event names instead of page steps.
+
 ## Signup journey
 
 | Step | Kind | Value | Meaning |

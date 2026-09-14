@@ -2,7 +2,7 @@
 title: "Understand app usage"
 group: guides
 slug: guides/understand-app-usage
-summary: "Read active installs, version adoption, and retention."
+summary: "Read active installs, version adoption, onboarding funnels and retention."
 ---
 
 # Understand app usage
@@ -27,6 +27,14 @@ Find **Version adoption** in the app section. The card groups active installs by
 *Version adoption shows each active install under its latest reported version. Select the image to view it at full size.*
 
 Use **Quiet · 14+ days** to explore installs that have stopped checking in, or **App updates** to inspect reported version changes. **View version data** opens the underlying breakdown.
+
+## Follow onboarding to an outcome
+
+Use an [app funnel](../app/funnels.md) to measure an ordered journey such as `onboarding:welcome → onboarding:complete → upgrade_click`. Open **Settings → Events & funnels → Funnels → Add funnel**, choose **App**, and use the exact onboarding or custom event names your SDK sends.
+
+The report counts installs entering step 1 during the selected dates. Later steps can occur on later days, through the last completed day when you query. Repeated events count once per step, and an event that happens before its preceding step does not advance the journey. Recent cohorts need time to progress; counts below five installs are suppressed.
+
+An onboarding step matches its name regardless of `ok`, `fail` or `skip` status. Use onboarding status metrics when investigating failed or skipped setup steps. An upgrade click is an action; use license or verified payment reporting to assess paid conversion.
 
 ## Put retention in context
 

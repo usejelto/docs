@@ -1,11 +1,11 @@
 ---
-title: "Website API recipes"
+title: "Website and app API recipes"
 group: api
 slug: api/website
 summary: "Use scoped server keys to read analytics, manage funnels, or post payments."
 ---
 
-# Website API
+# Website and app API
 
 Open Settings → Developer to mint a product-scoped `jk_` key. The full key is
 shown once. Choose only the needed permissions, store it in your server's
@@ -15,7 +15,7 @@ permissions automatically.
 
 | Scope | Operations |
 |---|---|
-| `analytics:read` | Website stats, health, realtime and crawler reports |
+| `analytics:read` | Website and app analytics, health, realtime and crawler reports |
 | `funnels:read` | Read this product's funnel definitions |
 | `funnels:write` | Create, update and delete this product's funnels |
 | `payments:write` | Submit custom payment/refund records |
@@ -48,7 +48,7 @@ failures rather than retrying in a tight loop.
 
 ## Manage funnel definitions
 
-Create a `funnels:write` key and send each custom event once so Jelto discovers any goal used in the journey. The following request creates two ordered steps:
+Create a `funnels:write` key and verify the events used in the journey. Definitions accept `surface: "web"` or `surface: "app"`; omitting it defaults to `web`. The following request creates a website funnel with two ordered steps:
 
 ```sh
 curl --fail-with-body 'https://app.jelto.io/api/v1/products/prd_acmedemo01/funnels' \
@@ -58,9 +58,47 @@ curl --fail-with-body 'https://app.jelto.io/api/v1/products/prd_acmedemo01/funne
 
 Use `equals` for one page path or `starts_with` for a page prefix. An optional `hostname` restricts a step to a registered host; `label` changes its display name. A definition contains 2–8 steps and a product can save up to 20 definitions.
 
-`GET` on the collection uses `funnels:read`. `PUT` or `DELETE` on `/api/v1/products/YOUR_PRODUCT_ID/funnels/RETURNED_FUNNEL_ID` uses `funnels:write`. Update with the complete name and ordered steps. Editing a definition changes how retained history is queried; it does not rewrite events.
+`GET` on the collection uses `funnels:read` and returns each definition's ID, name, surface and steps. `PUT` or `DELETE` on `/api/v1/products/YOUR_PRODUCT_ID/funnels/RETURNED_FUNNEL_ID` uses `funnels:write`. Update with the complete name, surface and ordered steps. Include `surface: "app"` when updating an app funnel; omission defaults to `web` on updates too. Editing a definition changes how retained history is queried; it does not rewrite events.
 
-With `analytics:read`, query `/api/v1/stats` using `product`, `from`, `to`, `surface=web`, `metric=funnel:RETURNED_FUNNEL_ID` and `dimension=funnel_step`. Render returned rates and availability states; do not divide rounded or withheld display counts. See [Create a website funnel](../web/funnels.md) for the dashboard workflow and visit limits.
+With `analytics:read`, query `/api/v1/stats` using `product`, `from`, `to`, `metric=funnel:RETURNED_FUNNEL_ID` and `dimension=funnel_step`. For a website funnel, omit `surface`. App funnel queries require `surface=app`. A mismatched surface returns `unexpected_surface`; unlike website goal queries, website funnel queries also reject an explicit `surface=web`.
+
+### Create an app funnel
+
+This request saves an app funnel from onboarding completion to an upgrade click. Replace the product and event names with your own. Both steps use `kind: "goal"` and `match: "equals"`; do not include `hostname`:
+
+```sh
+curl --fail-with-body 'https://app.jelto.io/api/v1/products/prd_acmedemo01/funnels' \
+  -H "Authorization: Bearer $JELTO_KEY" -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Onboarding to upgrade",
+    "surface": "app",
+    "steps": [
+      {"kind": "goal", "value": "onboarding:complete", "match": "equals"},
+      {"kind": "goal", "value": "upgrade_click", "match": "equals"}
+    ]
+  }'
+```
+
+The same 2–8 step limit applies, and the 20-definition limit is shared across website and app funnels. Page steps, prefix matching and any `hostname` field return `invalid_steps` for app funnels. Reserved app measurements such as `installs` and `heartbeat` return `reserved_event`. Onboarding steps match the event name regardless of status.
+
+### Query an app funnel
+
+Use the ID returned by create or list; replace every `RETURNED_FUNNEL_ID` below. `companions` is a comma-separated string that adds rates from the first and previous steps:
+
+```sh
+curl --fail-with-body --get 'https://app.jelto.io/api/v1/stats' \
+  -H "Authorization: Bearer $JELTO_KEY" \
+  --data-urlencode 'product=prd_acmedemo01' \
+  --data-urlencode 'from=2026-09-01' --data-urlencode 'to=2026-09-07' \
+  --data-urlencode 'surface=app' \
+  --data-urlencode 'metric=funnel:RETURNED_FUNNEL_ID' \
+  --data-urlencode 'dimension=funnel_step' \
+  --data-urlencode 'companions=funnel_first:RETURNED_FUNNEL_ID,funnel_prev:RETURNED_FUNNEL_ID'
+```
+
+The dates select each install's first step 1 within the range. Later steps count in order through the last completed day in the reporting timezone, even when they occur after `to`. Today's entrants are excluded; a range with no completed entry day returns `withheld`. Step counts under five installs return `below_floor`, including a step with no observed completions. Render returned rates and availability states instead of dividing rounded or withheld counts.
+
+Supported app funnel filters are `app`, `app_version`, `arch`, `install_age` and `os`, evaluated at entry. Use `funnel_step` only as a breakdown. See [Create an app funnel](../app/funnels.md) for cohort examples and [Create a website funnel](../web/funnels.md) for visit-based journeys.
 
 ## Custom payments
 
@@ -87,5 +125,5 @@ The Payments API accepts event times from the last 30 days, with at most five
 minutes of future clock skew. Older provider history needs an import mechanism;
 changing its timestamp to today would misstate revenue.
 
-Related: [Funnel setup](../web/funnels.md), [Crawler SDK](../sdk/crawler.md),
+Related: [Website funnels](../web/funnels.md), [App funnels](../app/funnels.md), [Crawler SDK](../sdk/crawler.md),
 [GitHub](../integrations/github.md).

@@ -28,6 +28,119 @@ Find **Version adoption** in the app section. The card groups active installs by
 
 Use **Quiet · 14+ days** to explore installs that have stopped checking in, or **App updates** to inspect reported version changes. **View version data** opens the underlying breakdown.
 
+## Configure the published version
+
+**% on latest** compares activity with the published version configured for your product. It does not assume that the highest version observed in incoming events is your current release.
+
+Open **Settings → Overview → Published app version**. This section appears for products with a registered app or an existing version setting. One published version applies to every app in the product.
+
+For manual updates, select **Manual**, enter **Latest version**, and save. Use the exact version your SDK reports, such as `2.4.1`; it can contain up to 32 characters. Clear the field to remove the configured version. Switching to Manual disconnects automatic appcast checks.
+
+For automatic updates:
+
+1. Select **Appcast / update feed**.
+2. Enter your public HTTPS **Appcast URL** using the release feed for your updater, as listed below.
+3. Save. Jelto checks the feed immediately and shows the published version and last check time.
+
+The daily maintenance job checks connected feeds again when their previous check is at least 24 hours old. **Check now** retries a saved feed immediately; save or discard other edits first. If a check fails, the previous published version remains in use and the error appears beside the feed. Correct the URL or feed and retry, or switch to Manual.
+
+### Supported appcast formats
+
+Jelto detects the format from the feed contents. Use the URL of the published metadata file or a complete updater response endpoint:
+
+| Updater | Example Appcast URL | Published version |
+| --- | --- | --- |
+| [Sparkle](https://sparkle-project.org/documentation/publishing/) / [WinSparkle](https://winsparkle.org/guides/publishing-updates/) | `https://updates.example.com/appcast.xml` | Greatest numeric `sparkle:version` build; displays `sparkle:shortVersionString` when supplied |
+| [electron-updater](https://www.electron.build/docs/features/auto-update/) | `https://updates.example.com/latest.yml` | Top-level `version`; `latest-mac.yml` and `latest-linux.yml` also work |
+| [Tauri Updater](https://v2.tauri.app/plugin/updater/#server-support) | `https://updates.example.com/latest.json` | Top-level `version` in static or dynamic updater JSON |
+| [Velopack](https://docs.velopack.io/distributing/overview) | `https://updates.example.com/releases.win.json` | Greatest stable `Version` among `Assets` whose `Type` is `Full` |
+
+Supply the complete feed URL for your platform and stable channel. For electron-updater and Velopack, a hosting directory or release web page is insufficient. For dynamic Tauri endpoints, replace any `{{target}}`, `{{arch}}`, and `{{current_version}}` placeholders yourself, or use the static JSON feed. A `204 No Content` response retains the previous version and reports no supported release.
+
+**Sparkle and WinSparkle:** Jelto orders numeric dotted builds regardless of item order. Child elements and legacy attributes on `enclosure` are supported. For example, this item configures `2.4.1`, matching the version reported by your SDK:
+
+```xml
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>Example app releases</title>
+    <item>
+      <sparkle:version>20401</sparkle:version>
+      <sparkle:shortVersionString>2.4.1</sparkle:shortVersionString>
+      <enclosure url="https://updates.example.com/app-2.4.1.zip"
+                 type="application/octet-stream" />
+    </item>
+  </channel>
+</rss>
+```
+
+Items with a `sparkle:channel` and delta-only items are excluded. Use numeric builds such as `20401` or `2.4.1`; builds with letter suffixes are unsupported. Equal builds with different displayed versions are rejected.
+
+**electron-updater:** Use the generated YAML release manifest, which contains a version and download entries:
+
+```yaml
+version: 2.4.1
+files:
+  - url: Example-2.4.1.exe
+    sha512: <generated checksum>
+```
+
+Legacy manifests with a top-level `path` and JSON representations of this metadata also work. A nonempty `files` array takes precedence; when `files` is absent, null, or empty, Jelto uses `path`. `app-update.yml` and `package.json` are configuration files, so use the published `latest*.yml` instead.
+
+**Tauri Updater:** Static JSON must include a `platforms` map with a download URL and signature for every listed target:
+
+```json
+{
+  "version": "2.4.1",
+  "platforms": {
+    "windows-x86_64": {
+      "url": "https://updates.example.com/Example-2.4.1.exe",
+      "signature": "<generated signature>"
+    }
+  }
+}
+```
+
+Dynamic responses with top-level `version`, `url`, and `signature` are also supported. The `name` alias can replace `version`; do not send both. A non-null `platforms` map takes precedence over the dynamic fields, and an empty map contains no release. If `platforms` is absent or null, Jelto reads the dynamic response.
+
+**Velopack:** Use `releases.<channel>.json`, such as `releases.win.json`, `releases.osx.json`, or `releases.linux.json`:
+
+```json
+{
+  "Assets": [
+    {
+      "PackageId": "Example",
+      "Version": "2.4.1",
+      "Type": "Full",
+      "FileName": "Example-2.4.1-full.nupkg"
+    }
+  ]
+}
+```
+
+Jelto compares full release versions numerically, so `2.10.0` follows `2.9.0`. Velopack's [optional fourth revision component](https://docs.velopack.io/reference/cs/Velopack/SemanticVersion) is also supported: `2.4.1.10` follows `2.4.1.9`. The supplied revision is preserved in the published version. Delta packages, installers, and portable archives do not set the published version. Use a feed for one package; conflicting package IDs or equal-precedence versions with different version strings are rejected. The legacy `RELEASES` text file and `assets.<channel>.json` deployment inventory are unsupported.
+
+For electron-updater and Tauri feeds, versions must use full SemVer such as `2.4.1` or `2.4.1+build.7`; Velopack also allows the fourth revision described above. An optional leading `v` is removed; build metadata is preserved. Prerelease versions such as `3.0.0-beta.1` are excluded. The resulting version must fit the 32-character limit and match what your SDK reports. Use Manual if you need a different version string or a prerelease target.
+
+These checks select a stable release across the feed. Operating-system requirements, architecture, and staged rollout rules do not alter the analytics target. The examples above show the metadata Jelto reads; keep the full files generated by your updater, including its checksums and signatures.
+
+The feed must be at most 1 MiB and respond within four seconds. HTTPS redirects are supported up to three hops. URLs must use port 443, be at most 2048 bytes, and contain no credentials or fragment. Local and private network destinations are refused. Jelto reads release metadata; it does not download or install the update archive.
+
+### Configure through the API
+
+Use an [account token](../api/account-tokens.md) with `settings:write` and access to the product. Replace the example product ID and URL. This request previews the change:
+
+```sh
+curl --fail-with-body -X PATCH \
+  'https://app.jelto.io/api/v1/products/prd_acmedemo01' \
+  -H "Authorization: Bearer $JELTO_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"appcast_url":"https://updates.example.com/appcast.xml"}'
+```
+
+After reviewing the preview, repeat the identical request with `Jelto-Confirm: true` and a unique `Idempotency-Key` header, as described in the account-token guide. The confirmed response includes `latest_version`, `appcast_url`, `appcast_checked_at`, and `appcast_error`. A feed-check failure is reported in `appcast_error`; the URL is still saved and the previous version is retained.
+
+To set a manual version, send `{"latest_version":"2.4.1"}`; this disconnects appcast. Send `{"latest_version":null}` to clear the version and disconnect. Send only `{"appcast_url":null}` to disconnect while retaining the current version. A manual version and a non-null appcast URL cannot be sent together. Sending the same URL explicitly checks it again.
+
 ## Follow onboarding to an outcome
 
 Use an [app funnel](../app/funnels.md) to measure an ordered journey such as `onboarding:welcome → onboarding:complete → upgrade_click`. Open **Settings → Events & funnels → Funnels → Add funnel**, choose **App**, and use the exact onboarding or custom event names your SDK sends.

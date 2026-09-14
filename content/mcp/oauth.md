@@ -70,9 +70,11 @@ Exchange the code within two minutes using form encoding at `/oauth/token`. Send
 
 ## Refresh and disconnect
 
-Access tokens last up to one hour. Send `grant_type=refresh_token`, the current `refresh_token`, `client_id` and the exact `resource` to the token endpoint. Authenticate confidential clients as above. Store both returned tokens and discard the old refresh token. Serialize refresh requests: reusing a consumed code or refresh token revokes the entire connection. Retrying an ambiguous exchange may require reconnecting.
+Access tokens last up to seven days, capped by the connection's remaining lifetime. Send `grant_type=refresh_token`, the current `refresh_token`, `client_id` and the exact `resource` to the token endpoint. For compatibility, a refresh request that omits `resource` inherits the connection's approved MCP resource; an explicit empty or different resource is rejected. Authenticate confidential clients as above. Store both returned tokens and discard the old refresh token. Serialize refresh requests: reusing a consumed code or refresh token revokes the entire connection. Retrying an ambiguous exchange may require reconnecting.
 
 A refresh token lasts up to 30 days, capped by the connection's 90-day lifetime. Request fresh consent when the connection expires or is revoked. Omit `scope` during refresh, or repeat the exact granted set; widening or narrowing requires new consent.
+
+The longer access-token lifetime reduces refresh interruptions in MCP clients. Jelto still checks revocation, account status and current permissions on every request. Previously issued access tokens keep their original expiry; a successful refresh or a new connection receives the seven-day lifetime.
 
 To disconnect, send a form-encoded `token` with the client's authentication to `/oauth/revoke`, or revoke the app in **Account settings → API / MCP**. Unknown tokens return success without disclosing whether they existed. Revocation blocks new calls and refreshes; a running operation may finish. Data already received by a client stays with that client.
 

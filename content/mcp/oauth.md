@@ -26,6 +26,8 @@ An unauthenticated MCP request returns `401` with a `WWW-Authenticate` header po
 
 You may use an HTTPS Client ID Metadata Document URL as `client_id`. Its JSON must contain the identical `client_id`, `client_name`, and `redirect_uris`; only public authentication (`token_endpoint_auth_method: "none"`) is supported for metadata documents. Host the document on a public HTTPS server on port 443. Redirects, private network destinations and documents larger than 32 KiB are rejected. Cache directives are honored with a five-minute maximum.
 
+If the document declares `grant_types` or `response_types`, include `authorization_code` or `code`, respectively. It may advertise additional capabilities for other servers; Jelto still accepts only authorization-code and refresh-token requests.
+
 Alternatively, register the client:
 
 ```http
@@ -43,6 +45,8 @@ Content-Type: application/json
 
 The response includes `client_id`. Confidential clients may register `client_secret_basic` or `client_secret_post`; their secret is returned once. Registrations expire after one year. Client names are displayed as unverified metadata on the consent page.
 
+Registration ignores unrecognized metadata fields, including optional fields such as `software_version` and `contacts`. Known fields must have the correct types and supported values. Permissions are selected during authorization and consent; registration metadata does not grant access.
+
 ## Authorize and exchange
 
 Generate a random PKCE verifier of 43–128 unreserved ASCII characters. Send its SHA-256 digest as an unpadded base64url `code_challenge`. Authorization requires these query parameters:
@@ -58,9 +62,9 @@ scope=products:read analytics:read
 state=YOUR_RANDOM_STATE
 ```
 
-Callbacks must exactly match a registered HTTPS URL or HTTP loopback URL, including port and path, with no fragment or embedded credentials. Use and verify `state`; verify the returned `iss` equals the discovered issuer. Consent expires in ten minutes and is bound to its initiating browser and signed-in account. Denial returns `error=access_denied` without a code.
+Callbacks must match a registered HTTPS URL or HTTP loopback URL, with no fragment or embedded credentials. At authorization, HTTP callbacks on `localhost`, `127.0.0.1` or `[::1]` may use a different port; scheme, hostname, path and query must still match exactly. For example, Claude Code declares `http://localhost/callback` and may request `http://localhost:60965/callback`. HTTPS callbacks must match exactly, including the port. Use and verify `state`; verify the returned `iss` equals the discovered issuer. Consent expires in ten minutes and is bound to its initiating browser and signed-in account. Denial returns `error=access_denied` without a code.
 
-Exchange the code within two minutes using form encoding at `/oauth/token`. Send `grant_type=authorization_code`, `client_id`, `code`, `code_verifier`, the same `redirect_uri` and `resource`. A confidential client must also use its registered secret authentication method. The response contains `access_token`, `token_type: "Bearer"`, `expires_in`, `refresh_token` and the granted `scope`.
+Exchange the code within two minutes using form encoding at `/oauth/token`. Send `grant_type=authorization_code`, `client_id`, `code`, `code_verifier`, the same `redirect_uri` and `resource`. The token request must repeat the exact callback used at authorization, including its loopback port. A confidential client must also use its registered secret authentication method. The response contains `access_token`, `token_type: "Bearer"`, `expires_in`, `refresh_token` and the granted `scope`.
 
 ## Refresh and disconnect
 

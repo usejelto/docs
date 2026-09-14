@@ -58,6 +58,21 @@ attribution. Repeated callbacks and webhooks resolve to the same monetary
 record. A claim that arrives before payment success is retried for up to
 24 hours. Known server metadata and app installation attribution take priority.
 
+## Mark hosted checkout anchors
+
+`jelto.checkout.js` rewrites only anchors carrying `data-jelto-checkout` with a matching provider value: `lemonsqueezy`, `stripe` or `polar` (`lemon_squeezy` is also accepted as a Lemon Squeezy alias). Use the matching value on a supported provider URL:
+
+```html
+<a href="https://your-store.lemonsqueezy.com/buy/YOUR_VARIANT"
+   data-jelto-checkout="lemonsqueezy">Buy with Lemon Squeezy</a>
+<a href="https://buy.stripe.com/YOUR_PAYMENT_LINK"
+   data-jelto-checkout="stripe">Buy with Stripe</a>
+<a href="https://polar.sh/checkout/YOUR_CHECKOUT_ID"
+   data-jelto-checkout="polar">Buy with Polar</a>
+```
+
+Without this attribute, the helper does nothing to the checkout link, and payments read as unattributed unless server metadata or another documented attribution method supplies context. The `jl=` parameter that `jelto.js` appends goes on download links only, never on checkout links; checkout attribution uses the separate helper and provider metadata above.
+
 ## Website conversion and funnels
 
 Use `window.jeltoCheckoutMetadata?.() ?? {}` when starting checkout. Forward its
@@ -88,6 +103,10 @@ as completions. An old checkout reference does not create a new visit for a
 renewal outside that checkout's reporting range. With checkout memory off,
 forward metadata before leaving your website; the return page cannot recover
 the original pageview on its own.
+
+## Purchases started from a desktop app
+
+When checkout starts directly from a desktop app, no website visit exists, so the browser helper and return-page method do not apply. The payment stays completion-only unless your server sends it through the [Payments API](../api/website.md#custom-payments) with `install_id` from the desktop SDK. This associates the payment with an app install; it does not create a website visit. `install_id` and `cohort` never share one payment: sending both non-empty fields is rejected with `cohort_and_install_id_both_present`.
 
 ## Email fallback
 

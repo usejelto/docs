@@ -46,6 +46,12 @@ repeated event occurrences. Currency estimates and native/imported coverage
 must remain visible to readers. Honor Retry-After on rate limits and transient
 failures rather than retrying in a tight loop.
 
+## Query constraints
+
+`goal:<name>` metrics require `surface=web` or `surface=app`, including when a goal is requested as a companion. Fixed app metrics such as `active_installs`, `onboarding_reached` and `license_share` already select the app surface: omit `surface` when querying them alone or with other fixed app metrics, or the API returns `unexpected_surface`.
+
+For date-based queries, `dimension=hour` needs a single-day range (`from` and `to` must be the same date); a multi-day range returns `invalid_range`. The `entry_page` and `exit_page` dimensions are served by sessions, so `visitors` returns `not_applicable` on either dimension; use a compatible session metric such as `visits`.
+
 ## Manage funnel definitions
 
 Create a `funnels:write` key and verify the events used in the journey. Definitions accept `surface: "web"` or `surface: "app"`; omitting it defaults to `web`. The following request creates a website funnel with two ordered steps:

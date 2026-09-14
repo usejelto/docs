@@ -67,6 +67,12 @@ if (result.ok) console.log(result.data.total)
 
 Use `analytics:read` for reporting, `funnels:read` or `funnels:write` for the respective funnel operations, and `payments:write` for verified payments. See [API keys](../manage/api-keys.md) and [Website API](../api/website.md).
 
+## Query constraints
+
+`goal:<name>` metrics require `surface=web` or `surface=app`, including when a goal is requested as a companion. Fixed app metrics such as `active_installs`, `onboarding_reached` and `license_share` already select the app surface: omit `surface` when querying them alone or with other fixed app metrics, or the API returns `unexpected_surface`.
+
+For date-based queries, `dimension=hour` needs a single-day range (`from` and `to` must be the same date); a multi-day range returns `invalid_range`. The `entry_page` and `exit_page` dimensions are served by sessions, so `visitors` returns `not_applicable` on either dimension; use a compatible session metric such as `visits`.
+
 App funnel queries require `surface=app` with `funnel:<id>`, `funnel_first:<id>` or `funnel_prev:<id>`. For website funnel queries, omit `surface`. Use the saved definition's surface and ID; see the [app funnel API recipe](../api/website.md#query-an-app-funnel) for step counts, companion rates and date semantics.
 
 ## Verify and handle failure

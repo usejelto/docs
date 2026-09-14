@@ -28,6 +28,18 @@ test('allows customer integrations, SDK contracts, privacy outcomes and public A
   ]) assert.deepEqual(publicBoundaryViolations(text), [], text)
 })
 
+test('allows the reviewed public wire contract link without allowing private specifications', () => {
+  const link = '[spec/wire-v1.md §4](https://github.com/usejelto/contracts/blob/main/spec/wire-v1.md#4-reserved-event-names)'
+  assert.deepEqual(publicBoundaryViolations(`Read ${link}.`), [])
+  for (const text of [
+    `${link} and spec/api.yaml`,
+    `${link} and internal/store`,
+    link.replace('/contracts/', '/jelto/'),
+    link.replaceAll('wire-v1.md', 'api.yaml'),
+    'See spec/wire-v1.md §4.',
+  ]) assert.ok(publicBoundaryViolations(text).includes('private source path'), text)
+})
+
 // The whole repository is public, not only content/. build-agent-twins.mjs scans
 // the guides; this scans everything else that is tracked, so a private path in a
 // Go comment, a test fixture or a build script fails the same gate.

@@ -36,6 +36,12 @@ The report counts installs entering step 1 during the selected dates. Later step
 
 An onboarding step matches its name regardless of `ok`, `fail` or `skip` status. Use onboarding status metrics when investigating failed or skipped setup steps. An upgrade click is an action; use license or verified payment reporting to assess paid conversion.
 
+## License properties
+
+Report the `license` install property with your desktop SDK’s install-property setter when the license changes.
+
+Accepted license values are strings matching `^[a-z0-9_.-]{1,24}$`, such as `free`, `trial`, `paid` or `expired`; these examples are not a fixed enum. Uppercase letters, spaces and values longer than 24 characters are rejected. `license_share` breaks the live install fleet down by the stored `license` value. `license_conversion` counts an install as converted only when its latest stored `license` equals the product's `paid_license_value` setting by string equality; the setting defaults to `paid`. If no stored values ever match, an otherwise reportable cohort stays at a true, permanent 0 % even though the query succeeds; align the value in the product settings or through the account API's `paid_license_value` field.
+
 ## Put retention in context
 
 The **Retention** card offers **D1**, **D7**, and **D30**. A cohort needs time to reach the day being measured; recent installs may not yet qualify. Treat unavailable retention as unavailable, rather than assuming nobody returned.

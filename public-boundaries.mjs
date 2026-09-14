@@ -10,6 +10,11 @@ const rules = [
   ['session-only dashboard authentication', /(?:session mutations.{0,50}(?:Origin|CSRF)|deployment Origin for CSRF)/i],
 ]
 
+// This exact link targets the public contracts repository, not a private
+// platform specification. Keep the exception tied to its reviewed label and URL.
+const publicSdkContractLink = '[spec/wire-v1.md §4](https://github.com/usejelto/contracts/blob/main/spec/wire-v1.md#4-reserved-event-names)'
+
 export function publicBoundaryViolations(text) {
+  text = text.split(publicSdkContractLink).join('public SDK event contract')
   return rules.filter(([, pattern]) => pattern.test(text)).map(([label]) => label)
 }

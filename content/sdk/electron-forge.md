@@ -59,6 +59,35 @@ jelto.track('export_finished', { format: 'pdf' })
 
 Keep the SDK in the main process. If an action starts in the renderer, expose a narrow method through your existing preload bridge and IPC handler. For example, forward an export-completed action with an allowlisted format. Do not expose arbitrary event names, arbitrary payload forwarding or SDK initialization to remote renderer content.
 
+## Onboarding and custom events
+
+The onboarding call sends `onboarding:<step>` with a status and optional reason:
+
+```ts
+jelto.onboarding('permissions', 'ok')
+jelto.onboarding('permissions', 'fail', 'denied')
+```
+
+The step must match `^[a-z0-9_-]{1,32}$`: 1–32 lowercase ASCII letters, digits, underscores or hyphens. Status must be `ok`, `fail` or `skip`. A non-empty reason must match `^[a-z0-9_.-]+$` and be at most 64 characters; an omitted or empty reason sends no reason property. If any of these values falls outside the grammar or length cap, the whole event is dropped. The rejection is visible only in debug logging, not in the dashboard.
+
+Enable local debug logging with `JELTO_DEBUG=1`.
+
+Steps feed `onboarding_reached`, `onboarding_ok`, `onboarding_fail` and `onboarding_skip`, broken down by `onboarding_step`; status reports use each install's first result for that step. They also feed `onboarding_reason`, which groups failures by `onboarding_reason` and requires an `onboarding_step` filter. `onboarding_cohort` supplies the install population, and `onboarding_completed` uses the final step's `ok` result.
+
+Every valid `jelto.track()` event received by Jelto becomes `goal:<name>` on the app surface, with per-install conversion and `prop:<key>` breakdowns. Custom events and their property keys are discovered on first receipt; no event or goal registration is required. For the export example, query `goal:export_finished` with `surface=app` and `dimension=prop:format`.
+
+The source of truth for these SDK event contracts is [spec/wire-v1.md §4](https://github.com/usejelto/contracts/blob/main/spec/wire-v1.md#4-reserved-event-names); §7 of the same document defines custom event discovery.
+
+## License properties
+
+Update the install's license when its state changes:
+
+```ts
+jelto.setProps({ license: 'paid' })
+```
+
+Accepted license values are strings matching `^[a-z0-9_.-]{1,24}$`, such as `free`, `trial`, `paid` or `expired`; these examples are not a fixed enum. Uppercase letters, spaces and values longer than 24 characters are rejected. `license_share` breaks the live install fleet down by the stored `license` value. `license_conversion` counts an install as converted only when its latest stored `license` equals the product's `paid_license_value` setting by string equality; the setting defaults to `paid`. If no stored values ever match, an otherwise reportable cohort stays at a true, permanent 0 % even though the query succeeds; align the value in the product settings or through the account API's `paid_license_value` field.
+
 ## Verify
 
 Launch the app after enabling telemetry in your own app. Trigger an export, then inspect the product's app activity and Goals for the current date. Jelto discovers `export_finished` and its `format` property when it receives the event; no event registration is required.

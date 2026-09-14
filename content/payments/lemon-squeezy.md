@@ -55,6 +55,21 @@ window.location.assign(checkout.url)
 
 Add the checkout helper on the page containing the provider link. Keep the link as a real supported provider URL; the helper adds aggregate context without replacing unrelated metadata. For a verified return claim, configure the exact provider success parameter below and install the helper on the return page too.
 
+#### Mark hosted checkout anchors
+
+`jelto.checkout.js` rewrites only anchors carrying `data-jelto-checkout` with a matching provider value: `lemonsqueezy`, `stripe` or `polar` (`lemon_squeezy` is also accepted as a Lemon Squeezy alias). Use the matching value on a supported provider URL:
+
+```html
+<a href="https://your-store.lemonsqueezy.com/buy/YOUR_VARIANT"
+   data-jelto-checkout="lemonsqueezy">Buy with Lemon Squeezy</a>
+<a href="https://buy.stripe.com/YOUR_PAYMENT_LINK"
+   data-jelto-checkout="stripe">Buy with Stripe</a>
+<a href="https://polar.sh/checkout/YOUR_CHECKOUT_ID"
+   data-jelto-checkout="polar">Buy with Polar</a>
+```
+
+Without this attribute, the helper does nothing to the checkout link, and payments read as unattributed unless server metadata or another documented attribution method supplies context. The `jl=` parameter that `jelto.js` appends goes on download links only, never on checkout links; checkout attribution uses the separate helper and provider metadata above.
+
 ### Other checkout flows
 
 Use the limited email fallback only after your app confirms payment, when neither server metadata nor a supported checkout reference is available. Its matching and privacy limits are documented in [Browser payment attribution](browser-attribution.md#email-fallback).

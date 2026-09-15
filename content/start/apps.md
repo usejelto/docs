@@ -46,7 +46,7 @@ prompt or passing a build does not verify incoming app activity.
 
 ## Verify app activity
 
-Launch the app and keep it open long enough to send queued activity. Check app metrics in the correct product and date range. A daily heartbeat and the install claim have different timing: a first install claim can be delayed by up to six hours. Do not repeatedly reset an install ID to test counts.
+Launch the app and keep it open long enough to send queued activity. Check app metrics in the correct product and date range. The SDK queues daily activity and the first install claim immediately on first initialization. Do not repeatedly reset an install ID to test counts.
 
 Version adoption requires known app versions. Retention needs time and a sufficiently mature sample. Read [Understand app usage](../guides/understand-app-usage.md) before interpreting an empty or unavailable metric.
 

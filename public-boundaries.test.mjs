@@ -22,7 +22,7 @@ test('allows customer integrations, SDK contracts, privacy outcomes and public A
     'Keep JELTO_CRAWLER_KEY on your server; call trackResponse and flush the SDK queue.',
     "Connect your private GitHub repository in Settings.",
     "Verify your provider webhook's HMAC signature on your server.",
-    'The SDK stores unsent activity locally. The first install can take six hours.',
+    'The SDK stores unsent activity locally and queues the first install claim immediately.',
     'Raw email is not stored in analytics or logs. Matching expires after 24 hours.',
     'Set a CNAME in Cloudflare DNS for your custom tracking domain.',
   ]) assert.deepEqual(publicBoundaryViolations(text), [], text)

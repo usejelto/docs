@@ -22,7 +22,7 @@ Localhost and automation are excluded by default. `file:` URLs do not work. A UR
 
 ## Other sources
 
-For an app, check SDK initialization, permission to collect, product/app slug and its network access. The first install claim can be delayed by up to six hours.
+For an app, check SDK initialization, permission to collect, product/app slug and its network access. The SDK queues the first install claim immediately on first initialization.
 
 For payments, check the selected environment, connection and sync state before checking attribution. For server crawlers, a successful connection check creates no traffic: enable collection and verify actual eligible requests.
 

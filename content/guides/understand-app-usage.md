@@ -89,9 +89,13 @@ Delivery remains best effort under the SDK's queue and shutdown rules. Keep upda
 
 ## Configure the published version
 
-**% on latest** compares activity with the published version configured for your product. It does not assume that the highest version observed in incoming events is your current release.
+**% on latest** compares activity with the published version configured for each app. It does not assume that the highest version observed in incoming events is your current release.
 
-Open **Settings → Overview → Published app version**. This section appears for products with a registered app or an existing version setting. One published version applies to every app in the product.
+Open **Settings → Overview → Published app version**. This section appears for products with a registered app or an existing version setting. If multiple apps are registered, use the **App** dropdown to choose the macOS, Windows, or Linux app you want to configure. With one app, its name appears without a dropdown. Each app has its own version and update feed. Unsaved version edits stay with their app when you switch selections.
+
+The product-wide percentage combines installs that are on their own app’s published version. Apps without a configured version are excluded. For example, macOS can target `1.5.1` while Windows targets `2.0.0`. Existing product settings are copied to existing apps during migration; newly added apps start without a version.
+
+On the dashboard, products with multiple apps also show an **App** dropdown next to the product name. Choose an app to filter its cards and charts, or **All apps** to return to the combined overview. The selection stays in the URL and preserves your date range, comparison and other filters.
 
 For manual updates, select **Manual**, enter **Latest version**, and save. Use the exact version your SDK reports, such as `2.4.1`; it can contain up to 32 characters. Clear the field to remove the configured version. Switching to Manual disconnects automatic appcast checks.
 
@@ -186,11 +190,11 @@ The feed must be at most 1 MiB and respond within four seconds. HTTPS redirects 
 
 ### Configure through the API
 
-Use an [account token](../api/account-tokens.md) with `settings:write` and access to the product. Replace the example product ID and URL. This request previews the change:
+Use an [account token](../api/account-tokens.md) with `settings:write` and access to the product. Find the app ID with `GET /api/v1/products/{product}/apps`, then replace the example product ID, app ID and URL. This request previews the change:
 
 ```sh
 curl --fail-with-body -X PATCH \
-  'https://app.jelto.io/api/v1/products/prd_acmedemo01' \
+  'https://app.jelto.io/api/v1/products/prd_acmedemo01/apps/123/version' \
   -H "Authorization: Bearer $JELTO_TOKEN" \
   -H 'Content-Type: application/json' \
   -d '{"appcast_url":"https://updates.example.com/appcast.xml"}'

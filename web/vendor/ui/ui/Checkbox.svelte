@@ -4,6 +4,7 @@
   // as app.css's .ui-checkbox. The indicator is a lucide check, shown from the
   // primitive's own `checked` snippet prop, never from a second copy of state.
   import type { Snippet } from 'svelte'
+  import type { HTMLButtonAttributes } from 'svelte/elements'
   import { Checkbox } from 'bits-ui'
   import Check from '@lucide/svelte/icons/check'
 
@@ -13,6 +14,8 @@
     disabled = false,
     label,
     hint = undefined,
+    'aria-invalid': invalid = undefined,
+    'aria-describedby': describedby = undefined,
     name = undefined,
     leading,
     metadata,
@@ -24,16 +27,19 @@
     disabled?: boolean
     label: string
     hint?: string
+    'aria-invalid'?: HTMLButtonAttributes['aria-invalid']
+    'aria-describedby'?: string
     name?: string
     leading?: Snippet
     metadata?: Snippet
     onCheckedChange?: (checked: boolean) => void
     compact?: boolean
   } = $props()
+  const descriptionIds = $derived([...new Set(`${describedby ?? ''} ${hint ? `${id}-hint` : ''}`.split(/\s+/).filter(Boolean))].join(' ') || undefined)
 </script>
 
 <div class="ui-check-row" data-compact={compact || undefined}>
-  <Checkbox.Root {id} {name} bind:checked {disabled} {onCheckedChange} class="ui-checkbox" aria-labelledby={`${id}-label`} aria-describedby={hint ? `${id}-hint` : undefined}>
+  <Checkbox.Root {id} {name} bind:checked {disabled} {onCheckedChange} class="ui-checkbox" aria-labelledby={`${id}-label`} aria-invalid={invalid} aria-describedby={descriptionIds}>
     {#snippet children({ checked: isChecked })}
       {#if isChecked}<Check size={12} strokeWidth={3} />{/if}
     {/snippet}

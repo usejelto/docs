@@ -16,6 +16,7 @@
   line-height: 1.4;
   text-align: start;
   touch-action: manipulation;
+  transition: background-color var(--motion-fast) var(--ease), color var(--motion-fast) var(--ease), border-color var(--motion-fast) var(--ease), box-shadow var(--motion-fast) var(--ease);
 }
 
 .card-select__trigger[data-appearance='field'] {
@@ -26,6 +27,14 @@
   font-size: var(--text-base);
 }
 .card-select__trigger:disabled { opacity: 0.5; cursor: default; }
+.card-select__trigger[data-appearance='quiet'] {
+  background: transparent;
+  font-weight: var(--weight-semibold);
+}
+.card-select__trigger:active:not(:disabled):not([aria-disabled='true']) {
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--ink) 12%, transparent);
+  transition-duration: calc(var(--motion-fast) / 2);
+}
 
 .card-select__trigger[data-appearance='pill'] {
   min-block-size: var(--control-compact);
@@ -143,17 +152,14 @@
 }
 
 @media (hover: hover) {
-  .card-select__trigger:hover:not(:disabled) {
+  .card-select__trigger:hover:not(:disabled):not([aria-disabled='true']):not([data-state='open']):not([data-active]) {
     background: var(--control-fill-hover);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .card-select__trigger {
-    transition: background-color var(--motion-fast) var(--ease), border-color var(--motion-fast) var(--ease);
-  }
   .card-select__chevron {
-    transition: transform var(--motion-fast) var(--ease);
+    transition: transform var(--motion-base) var(--ease), color var(--motion-fast) var(--ease);
   }
 }
 
@@ -178,3 +184,5 @@
   }
   .card-select__check { color: Highlight; }
 }
+
+.card-select__option-label--icon { display: flex; align-items: center; gap: var(--space-2); }

@@ -4,26 +4,34 @@
   import Check from '@lucide/svelte/icons/check'
   import Button from './Button.svelte'
   import StatusMessage from './StatusMessage.svelte'
+  import { toast, type ToastQueue } from './toast'
   import type { ButtonProps } from './types'
-  let { text, label, copiedLabel, failureLabel, resetAfter = 0, disabled = false, variant = 'secondary', onfailure, class: className = '' }:
-    { text: string; label: string; copiedLabel: string; failureLabel: string; resetAfter?: number; disabled?: boolean; variant?: ButtonProps['variant']; onfailure?: () => void; class?: string } = $props()
+  let { text, label, copiedLabel, failureLabel, resetAfter = 0, disabled = false, variant = 'secondary', onfailure, toastQueue = toast, class: className = '' }:
+    { text: string; label: string; copiedLabel: string; failureLabel: string; resetAfter?: number; disabled?: boolean; variant?: ButtonProps['variant']; onfailure?: () => void; toastQueue?: ToastQueue; class?: string } = $props()
   let outcome = $state<'copied' | 'failed' | null>(null)
+  let announceCopied = $state(false)
   let pending = $state(false)
   let version = 0
   let timer: ReturnType<typeof setTimeout> | undefined
   $effect(() => { text; version++; outcome = null; pending = false; clearTimeout(timer) })
   onDestroy(() => { version++; clearTimeout(timer) })
-  async function copy() {
+  async function copy(event: MouseEvent) {
     if (disabled || pending) return
+    // A native modal makes the application toast host inert. Keep its copy
+    // announcement inside the dialog, where the initiating control is accessible.
+    const inDialog = event.currentTarget instanceof HTMLElement && event.currentTarget.closest('dialog[open]') !== null
     const request = ++version
     pending = true
     outcome = null
+    announceCopied = false
     clearTimeout(timer)
     try {
       if (!navigator.clipboard) throw new Error('clipboard unavailable')
       await navigator.clipboard.writeText(text)
       if (request !== version) return
       outcome = 'copied'
+      if (inDialog) announceCopied = true
+      else toastQueue.success(copiedLabel)
       if (resetAfter > 0) timer = setTimeout(() => { outcome = null }, resetAfter)
     } catch {
       if (request === version) { outcome = 'failed'; onfailure?.() }
@@ -37,5 +45,5 @@
     {#if outcome === 'copied'}<Check size={14} aria-hidden="true" />{:else}<Copy size={14} aria-hidden="true" />{/if}
     {outcome === 'copied' ? copiedLabel : label}
   </Button>
-  <StatusMessage live="polite" tone={outcome === 'failed' ? 'danger' : 'neutral'} class={outcome === 'failed' ? '' : 'sr-only'}>{outcome === 'failed' ? failureLabel : outcome === 'copied' ? copiedLabel : ''}</StatusMessage>
+  <StatusMessage live="polite" tone={outcome === 'failed' ? 'danger' : 'success'} class={outcome === 'failed' ? '' : 'sr-only'}>{outcome === 'failed' ? failureLabel : outcome === 'copied' && announceCopied ? copiedLabel : ''}</StatusMessage>
 </div>

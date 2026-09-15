@@ -1,4 +1,5 @@
 import type { TransitionConfig } from 'svelte/transition'
+import { flip } from 'svelte/animate'
 
 // JavaScript transitions mirror app.css's motion tokens. CSS custom properties
 // cannot supply Svelte's numeric duration or easing function, so the values live
@@ -50,37 +51,70 @@ function prefersReducedMotion(): boolean {
   return typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-function boundary(duration: number, y: number): TransitionConfig {
+function restingStyles(node: Element) {
+  const css = getComputedStyle(node)
+  const opacity = Number.parseFloat(css.opacity)
+  return {
+    opacity: Number.isNaN(opacity) ? 1 : opacity,
+    transform: css.transform && css.transform !== 'none' ? css.transform : '',
+  }
+}
+
+function translated(transform: string, y: number): string {
+  return `${transform ? `${transform} ` : ''}translateY(${y}px)`
+}
+
+function boundary(node: Element, duration: number, y: number): TransitionConfig {
   const reduced = prefersReducedMotion()
+  const { opacity, transform } = restingStyles(node)
   return {
     duration: reduced ? FAST_MS : duration,
     easing: uiEase,
-    css: (t, u) => `opacity: ${t}; transform: ${reduced ? 'none' : `translateY(${u * y}px)`}`,
+    css: (t, u) => `opacity: ${t * opacity}; transform: ${reduced ? transform || 'none' : translated(transform, u * y)}`,
   }
 }
 
 /** A rare, one-shot result entering on the `--motion-enter` tier. */
-export function enterOneShot(_node: Element, { y = 1 }: BoundaryParams = {}): TransitionConfig {
-  return boundary(ENTER_MS, y)
+export function enterOneShot(node: Element, { y = 1 }: BoundaryParams = {}): TransitionConfig {
+  return boundary(node, ENTER_MS, y)
 }
 
 /** An occasional surface entering on the `--motion-base` tier. */
-export function enterSurface(_node: Element, { y = 1 }: BoundaryParams = {}): TransitionConfig {
-  return boundary(BASE_MS, y)
+export function enterSurface(node: Element, { y = 1 }: BoundaryParams = {}): TransitionConfig {
+  return boundary(node, BASE_MS, y)
 }
 
 /** The symmetric return path, always on the `--motion-fast` tier. */
-export function exitFast(_node: Element, { y = 1 }: BoundaryParams = {}): TransitionConfig {
-  return boundary(FAST_MS, y)
+export function exitFast(node: Element, { y = 1 }: BoundaryParams = {}): TransitionConfig {
+  return boundary(node, FAST_MS, y)
+}
+
+/** Keep the notification stack together as its visible items change. */
+export function moveToast(node: Element, positions: { from: DOMRect; to: DOMRect }) {
+  return flip(node, positions, { duration: prefersReducedMotion() ? 0 : BASE_MS, easing: uiEase })
 }
 
 /** Shared, interruptible dashboard motion. No animation owns persistent styles. */
-const timing = { duration: 240, easing: 'cubic-bezier(0.2, 0, 0, 1)' }
-const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const timing = { duration: ENTER_MS, easing: 'cubic-bezier(0.2, 0, 0, 1)' }
 
 export function animatePanel(node: HTMLElement): Animation | undefined {
-  if (reduced() || !node.animate) return
-  return node.animate([{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'translateY(0)' }], timing)
+  const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+  if (preference.matches || !node.animate) return
+  const { opacity, transform } = restingStyles(node)
+  const animation = node.animate([
+    { opacity: 0, transform: translated(transform, 4) },
+    { opacity, transform: translated(transform, 0) },
+  ], timing)
+  function stop() { if (preference.matches) animation.cancel() }
+  function cleanup() {
+    preference.removeEventListener('change', stop)
+    animation.removeEventListener('finish', cleanup)
+    animation.removeEventListener('cancel', cleanup)
+  }
+  preference.addEventListener('change', stop)
+  animation.addEventListener('finish', cleanup)
+  animation.addEventListener('cancel', cleanup)
+  return animation
 }
 
 /** Animate content changes, never observer-generated layout changes. Grid cards

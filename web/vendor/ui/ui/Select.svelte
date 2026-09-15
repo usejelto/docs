@@ -5,7 +5,7 @@
   }
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="T extends string = string">
   import { Select } from 'bits-ui'
   import './selection.css'
   import Check from '@lucide/svelte/icons/check'
@@ -14,18 +14,21 @@
   import { getContext, type Snippet } from 'svelte'
   import type { HTMLButtonAttributes } from 'svelte/elements'
   import { FIELD, type FieldContext } from './field'
+  import SelectionInput from './SelectionInput.svelte'
 
   let {
     options,
-    value = $bindable(''),
+    value = $bindable('' as T),
     label,
     labelledby,
     placeholder = '',
     displayLabel,
     appearance = 'field',
     icon,
+    optionIcon,
     align = 'start',
     disabled = false,
+    required = false,
     name,
     id,
     triggerProps = {},
@@ -33,24 +36,29 @@
     onValueChange,
   }: {
     options: readonly SelectOption[]
-    value?: string
+    value?: T
     label: string
     labelledby?: string
     placeholder?: string
     /** Optional compact trigger label; the menu retains each complete option. */
     displayLabel?: string
-    appearance?: 'field' | 'compact' | 'pill'
+    appearance?: 'field' | 'compact' | 'pill' | 'quiet'
+    optionIcon?: Snippet<[SelectOption]>
     icon?: Snippet
     align?: 'start' | 'end'
     disabled?: boolean
+    required?: boolean
     name?: string
     id?: string
     ref?: HTMLButtonElement | null
     triggerProps?: HTMLButtonAttributes
-    onValueChange?: (value: string) => void
+    onValueChange?: (value: T) => void
   } = $props()
 
   const field = getContext<FieldContext | undefined>(FIELD)
+  const uid = $props.id()
+  let missingRequired = $state(false)
+  $effect(() => { if (value || disabled || !required) missingRequired = false })
 
   // Bits reserves the empty string for no selection. Encode every option so
   // Pages' real "All" choice (value="") still gets a selected checkmark.
@@ -62,15 +70,15 @@
 
 <Select.Root
   type="single"
-  value={selection}
+  bind:value={() => selection, (next) => {
+    if (!next.startsWith('option:')) return
+    const nextValue = next.slice('option:'.length) as T
+    value = nextValue
+    onValueChange?.(nextValue)
+  }}
   {items}
   {disabled}
   allowDeselect={false}
-  onValueChange={(next) => {
-    if (!next.startsWith('option:')) return
-    value = next.slice('option:'.length)
-    onValueChange?.(value)
-  }}
 >
   <Select.Trigger
     {...triggerProps}
@@ -79,9 +87,9 @@
     class={`card-select__trigger ${triggerProps.class ?? ''}`}
     aria-label={labelledby ? undefined : label}
     aria-labelledby={labelledby}
-    aria-describedby={triggerProps['aria-describedby'] ?? field?.describedby}
-    aria-invalid={triggerProps['aria-invalid'] ?? (field?.invalid || undefined)}
-    title={text}
+    aria-describedby={[triggerProps['aria-describedby'] ?? field?.describedby, required ? `${uid}-required` : undefined].filter(Boolean).join(' ') || undefined}
+    aria-invalid={triggerProps['aria-invalid'] ?? (field?.invalid || missingRequired || undefined)}
+    title={triggerProps.title ?? text}
     data-appearance={appearance}
     data-value={value}
   >
@@ -104,10 +112,13 @@
       <Select.Viewport class="card-select__viewport">
         <Select.Group>
           <Select.GroupHeading class="card-select__heading">{label}</Select.GroupHeading>
-          {#each items as item (item.value)}
-            <Select.Item class="card-select__option" value={item.value} label={item.label}>
+          {#each options as item (item.value)}
+            <Select.Item class="card-select__option" value={`option:${item.value}`} label={item.label}>
               {#snippet children({ selected })}
-                <span class="card-select__option-label">{item.label}</span>
+                <span class="card-select__option-label" class:card-select__option-label--icon={!!optionIcon}>
+                  {#if optionIcon}<span class="card-select__icon" aria-hidden="true">{@render optionIcon(item)}</span>{/if}
+                  {item.label}
+                </span>
                 <span class="card-select__check" aria-hidden="true">
                   {#if selected}<Check size={16} strokeWidth={2} />{/if}
                 </span>
@@ -122,4 +133,5 @@
     </Select.Content>
   </Select.Portal>
 </Select.Root>
-{#if name}<input type="hidden" {name} {value} {disabled} />{/if}
+{#if required}<span class="sr-only" id={`${uid}-required`}>Required</span>{/if}
+<SelectionInput {name} {value} {disabled} {required} trigger={ref} oninvalid={() => missingRequired = true} />

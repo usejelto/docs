@@ -2,7 +2,7 @@
   "name": "shared-ui",
   "version": "1.0.1",
   "producer": "frontend",
-  "producer_commit": "e4a90e0d58aa6618250edaf29f228b2184e8a959",
+  "producer_commit": "7bff388f11932b337a09db0bb7e8f8f4c76b2e33",
   "files": {
     "package.json": {
       "source": "shared-ui.package.json",
@@ -10,11 +10,11 @@
     },
     "styles.css": {
       "source": "src/shared/styles.css",
-      "sha256": "a54ab746dc469c98b5cadcc0aa0d813122a4a11d7004204f8321946f54fded8f"
+      "sha256": "345799219de73cca6f1351da09d6065d76caf85ffa096d48b2daff2c5b8d9a82"
     },
     "test-setup.ts": {
       "source": "src/test-setup.ts",
-      "sha256": "607ff53b05905ce6c3aa419f933948eefa3ba27a57ce3b778b5351d4a8075282"
+      "sha256": "5910f5b2c097110b5404e7b0038dd8e4c0e0ab9134b55ec56856e6a4628ed8a9"
     },
     "ui/Badge.svelte": {
       "source": "src/shared/ui/Badge.svelte",
@@ -46,7 +46,7 @@
     },
     "ui/Checkbox.svelte": {
       "source": "src/shared/ui/Checkbox.svelte",
-      "sha256": "847d02e7db65ef7e66caac8250b84a8b593ac4274153685b0f9803e1baba97a7"
+      "sha256": "9daf79868750713f0e0fa6d1e5570fd156c0bbf4b6f1aca4c8de93ba068fce01"
     },
     "ui/CodeBlock.svelte": {
       "source": "src/shared/ui/CodeBlock.svelte",
@@ -54,7 +54,7 @@
     },
     "ui/Combobox.svelte": {
       "source": "src/shared/ui/Combobox.svelte",
-      "sha256": "aad5de33071de89d2d3bbda9a7a45b5ed067565aae7c0ad94d81b36f917e09fa"
+      "sha256": "9be88ac1d7af31cb0eea0e11fd86a17a2bac040bce4c04a3535e6bdcf1ece936"
     },
     "ui/ConfirmDialog.svelte": {
       "source": "src/shared/ui/ConfirmDialog.svelte",
@@ -62,7 +62,7 @@
     },
     "ui/CopyButton.svelte": {
       "source": "src/shared/ui/CopyButton.svelte",
-      "sha256": "689c2b5bb9c06d54038e55d0b608f1df8f53dcd222e2c3a33eda0f0302384412"
+      "sha256": "ca167bf0db95b60cc1f023b25926a6221e04c547af517235dbe6387e1419f5bc"
     },
     "ui/Dialog.svelte": {
       "source": "src/shared/ui/Dialog.svelte",
@@ -82,7 +82,7 @@
     },
     "ui/FilterChip.svelte": {
       "source": "src/shared/ui/FilterChip.svelte",
-      "sha256": "ef44c666f379f2b9a414f5c7c4317de5158fc57d458a16906707e93a2ac10d3d"
+      "sha256": "419cf71cafcc5b26a1a19297a8618e5f3037f92bc2ad7869605cd1d3b66ed5a9"
     },
     "ui/FormField.svelte": {
       "source": "src/shared/ui/FormField.svelte",
@@ -106,7 +106,7 @@
     },
     "ui/IconButton.svelte": {
       "source": "src/shared/ui/IconButton.svelte",
-      "sha256": "5cec891fe80b07083abf88ba9a65f32d8b4960b36f5600da1e712fb2fda77c00"
+      "sha256": "43a320713b1c93bac6f7b6e8bb814bdfe27c2f49c5c8794fb7d8c49666a618e4"
     },
     "ui/ImagePreview.svelte": {
       "source": "src/shared/ui/ImagePreview.svelte",
@@ -114,7 +114,7 @@
     },
     "ui/index.ts": {
       "source": "src/shared/ui/index.ts",
-      "sha256": "689e1ab427bb6af15eaa1522552ecae8029111ff2935e5cb90041b237c752f77"
+      "sha256": "89588f5469c98fa8ecb6446b16427fb6d66bca0182fea2b2ca5926fa576e6f54"
     },
     "ui/LinkButton.svelte": {
       "source": "src/shared/ui/LinkButton.svelte",
@@ -130,7 +130,7 @@
     },
     "ui/motion.ts": {
       "source": "src/shared/ui/motion.ts",
-      "sha256": "7b5404051a82e09cb078c851740493756070da361848d64cbdb0b35048ee7163"
+      "sha256": "b44bd2f700032032b809625a4268300aa00fb1bd6464a49fc7f93cae0199f53f"
     },
     "ui/NativeSelect.svelte": {
       "source": "src/shared/ui/NativeSelect.svelte",
@@ -146,7 +146,7 @@
     },
     "ui/Popover.svelte": {
       "source": "src/shared/ui/Popover.svelte",
-      "sha256": "47f0ac39cca2a247594be8e8b72f6858bb73e9129743ebc0d3d607829792fdc0"
+      "sha256": "b031eda6b9b397a6a3c2a301156a720ebf48193a213d0db79e1b30d8609cfadb"
     },
     "ui/RadioGroup.svelte": {
       "source": "src/shared/ui/RadioGroup.svelte",
@@ -158,11 +158,15 @@
     },
     "ui/Select.svelte": {
       "source": "src/shared/ui/Select.svelte",
-      "sha256": "7a58cd73b934e7559971db2d392ba624be899276a0f79fd2b7c11df07b438a4e"
+      "sha256": "c02394d70b7bd190bb2a7f61922e533905bb342a2d683943268b65cf732c2bba"
     },
     "ui/selection.css": {
       "source": "src/shared/ui/selection.css",
-      "sha256": "b428fc66aa104c2317119cf580e5d96028f0f30592a5183ae75557bc8760f16d"
+      "sha256": "9d60b3031c45e0bf6c8d85ca1f4132defd61ffc194b12e54a1a91408a54855dc"
+    },
+    "ui/SelectionInput.svelte": {
+      "source": "src/shared/ui/SelectionInput.svelte",
+      "sha256": "d74dcaa39c47d508bfb1a3c20d15ec488b7efb9022410fcb71cfa5f30893a150"
     },
     "ui/Skeleton.svelte": {
       "source": "src/shared/ui/Skeleton.svelte",
@@ -174,7 +178,7 @@
     },
     "ui/Switch.svelte": {
       "source": "src/shared/ui/Switch.svelte",
-      "sha256": "0ed3022d66d8ded0e9701bf882a11359264d00d30cd55f7ecfc49db6ebd0212c"
+      "sha256": "58dd49f80ac909d438eb3446765d80e0004bb32f30291d0b16649a005bf77729"
     },
     "ui/TableContainer.svelte": {
       "source": "src/shared/ui/TableContainer.svelte",
@@ -208,13 +212,25 @@
       "source": "src/shared/ui/TextInput.svelte",
       "sha256": "c3f85e5a7ed345ef66b7a8b06e04d251e3f9e930f2338954209113c8ae9e2a02"
     },
+    "ui/Toast.svelte": {
+      "source": "src/shared/ui/Toast.svelte",
+      "sha256": "46772ffa162cfbfb8e45e87cc403db16e3c257be5932319dcef9383b739ca24e"
+    },
+    "ui/toast.ts": {
+      "source": "src/shared/ui/toast.ts",
+      "sha256": "bf27ce8ad68b454887f7b10d2d37ae44bb98e953c17c25d47dc90babc5bcbc48"
+    },
     "ui/Toolbar.svelte": {
       "source": "src/shared/ui/Toolbar.svelte",
       "sha256": "452c409acae9dafe822ecb408162ff79f64dbe26608db06c480355b71a601b1f"
     },
+    "ui/Tooltip.svelte": {
+      "source": "src/shared/ui/Tooltip.svelte",
+      "sha256": "f71dcfe1579fa51bccfa4604e0a740723cb65239f2b5cbed611e0d6082437dde"
+    },
     "ui/TooltipToggle.svelte": {
       "source": "src/shared/ui/TooltipToggle.svelte",
-      "sha256": "d4382b469956a953ca1eb8578fb26ebd17475cc7efea73f89179fd74e8d5ef35"
+      "sha256": "bea7503923778b1c33154f174192010360f8ac7b5a419b165e6d4fbf2e92938e"
     },
     "ui/types.ts": {
       "source": "src/shared/ui/types.ts",

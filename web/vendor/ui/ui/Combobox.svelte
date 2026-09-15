@@ -14,7 +14,7 @@
   }
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="T extends string = string">
   import { Combobox, Popover } from 'bits-ui'
   import { flushSync, getContext } from 'svelte'
   import type { HTMLButtonAttributes } from 'svelte/elements'
@@ -24,33 +24,38 @@
   import Search from '@lucide/svelte/icons/search'
   import LinkButton from './LinkButton.svelte'
   import { FIELD, type FieldContext } from './field'
+  import SelectionInput from './SelectionInput.svelte'
   import './selection.css'
 
   let {
-    options, value = $bindable(''), label, searchPlaceholder, emptyLabel,
+    options, value = $bindable('' as T), label, searchPlaceholder, emptyLabel,
     placeholder = '', appearance = 'field', disabled = false, createAction,
-    name, id, triggerProps = {}, ref = $bindable(null), onValueChange,
+    name, id, triggerProps = {}, ref = $bindable(null), onValueChange, required = false,
   }: {
     options: readonly ComboboxOption[]
-    value?: string
+    value?: T
     label: string
     searchPlaceholder: string
     emptyLabel: string
     placeholder?: string
     appearance?: 'field' | 'compact' | 'quiet'
     disabled?: boolean
+    required?: boolean
     createAction?: ComboboxCreateAction
     name?: string
     id?: string
     triggerProps?: HTMLButtonAttributes
     ref?: HTMLButtonElement | null
-    onValueChange?: (value: string) => void
+    onValueChange?: (value: T) => void
   } = $props()
 
   const field = getContext<FieldContext | undefined>(FIELD)
+  let missingRequired = $state(false)
+  $effect(() => { if (value || disabled || !required) missingRequired = false })
   const uid = $props.id()
   const listId = `${uid}-options`
   let open = $state(false)
+  $effect(() => { if (disabled) open = false })
   let search = $state('')
   let input = $state<HTMLInputElement | null>(null)
   let action = $state<HTMLAnchorElement | null>(null)
@@ -105,8 +110,8 @@
     {disabled}
     class={`card-select__trigger ui-combobox__trigger ${triggerProps.class ?? ''}`}
     aria-label={label}
-    aria-describedby={[triggerProps['aria-describedby'] ?? field?.describedby, selected ? `${uid}-value` : undefined].filter(Boolean).join(' ') || undefined}
-    aria-invalid={triggerProps['aria-invalid'] ?? (field?.invalid || undefined)}
+    aria-describedby={[triggerProps['aria-describedby'] ?? field?.describedby, selected ? `${uid}-value` : undefined, required ? `${uid}-required` : undefined].filter(Boolean).join(' ') || undefined}
+    aria-invalid={triggerProps['aria-invalid'] ?? (field?.invalid || missingRequired || undefined)}
     title={[text, selected?.description, selected?.trailingText].filter(Boolean).join(' · ')}
     data-appearance={appearance}
     data-value={value}
@@ -141,17 +146,18 @@
     >
       <Combobox.Root
         type="single"
+        {disabled}
         open={true}
-        value={selection}
+        bind:value={() => selection, (next) => {
+          if (disabled || !next.startsWith('option:')) return
+          const nextValue = next.slice('option:'.length) as T
+          value = nextValue
+          onValueChange?.(nextValue)
+        }}
         inputValue={search}
         {items}
         allowDeselect={false}
         onOpenChange={(next) => { if (!next) open = false }}
-        onValueChange={(next) => {
-          if (!next.startsWith('option:')) return
-          value = next.slice('option:'.length)
-          onValueChange?.(value)
-        }}
       >
         <div class="ui-combobox__search">
           <Search size={16} strokeWidth={1.5} aria-hidden="true" />
@@ -159,6 +165,7 @@
             bind:ref={input}
             class="ui-combobox__input"
             aria-label={searchPlaceholder}
+            aria-required={required || undefined}
             aria-controls={listId}
             placeholder={searchPlaceholder}
             autocomplete="off"
@@ -221,7 +228,8 @@
     </Popover.Content>
   </Popover.Portal>
 </Popover.Root>
-{#if name}<input type="hidden" {name} {value} {disabled} />{/if}
+{#if required}<span class="sr-only" id={`${uid}-required`}>Required</span>{/if}
+<SelectionInput {name} {value} {disabled} {required} trigger={ref} oninvalid={() => missingRequired = true} />
 
 <style>
   :global(.ui-combobox__trigger[data-appearance='quiet']) {

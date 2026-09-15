@@ -90,32 +90,39 @@ if (typeof (globalThis as { ResizeObserver?: unknown }).ResizeObserver !== 'func
 // keyframes on the next microtask. Product code still runs the real browser
 // implementation; this only lets tests observe the settled DOM.
 if (typeof Element !== 'undefined' && typeof Element.prototype.animate !== 'function') {
+  class AnimationStub extends EventTarget {
+    finished = Promise.resolve()
+    currentTime = 0
+    effect = {} as AnimationEffect | null
+    playState: AnimationPlayState = 'running'
+    onfinish: (() => void) | null = null
+    oncancel: (() => void) | null = null
+
+    constructor() {
+      super()
+      this.play()
+    }
+
+    play() {
+      this.playState = 'running'
+      queueMicrotask(() => {
+        if (this.playState !== 'running') return
+        this.playState = 'finished'
+        this.onfinish?.()
+        this.dispatchEvent(new Event('finish'))
+      })
+    }
+
+    cancel() {
+      if (this.playState === 'idle') return
+      this.playState = 'idle'
+      this.oncancel?.()
+      this.dispatchEvent(new Event('cancel'))
+    }
+  }
   Object.defineProperty(Element.prototype, 'animate', {
     configurable: true,
-    value: () => {
-      let handler: (() => void) | null = null
-      const animation = {
-        finished: Promise.resolve(),
-        currentTime: 0,
-        effect: {} as AnimationEffect | null,
-        playState: 'running' as AnimationPlayState,
-        cancel() {
-          animation.playState = 'idle'
-        },
-        get onfinish() {
-          return handler
-        },
-        set onfinish(next: (() => void) | null) {
-          handler = next
-          queueMicrotask(() => {
-            if (handler !== next || next === null) return
-            animation.playState = 'finished'
-            next()
-          })
-        },
-      }
-      return animation as unknown as Animation
-    },
+    value: () => new AnimationStub() as unknown as Animation,
   })
 }
 

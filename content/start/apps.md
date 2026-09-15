@@ -9,6 +9,9 @@ summary: "Register an app slug, choose an SDK, and verify the first app activity
 
 Use an app SDK to measure active installs, versions and custom app events. Adding a website script does not instrument a desktop app.
 
+Already have users? Read [Add Jelto to an app with existing users](existing-app.md)
+for install coverage, the first version baseline and cohort limits after adoption.
+
 ## Connect the app
 
 When adding a website, enable **This website also has an app** to include **Set up SDK** in the guided setup. You can register the app and copy its SDK prompt there, or skip it and return through Settings later.
@@ -16,7 +19,7 @@ When adding a website, enable **This website also has an app** to include **Set 
 1. Open your product's **Settings → Installation → Apps**.
 2. Register a short app slug for each app you want to distinguish, such as `desktop`. Use the exact registered slug in initialization.
 3. Choose [Swift](../sdk/swift.md), [Electron Forge](../sdk/electron-forge.md), [Electron Vite](../sdk/electron-vite.md), [Tauri](../sdk/tauri.md), or [.NET](../sdk/dotnet.md).
-4. Initialize once when your app decides telemetry may start. Keep secret server API keys out of desktop binaries.
+4. Initialize once when your app decides telemetry may start. Classify the installation with `installOrigin` from saved host state: `new`, `existing`, or `unknown`; see [the adoption guide](existing-app.md). Keep secret server API keys out of desktop binaries.
 5. [Register custom events](../goals/create-goal.md) before sending them.
 
 ## Set up with AI

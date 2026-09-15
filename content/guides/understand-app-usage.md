@@ -206,6 +206,12 @@ To set a manual version, send `{"latest_version":"2.4.1"}`; this disconnects app
 
 ## Follow onboarding to an outcome
 
+The Onboarding card measures explicitly new install cohorts. Set the SDK's optional
+`installOrigin` from saved host state; existing and unknown origins are excluded.
+The [existing-app adoption guide](../start/existing-app.md) explains classification
+and the effect on historical cohorts. Custom app funnels below count observed entry
+events and do not require a new-install claim.
+
 Use an [app funnel](../app/funnels.md) to measure an ordered journey such as `onboarding:welcome → onboarding:complete → upgrade_click`. Open **Settings → Events & funnels → Funnels → Add funnel**, choose **App**, and use the exact onboarding or custom event names your SDK sends.
 
 The report counts installs entering step 1 during the selected dates. Later steps can occur on later days, through the last completed day when you query. Repeated events count once per step, and an event that happens before its preceding step does not advance the journey. Recent cohorts need time to progress; counts below five installs are suppressed.
@@ -216,11 +222,11 @@ An onboarding step matches its name regardless of `ok`, `fail` or `skip` status.
 
 Report the `license` install property with your desktop SDK’s install-property setter when the license changes.
 
-Accepted license values are strings matching `^[a-z0-9_.-]{1,24}$`, such as `free`, `trial`, `paid` or `expired`; these examples are not a fixed enum. Uppercase letters, spaces and values longer than 24 characters are rejected. `license_share` breaks the live install fleet down by the stored `license` value. `license_conversion` counts an install as converted only when its latest stored `license` equals the product's `paid_license_value` setting by string equality; the setting defaults to `paid`. If no stored values ever match, an otherwise reportable cohort stays at a true, permanent 0 % even though the query succeeds; align the value in the product settings or through the account API's `paid_license_value` field.
+Accepted license values are strings matching `^[a-z0-9_.-]{1,24}$`, such as `free`, `trial`, `paid` or `expired`; these examples are not a fixed enum. Uppercase letters, spaces and values longer than 24 characters are rejected. `license_share` breaks the live install fleet down by the stored `license` value. `license_conversion` includes only explicitly new install cohorts; existing and unknown origins are excluded. It counts an eligible install as converted only when its latest stored `license` equals the product's `paid_license_value` setting by string equality; the setting defaults to `paid`. If no stored values ever match, an otherwise reportable cohort stays at a true, permanent 0 % even though the query succeeds; align the value in the product settings or through the account API's `paid_license_value` field.
 
 ## Put retention in context
 
-The **Retention** card offers **D1**, **D7**, and **D30**. A cohort needs time to reach the day being measured; recent installs may not yet qualify. Treat unavailable retention as unavailable, rather than assuming nobody returned.
+The **Retention** card offers **D1**, **D7**, and **D30** for explicitly new install cohorts. Existing and unknown installation origins are excluded. A cohort needs time to reach the day being measured; recent installs may not yet qualify. Treat unavailable retention as unavailable, rather than assuming nobody returned.
 
 **Download to Install** is a period ratio. Downloads and installs counted in the same period can belong to different people, so it is not a person-by-person conversion funnel.
 

@@ -9,6 +9,9 @@ summary: "Run Jelto in the Electron Forge main process and forward only declared
 
 Measure desktop app activity from the Electron main process.
 
+For an established app, read [Add Jelto to an app with existing users](../start/existing-app.md)
+before interpreting install counts, update history or cohorts.
+
 ## Set up with AI
 
 For a copyable setup prompt with your app details, open **Settings → Installation
@@ -59,6 +62,24 @@ jelto.track('export_finished', { format: 'pdf' })
 
 Keep the SDK in the main process. If an action starts in the renderer, expose a narrow method through your existing preload bridge and IPC handler. For example, forward an export-completed action with an allowlisted format. Do not expose arbitrary event names, arbitrary payload forwarding or SDK initialization to remote renderer content.
 
+## New and existing installations
+
+When using a version with install-origin support, pass the host's classification
+at initialization. For an installation that already existed before Jelto:
+
+```ts
+jelto.init('YOUR_PRODUCT_ID', 'desktop', undefined, 'existing')
+```
+
+Use `new` only when the host knows this is the app's first launch; use `existing`
+for a saved earlier installation and `unknown` when uncertain (the default).
+Pass the lowercase string as the fourth argument, after the optional endpoint.
+Read saved host state before changing it; never send a first-launch date.
+The first claim freezes the classification across retries and later launches.
+Older claims stay unknown and are excluded from new-install cohorts. See
+[Add Jelto to an app with existing users](../start/existing-app.md) for rollout,
+coverage and cohort rules.
+
 ## Onboarding and custom events
 
 The onboarding call sends `onboarding:<step>` with a status and optional reason:
@@ -72,7 +93,7 @@ The step must match `^[a-z0-9_-]{1,32}$`: 1–32 lowercase ASCII letters, digits
 
 Enable local debug logging with `JELTO_DEBUG=1`.
 
-Steps feed `onboarding_reached`, `onboarding_ok`, `onboarding_fail` and `onboarding_skip`, broken down by `onboarding_step`; status reports use each install's first result for that step. They also feed `onboarding_reason`, which groups failures by `onboarding_reason` and requires an `onboarding_step` filter. `onboarding_cohort` supplies the install population, and `onboarding_completed` uses the final step's `ok` result.
+Steps feed `onboarding_reached`, `onboarding_ok`, `onboarding_fail` and `onboarding_skip`, broken down by `onboarding_step`; status reports use each install's first result for that step. They also feed `onboarding_reason`, which groups failures by `onboarding_reason` and requires an `onboarding_step` filter. `onboarding_cohort` supplies the explicitly new install population (existing and unknown origins are excluded), and `onboarding_completed` uses the final step's `ok` result.
 
 Every valid `jelto.track()` event received by Jelto becomes `goal:<name>` on the app surface, with per-install conversion and `prop:<key>` breakdowns. Custom events and their property keys are discovered on first receipt; no event or goal registration is required. For the export example, query `goal:export_finished` with `surface=app` and `dimension=prop:format`.
 

@@ -18,11 +18,16 @@ and does not block installing website analytics.
    `organizations:read`, `products:read`,
    `orders:read`, `refunds:read`, `subscriptions:read`, `webhooks:read` and
    `webhooks:write`, then paste it in Jelto.
-3. Confirm the organization and select its products for this website. Jelto
-   stores this explicit selection and applies it to reads and webhooks. An empty
-   product selection includes all products in the selected organization.
-4. Choose whether to import retained history and connect. Jelto creates its
-   webhook for live payment updates.
+3. Confirm the organization belonging to this website. Choose **Selected products only**
+   and select at least one product, or explicitly choose **All products in this account**.
+   Jelto applies the saved scope to reads and webhooks.
+4. Choose whether to import retained history.
+5. Choose **Review connection**, check the environment, organization, products and
+   history, then confirm. Jelto creates its webhook for live payment updates.
+   Product scope locks after payments are imported.
+
+See [history options and reconnecting](connect.md) for the UTC start-date rules
+and how an existing connection preserves its saved scope and history bounds.
 
 If manual Payments API history exists, choose an explicit import start date
 after it and stop duplicate manual events at the cutover.

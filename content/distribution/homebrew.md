@@ -21,7 +21,7 @@ App activity, versions and retention describe SDK observations after launch. Ins
 
 The download-to-install metric compares totals for the chosen period. Installs from package managers may have no corresponding website click, so the populations differ and a percentage may be unavailable. Do not read it as the percentage of individual downloaders who installed.
 
-A real `.dmg`, `.exe` or other supported file link on a tracked website can produce a download click. Copying an installation command is a different action; if useful, register a custom copy-command goal rather than pretending it was a file download.
+A real `.dmg`, `.exe` or other supported file link on a tracked website can produce a download click. To measure copying an installation command, send a [custom event](../goals/create-goal.md) after the copy succeeds. Jelto discovers the goal on receipt; copying a command does not establish a download or installation.
 
 ## Verify
 

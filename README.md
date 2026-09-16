@@ -17,14 +17,18 @@ by an explicit maintainer update that reviews the pin diff, never by a build; ru
 its normal package dependencies.
 
 From this directory: `npm ci`, `npm run build`, `npm test`, `npm run check`,
-`npm run check:content`, and `go test ./...`. Build assets before the Go checks
-to include the rendered asset and logo assertions.
+`npm run check:content`, and `GOFLAGS=-mod=readonly GOWORK=off go test ./...`.
+Build assets before the Go checks to include the rendered asset and logo assertions.
 
 - `npm run check:content`: validate all public pages, metadata, links and boundaries.
 - `npm run build:agents`: generate agent copies and `llms.txt` from the same sources.
 - `npm run build`: build browser enhancements into `dist/`.
 - `npm test` and `npm run check`: run the browser and type checks.
-- `go test ./... -count=1`: verify public serving, search and content boundaries.
+- `GOFLAGS=-mod=readonly GOWORK=off go test ./... -count=1`: verify public serving, search and content boundaries.
+
+Use the same Go flags as CI. The root `vendor/` holds packaging tools, not Go
+dependencies; `-mod=readonly` keeps Go from treating it as a Go vendor tree.
+`GOWORK=off` keeps checks independent of any parent workspace.
 
 `agents/`, `llms.txt` and `dist/` are generated outputs. Only manifest-listed
 guides and approved assets are served: this README, the server sources and the

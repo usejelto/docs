@@ -17,9 +17,9 @@ Have access to your Jelto account and to the website or app you want to measure.
 
 1. Open **All products → New product**. The initial form is **Add a website**.
 2. For a website, enter **Website URL** and **Website name**, check **Reporting timezone**, then choose **Create website**. The URL accepts a full address or hostname; use the main published host.
-3. If you only have a desktop app, choose **I only have an app** enter the app product name, check its reporting timezone and choose **Create an app product**. You can add a website later.
-4. Website creation opens **Settings → Installation** with the product's script. Open **Allowed hostnames** and register additional hosts that will send traffic, including `www` or a documentation subdomain when used.
-5. For a desktop app, open **Installation → Apps**, add its platform and app slug, and use that slug when initializing the SDK.
+3. If you only have a desktop app, choose **I only have an app**, enter the app product name, check its reporting timezone and choose **Create an app product**. You can add a website later.
+4. Website creation opens the guided **Install tracking** step, followed by optional revenue setup. Enable **This website also has an app** to include **Set up SDK**. You can finish later and return through **Finish setup** in the product list.
+5. In **Settings → Installation → Allowed hostnames**, register additional hosts that will send traffic, including `www` or a documentation subdomain when used. For a desktop app, open **Settings → Installation → Apps**, add its platform and app slug, and use that slug when initializing the SDK. App-only creation opens that Apps page directly.
 6. Use **Settings → Overview** to review the product name and reporting timezone before comparing dates.
 
 ## Connect the first source
@@ -30,7 +30,7 @@ Have access to your Jelto account and to the website or app you want to measure.
 
 ## Check the result
 
-Follow [Verify website tracking](verify.md), or launch an app with its SDK initialized. Then [read your dashboard](../guides/read-your-dashboard.md). Empty cards before any data arrives do not mean that you need to create another product.
+Follow [Verify website tracking](verify.md) or the [per-app activity checks](apps.md#verify-app-activity). Then [read your dashboard](../guides/read-your-dashboard.md). Empty cards before any data arrives do not mean that you need to create another product.
 
 ## Next steps
 

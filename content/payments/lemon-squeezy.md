@@ -14,10 +14,15 @@ analytics and funnels can be set up independently of payment connections.
 
 1. Create a named Lemon Squeezy API key for **Live** or **Test** mode.
 2. Paste it in Jelto and verify the accessible stores and products.
-3. Select the store and products belonging to this website. An empty product
-   selection includes all products in that store.
-4. Choose whether to import retained history, then connect. Jelto automatically
-   sets up payment notifications for that store.
+3. Select the store belonging to this website. Choose **Selected products only**
+   and select at least one product, or explicitly choose **All products in this account**.
+4. Choose whether to import retained history.
+5. Choose **Review connection**, check the environment, store, products and history,
+   then confirm. Jelto automatically sets up payment notifications for that store.
+   Product scope locks after payments are imported.
+
+See [history options and reconnecting](connect.md) for the UTC start-date rules
+and how an existing connection preserves its saved scope and history bounds.
 
 Lemon Squeezy keys are not scoped read-only credentials. Jelto reads your
 store/catalog, orders, subscriptions and invoices and manages its own webhook.

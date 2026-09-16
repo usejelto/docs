@@ -20,7 +20,7 @@ Use [Filter your data](../guides/filter-your-data.md) to see the controls. Remov
 
 ## Event conditions
 
-**Did an event** and **Did not do an event** select website sessions with or without the registered goal during the selected interval. Optional property conditions qualify that event. Conditions combine with AND; this is not a nested rules editor.
+**Did an event** and **Did not do an event** select website sessions with or without the selected goal during the selected interval. Custom event names and property keys appear after Jelto receives them; no registration is required. Optional property conditions qualify that event. Conditions combine with AND; this is not a nested rules editor.
 
 For example, select visits that did `signup` with `plan=pro`, then inspect their sources. Use the selected date range consistently. Unsupported app, imported-history or revenue populations can show unavailable results rather than a guessed count.
 

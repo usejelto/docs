@@ -18,12 +18,17 @@ optional; website analytics can start before you connect a payment account.
    Checkout Sessions and line items, Products, Subscriptions, and Invoices (including invoice
    payments). Paste its `rk_live_…` or `rk_test_…` value. Unrestricted customer
    `sk_…` keys are not accepted.
-3. Select the merchant and products belonging to this website. An empty product
-   selection includes all merchant products. Mixed-product orders are included
-   only when every product belongs to the selected scope.
+3. Select the merchant belonging to this website. Choose **Selected products only**
+   and select at least one product, or explicitly choose **All products in this account**.
+   Mixed-product orders are included only when every product belongs to the selected scope.
 4. Choose whether to import retained history. Original dates are preserved. If
    manual Payments API history exists, choose an explicit import start date
    after it and stop sending those same payments manually at the cutover.
+5. Choose **Review connection**, check the environment, merchant, products and
+   history, then confirm the connection. Product scope locks after payments are imported.
+
+See [history options and reconnecting](connect.md) for the UTC start-date rules
+and how an existing connection preserves its saved scope and history bounds.
 
 The connection works through automatic API synchronization, normally hourly.
 Optionally grant **Webhook Endpoints: Write** on the restricted key: Jelto

@@ -28,7 +28,7 @@ npm run build
 npm test
 npm run check
 npm run check:content
-go test ./... -count=1
+GOFLAGS=-mod=readonly GOWORK=off go test ./... -count=1
 ```
 
 Guide prose, navigation and images live in `content/`. Go handlers, search and templates live in this directory; browser enhancements live in `web/`. Build the assets before the Go checks so the rendered-asset assertions run.

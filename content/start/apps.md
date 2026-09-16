@@ -20,7 +20,7 @@ When adding a website, enable **This website also has an app** to include **Set 
 2. Register a short app slug for each app you want to distinguish, such as `desktop`. Use the exact registered slug in initialization.
 3. Choose [Swift](../sdk/swift.md), [Electron Forge](../sdk/electron-forge.md), [Electron Vite](../sdk/electron-vite.md), [Tauri](../sdk/tauri.md), or [.NET](../sdk/dotnet.md).
 4. Initialize once when your app decides telemetry may start. Classify the installation with `installOrigin` from saved host state: `new`, `existing`, or `unknown`; see [the adoption guide](existing-app.md). Keep secret server API keys out of desktop binaries.
-5. [Register custom events](../goals/create-goal.md) before sending them.
+5. Send custom events for actions you want to measure. Jelto discovers valid event names and property keys on first receipt; no preregistration is needed. See [custom goals](../goals/create-goal.md).
 
 ## Set up with AI
 
@@ -49,10 +49,14 @@ prompt or passing a build does not verify incoming app activity.
 
 ## Verify app activity
 
-Launch the app and keep it open long enough to send queued activity. Check app metrics in the correct product and date range. The SDK queues daily activity and the first install claim immediately on first initialization. Do not repeatedly reset an install ID to test counts.
+Use a separate Jelto product for development tests. For production, launch each packaged app with telemetry allowed and keep it open long enough to send queued activity. In **Settings → Installation → Apps**, choose **Check app activity**. Each registered app shows its own retained heartbeat receipt and observed version; a receipt from macOS does not verify Windows. A quiet receipt still verifies the SDK but does not claim current activity. No retained heartbeat means unverified, not proof that an app has never reported. Failed checks remain unknown and can be retried.
+
+The SDK queues daily activity and the first install claim immediately on first initialization. Do not repeatedly reset an install ID to test counts.
 
 Version adoption requires known app versions. Retention needs time and a sufficiently mature sample. Read [Understand app usage](../guides/understand-app-usage.md) before interpreting an empty or unavailable metric.
 
 ## Website and app together
 
 You can compare website visits, download clicks and app installs in one product. A download-to-install period ratio does not identify which visitor installed your app. See [distribution channels](../distribution/homebrew.md) for what each delivery method can report.
+
+The per-app checks also show retained install classifications, optional license evidence and the published version. Review unknown origins in the host integration. A missing paid match can mean either that paid customers have not reported or that the entitlement mapping needs correction; check the actual saved state before changing it. These checks never reconstruct earlier history.

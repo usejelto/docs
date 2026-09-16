@@ -23,8 +23,9 @@ Use Revenue to see payments and refunds alongside your website analytics. There 
 1. Open **Settings → Revenue** and choose **Payment provider**.
 2. Select **Test** to verify with the provider's test environment, or **Live** for real payments. Keep the account, checkout and helper in the same environment.
 3. Follow the provider guide to create the required credential. Paste it only into the connection field; it never belongs in your website code.
-4. Select the correct merchant/store/organization and product scope. An empty product selection includes all products in that selected account scope.
-5. Review history import and its start date, then connect. If you previously sent these transactions through the Payments API, choose a cutover that avoids counting them twice.
+4. Select the correct merchant/store/organization. Choose **Selected products only** and select at least one product, or explicitly choose **All products in this account**. Scope locks after payments are imported, so check accounts shared by multiple websites carefully.
+5. Choose whether to **Import historical payments**. With history enabled, you can choose a start date at midnight UTC within retention; leave it blank for all retained history. Turn history off to collect from connection onward. If you previously sent these transactions through the Payments API, choose a cutover that avoids counting them twice.
+6. Choose **Review connection**, check the provider, test/live environment, account, products and history, then connect. Review does not send a connection request until you confirm it.
 
 
 [![Wide Revenue settings with badge 1 outlining Payment provider set to Stripe and Environment set to Live; connection is not configured.](../images/20-revenue-provider.png)](../images/20-revenue-provider.png)
@@ -77,3 +78,7 @@ Jelto extends existing managed webhook endpoints during synchronization. Credent
 History recovers milestones with provider dates. It cannot reconstruct every past plan change or cancellation reversal without an earlier observed state. Metered, tiered or otherwise incomparable prices do not produce guessed upgrade or downgrade goals.
 
 Use the [checkout helper](browser-attribution.md) to link verified goals to existing website visits. **Linked visitors** supports conversion, KPI selection, visitor filters and website funnel steps. **Completions** also includes payments without a usable reference; **Unlinked completions** shows that gap. App payment goals remain completion-only.
+
+## Reconnect an existing account
+
+Use the same provider, environment and merchant when replacing credentials or resuming a disconnected account. After discovery, Jelto identifies the saved connection and shows its existing product scope and history bounds for review. Reconnecting keeps those settings and resumes synchronization; it does not import a newly selected date range or move payments between products. If the saved connection changed, review the current settings again. Scope changes remain available only before payments have been imported.

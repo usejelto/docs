@@ -15,6 +15,22 @@ Follow [Connect a desktop app](apps.md) and your SDK's setup guide as usual. Kee
 initialization behind your app's telemetry choice and preserve the SDK's install
 identity across launches and updates.
 
+Enable **I’m adding Jelto to an existing product** during setup to reveal the adoption guidance. The preference is saved with the product and shared with authorized team members across devices. It changes the guide, not the classification of your installations. Manual SDK examples deliberately start with `unknown`; replace it with the classification derived from each installation's saved state before distributing your build.
+
+## Prepare current state and verify the rollout
+
+1. Test a clean first launch, an upgrade from a pre-Jelto build, an installation with uncertain history, and telemetry disabled. Use a separate Jelto product for development tests and preserve production analytics identity across upgrades.
+2. After initialization, read and send the current license from your saved entitlement state, including for already-paid users. Continue sending changes afterward. Use `paid` for the default paid-license match, or align your custom license value with `paid_license_value`. Waiting for a future purchase or license change leaves existing customers without this state.
+3. Set the published version separately for every registered app. The first SDK-enabled launch establishes a version baseline; it does not reconstruct an earlier update.
+4. In **Settings → Installation → Apps**, check each app's receipt, install classifications, license evidence, configured paid match, and published versus received version after launching its packaged production build. An unverified registration needs its own check even if another platform works.
+5. Do not replay old onboarding completions, payments or updates as events happening today. Provider payment history is connected separately and retains its provider dates.
+
+App-only products also show a setup checklist for activity, install classification, optional license reporting, and published versions. A retained receipt proves that something arrived for that app; it does not prove correct host logic or complete user coverage. Missing retained evidence is not proof that a signal was never sent.
+
+Both the AI setup prompt and manual instructions cover current-license bootstrap and subsequent entitlement changes. If your app has no license model, this step is optional.
+
+Each SDK's setup instructions include **Existing licenses, published version and report readiness** with a license example and links to the relevant configuration.
+
 ## Why the install count starts below your real install base
 
 Only users who upgrade to an SDK-enabled version, open it, permit collection and

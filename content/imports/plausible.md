@@ -9,6 +9,14 @@ summary: "Preview a site export and bring supported historical aggregates into J
 
 Bring existing reporting history with you when moving from Plausible. Jelto imports supported daily aggregates, not raw visitor journeys.
 
+## Plan the move before collecting traffic
+
+Jelto currently accepts Plausible site-settings exports. Exports from other analytics tools, historical app activity and customer records cannot be imported through this flow. Keep those reports in the original tool for historical reference.
+
+Match your Jelto product's reporting timezone to the export before collecting data. Daily aggregates cannot be moved into a different timezone. Only dates within your retention period and strictly before the first native Jelto day are eligible. Even one development or test visit received by your production product can establish that cutoff. Use a separate product for testing, then review the import preview against your intended production start. Once reserved by an import, the cutoff is retained for later uploads.
+
+Keep the old tracker during verification and compare a completed day using the same timezone and comparable metrics. Differences in bot filtering, identity and reporting definitions can produce different counts; an import does not make those definitions identical.
+
 ## Prepare the export
 
 In Plausible, export the site's data from its site settings. Use the ZIP containing the CSV reports, rather than a single dashboard chart export. Note the timezone used by those daily reports and when native Jelto collection started.
@@ -16,7 +24,7 @@ In Plausible, export the site's data from its site settings. Use the ZIP contain
 ## Preview and import
 
 1. Open **Settings → Privacy & data → Imports** in the intended Jelto product.
-2. Choose the Plausible ZIP and its reporting timezone, then upload it for **Preview**.
+2. Choose the Plausible ZIP and confirm that its reporting timezone matches the product timezone shown, then upload it for **Preview**. If it differs, correct the product timezone before importing.
 3. Review dates, report families, row counts, skipped rows and warnings. Check the proposed cutover against the start of Jelto collection to avoid overlapping native and imported reporting.
 4. Start the import only after that preview matches your intended history.
 5. Wait for processing to complete. Uploading alone does not activate the history.

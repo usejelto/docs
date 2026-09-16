@@ -17,11 +17,13 @@ If your website also has a macOS, Windows or Linux app, enable **This website al
 
 You can choose **Finish later** and return through **Finish setup** in the product list. Existing websites can also use **Settings → Installation**, where you can add more allowed hostnames and change tracking preferences.
 
+If the product already has users or reporting history, enable **I’m adding Jelto to an existing product**. This saves a setup preference for this product, shared with your team across devices; it does not classify app installations or change collection. Review [Plausible migration](../imports/plausible.md) before your first production visit. Match the source reporting timezone first and use a separate Jelto product for development tests. Keep your previous analytics while verifying coverage across your production pages and hostnames.
+
 ## Install the script
 
 ### Set up with AI
 
-In the **Install tracking** step, **Set up with AI** is selected for you. Check the target hostname
+In the **Install tracking** step, switch from **Install manually** to **Set up with AI**. Check the target hostname
 and optionally choose your framework; **Let my assistant detect** lets your
 coding assistant inspect the repository. Choose **Copy prompt**, then paste it
 into Cursor, Claude Code, Codex or another coding assistant with your project open.

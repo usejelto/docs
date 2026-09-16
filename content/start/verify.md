@@ -30,7 +30,7 @@ A recent pageview from the selected hostname confirms collection for that page. 
 - Check the live site's HTML for your product ID and the script URL.
 - Confirm the script loads and the collection request is allowed by the site's CSP.
 - Try a browser without a blocker affecting the tracking host.
-- Register the hostname actually shown in the address bar. Redirects may change it.
+- Register the hostname actually shown in the address bar. Redirects may change it. In guided setup, choose **Add hostname** beside the installation check; existing hostnames are kept, and the new hostname is selected for its own check.
 - Localhost, `file:` pages, automation and `?jelto_ignore=1` are excluded by default. Use the explicit [local testing option](../web/configuration.md#local-testing) for localhost; automated visits are not a substitute for this check.
 
 See [No data arriving](../troubleshooting/no-data.md) for a focused checklist.

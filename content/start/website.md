@@ -11,7 +11,7 @@ Add one Jelto script to your site's shared HTML. It collects pageviews and suppo
 
 ## Before you start
 
-Choose **Add website**, enter your website address, and check its name and reporting timezone. Creating the website registers that hostname and opens a three-step setup: **Add website → Install tracking → Connect revenue (optional)**. Have permission to edit and publish your website.
+Choose **Add website**, enter your website address, and check its name and reporting timezone. Creating the website registers that hostname and opens guided setup: **Add website → Install tracking → First goal (optional) → Connect revenue (optional)**. Have permission to edit and publish your website.
 
 If your website also has a macOS, Windows or Linux app, enable **This website also has an app**. This adds an optional **Set up SDK** step after website tracking. Your choice is remembered for this product in your browser; products with a registered app include that step automatically. You can also enable it from the installation step later.
 
@@ -83,3 +83,17 @@ For Paddle or another provider, choose **Other / Payments API** for the server i
 If only the homepage appears, move the tag to the shared layout. If nothing arrives, check the hostname, content security policy, blocker extensions and [missing-data guide](../troubleshooting/no-data.md). If counts look doubled, check for [duplicate installations](../troubleshooting/duplicate-pageviews.md).
 
 For optional behavior, use [Script configuration](../web/configuration.md).
+
+## Track your first important action
+
+After the installation check, choose **Continue to your first goal**. Name a
+successful action, such as `signup`, and add the generated call after that action
+succeeds. Publish, perform the action in your site, then choose **Check goal**.
+The check confirms discovery of that custom event on the selected surface; check
+the Goals card with today included and filters cleared to verify the latest
+completion. Copying code alone does not verify a goal. This step is optional.
+
+Your required setup is complete once website collection is verified. Revenue and
+checkout remain optional next steps. Choose **Not applicable** for a feature you
+do not need; that choice is saved in this browser and can be reversed. SDK and
+revenue checkmarks in guided setup use actual receipts and connections.

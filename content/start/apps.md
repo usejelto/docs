@@ -49,7 +49,7 @@ prompt or passing a build does not verify incoming app activity.
 
 ## Verify app activity
 
-Use a separate Jelto product for development tests. For production, launch each packaged app with telemetry allowed and keep it open long enough to send queued activity. In **Settings → Installation → Apps**, choose **Check app activity**. Each registered app shows its own retained heartbeat receipt and observed version; a receipt from macOS does not verify Windows. A quiet receipt still verifies the SDK but does not claim current activity. No retained heartbeat means unverified, not proof that an app has never reported. Failed checks remain unknown and can be retried.
+Use a separate Jelto product for development tests. The trial includes two product slots for this purpose; use a different product key in development. Before choosing Starter, remove the test product and wait for deletion to finish, or choose Growth to keep both. For production, launch each packaged app with telemetry allowed and keep it open long enough to send queued activity. In **Settings → Installation → Apps**, choose **Check app activity**. Each registered app shows its own retained heartbeat receipt and observed version; a receipt from macOS does not verify Windows. A quiet receipt still verifies the SDK but does not claim current activity. No retained heartbeat means unverified, not proof that an app has never reported. Failed checks remain unknown and can be retried.
 
 The SDK queues daily activity and the first install claim immediately on first initialization. Do not repeatedly reset an install ID to test counts.
 
@@ -60,3 +60,14 @@ Version adoption requires known app versions. Retention needs time and a suffici
 You can compare website visits, download clicks and app installs in one product. A download-to-install period ratio does not identify which visitor installed your app. See [distribution channels](../distribution/homebrew.md) for what each delivery method can report.
 
 The per-app checks also show retained install classifications, optional license evidence and the published version. Review unknown origins in the host integration. A missing paid match can mean either that paid customers have not reported or that the entitlement mapping needs correction; check the actual saved state before changing it. These checks never reconstruct earlier history.
+
+## Track your first important action
+
+After registering your app, **Track your first important action** appears on the
+Apps page. Choose an event name and SDK, place the call after the action succeeds,
+publish the app, and perform that action with telemetry allowed. **Check goal**
+checks the app event catalog independently of website events. Use the dashboard’s
+Goals card to verify the latest completion. License and published-version steps
+are optional; mark them **Not applicable** in the setup checklist when appropriate.
+
+Product deletion has a seven-day cancellation window. Allow at least seven days for the development product to be deleted before switching to a one-product plan.

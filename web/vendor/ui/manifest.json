@@ -2,7 +2,7 @@
   "name": "shared-ui",
   "version": "1.0.1",
   "producer": "frontend",
-  "producer_commit": "7bff388f11932b337a09db0bb7e8f8f4c76b2e33",
+  "producer_commit": "be2f3d773e17a9d010c8aef152973745ddd81d93",
   "files": {
     "package.json": {
       "source": "shared-ui.package.json",
@@ -130,7 +130,7 @@
     },
     "ui/motion.ts": {
       "source": "src/shared/ui/motion.ts",
-      "sha256": "b44bd2f700032032b809625a4268300aa00fb1bd6464a49fc7f93cae0199f53f"
+      "sha256": "c9916ccaab9ca89b238465e57114c1a0a06cd56f514d1379d2ffc15a3d280176"
     },
     "ui/NativeSelect.svelte": {
       "source": "src/shared/ui/NativeSelect.svelte",
@@ -198,7 +198,7 @@
     },
     "ui/TabsRoot.svelte": {
       "source": "src/shared/ui/TabsRoot.svelte",
-      "sha256": "b3f476394805a57d99360324296ec4b2c7113e65b3fa66b703fae32688145ec7"
+      "sha256": "13e05e2c49b1e19220c41c74d81d5b6ea69a7456f5c19f306ef107f8217df989"
     },
     "ui/TabsTrigger.svelte": {
       "source": "src/shared/ui/TabsTrigger.svelte",

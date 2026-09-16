@@ -15,7 +15,9 @@
     void tick().then(() => {
       if (cancelled) return
       const panel = root.querySelector<HTMLElement>('[role="tabpanel"][data-state="active"]')
-      if (panel) animation = animatePanel(panel)
+      // Pending reports retain their previous content. Animate only a ready
+      // panel, without replaying an entrance over stale rows or a skeleton.
+      if (panel && panel.dataset.loading !== 'true' && !panel.hasAttribute('inert')) animation = animatePanel(panel)
     })
     return () => { cancelled = true; animation?.cancel() }
   })

@@ -100,11 +100,11 @@ const timing = { duration: ENTER_MS, easing: 'cubic-bezier(0.2, 0, 0, 1)' }
 export function animatePanel(node: HTMLElement): Animation | undefined {
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
   if (preference.matches || !node.animate) return
-  const { opacity, transform } = restingStyles(node)
+  const { transform } = restingStyles(node)
   const animation = node.animate([
-    { opacity: 0, transform: translated(transform, 4) },
-    { opacity, transform: translated(transform, 0) },
-  ], timing)
+    { transform: translated(transform, 2) },
+    { transform: translated(transform, 0) },
+  ], { ...timing, duration: FAST_MS })
   function stop() { if (preference.matches) animation.cancel() }
   function cleanup() {
     preference.removeEventListener('change', stop)

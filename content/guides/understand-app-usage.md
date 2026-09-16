@@ -222,6 +222,24 @@ An onboarding step matches its name regardless of `ok`, `fail` or `skip` status.
 
 Report the `license` install property with your desktop SDK’s install-property setter when the license changes.
 
+The dashboard's **Install distribution** card has **License / OS / App version**
+tabs and defaults to **All**, showing installations known by your selected end
+date, including those inactive during the range. Each installation counts once under its latest known
+license, OS, or app version by that date. Existing installations, unknown
+installation origins, and installations without an install claim are included
+when Jelto has retained reports for them. Missing licenses appear as `(none)`.
+The card's info tooltip explains the end-date snapshot and its use of retained
+data. Reports that have expired or been erased cannot be reconstructed.
+
+To see only installations that sent a heartbeat during your selected dates,
+choose **Active installs** from the dropdown at the card's top right.
+The choice applies to all three tabs and stays selected when you reload the
+page. Choose **All** to include inactive installations again.
+Other dashboard cards keep their own populations, and ordinary dashboard
+filters still apply. Today's available reports are included when the range ends
+today. Known installations reflect retained reports, not confirmation that the
+app is still installed on a device.
+
 Accepted license values are strings matching `^[a-z0-9_.-]{1,24}$`, such as `free`, `trial`, `paid` or `expired`; these examples are not a fixed enum. Uppercase letters, spaces and values longer than 24 characters are rejected. `license_share` breaks the live install fleet down by the stored `license` value. `license_conversion` includes only explicitly new install cohorts; existing and unknown origins are excluded. It counts an eligible install as converted only when its latest stored `license` equals the product's `paid_license_value` setting by string equality; the setting defaults to `paid`. If no stored values ever match, an otherwise reportable cohort stays at a true, permanent 0 % even though the query succeeds; align the value in the product settings or through the account API's `paid_license_value` field.
 
 ## Put retention in context

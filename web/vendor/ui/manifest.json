@@ -1,8 +1,8 @@
 {
   "name": "shared-ui",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "producer": "frontend",
-  "producer_commit": "be2f3d773e17a9d010c8aef152973745ddd81d93",
+  "producer_commit": "7fab12dddba50b18a16d3b6e18e12af08437dffd",
   "files": {
     "package.json": {
       "source": "shared-ui.package.json",
@@ -10,7 +10,7 @@
     },
     "styles.css": {
       "source": "src/shared/styles.css",
-      "sha256": "345799219de73cca6f1351da09d6065d76caf85ffa096d48b2daff2c5b8d9a82"
+      "sha256": "baa37db10cb5119ae4cef703e7b83ce69620ff37a599121583f31cfdb8c83f91"
     },
     "test-setup.ts": {
       "source": "src/test-setup.ts",
@@ -34,7 +34,7 @@
     },
     "ui/CardHeader.svelte": {
       "source": "src/shared/ui/CardHeader.svelte",
-      "sha256": "3968d02042ebe6a1bff35ad089b78849c472c2a5068b61d78cc76b8d7e5beb3f"
+      "sha256": "3faac8edf75e2b96ec255023c5dd7332648b8b3f02ba77c2cbb008f4664feb95"
     },
     "ui/CardSelect.svelte": {
       "source": "src/shared/ui/CardSelect.svelte",

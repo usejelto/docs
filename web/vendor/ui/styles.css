@@ -192,6 +192,8 @@
   --control-select: 36px;
   --control-default: 40px;
   --control-touch: 44px;
+  /* §2 v1.131: the two-column grid's row floor — the standard ten-row breakdown card. */
+  --card-row-min: 36rem;
   --text-input-mobile: 16px;
   --focus-width: 2px;
   --focus-offset: 2px;

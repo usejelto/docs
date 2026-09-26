@@ -9,7 +9,7 @@ summary: "Copy prompts for traffic analysis, setup checks, funnels and approved 
 
 After [connecting your assistant](setup.md), start with a product and a specific question. The examples below use `prd_acmedemo01` as a placeholder; replace it with an ID returned by `jelto_products_list`. Adjust the sample dates to a period with data in your product.
 
-Scope names below apply to OAuth and account tokens. Product keys have the narrower access described in the [tool reference](tools.md). Your role and the product's available data still apply.
+Scope names below apply to OAuth and account tokens. API keys (`jk_…`) have the narrower access described in the [tool reference](tools.md). Your role and the product's available data still apply.
 
 ## Find the right product
 
@@ -187,6 +187,6 @@ Write · account token only, with `products:write` and **All accessible products
 Preview creating a Jelto product named "Acme docs" for docs.example.com, using UTC as its reporting timezone. Show the proposed details and wait for approval before creating it.
 ```
 
-Replace the example domain with your own. This uses `jelto_products_create`; OAuth and product keys cannot create products. Creating a product does not install tracking on the website. Continue with [installation](../start/quickstart.md) afterward.
+Replace the example domain with your own. This uses `jelto_products_create`; OAuth and API keys cannot create products. Creating a product does not install tracking on the website. Continue with [installation](../start/quickstart.md) afterward.
 
 For every workflow, ask the assistant to report tool errors and missing data directly. Follow [best practices and troubleshooting](best-practices-and-troubleshooting.md) if its results differ from the dashboard.

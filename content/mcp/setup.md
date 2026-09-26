@@ -7,7 +7,7 @@ summary: "Connect Codex, Claude, Cursor, VS Code or another remote MCP client."
 
 # MCP setup
 
-Use OAuth to sign in from your assistant and select the products it can access. If your client needs a manually configured Bearer token, use an account token or product key instead.
+Use OAuth to sign in from your assistant and select the products it can access. If your client needs a manually configured Bearer token, use an account token (`jt_…`) or an API key (`jk_…`) instead.
 
 ## Before you start
 
@@ -106,7 +106,7 @@ An account token can cover selected products and the additional account operatio
 3. Keep **View products** and **Read analytics** for reporting, adding only the permissions the workflow needs.
 4. Select **Create token**, copy the `jt_` value into your client's credential store, and choose **I’ve saved it**. The full value is shown once.
 
-For a single product, you can instead create a `jk_` key in **Settings → Developer**. See [product API keys](../manage/api-keys.md) for its analytics and funnel scopes. Ingestion identifiers and payment-provider secrets are not MCP credentials.
+For a single product, you can instead create a `jk_` key in **Settings → Developer**. See [API keys](../manage/api-keys.md) for its analytics and funnel scopes. Product IDs (`prd_…`) and payment-provider secrets are not MCP credentials.
 
 Use the token as an `Authorization: Bearer` header. Keep it out of source control and chat messages. If you use an environment variable, make sure it is available to the process running your client; a desktop app may not inherit variables from your terminal.
 

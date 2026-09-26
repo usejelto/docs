@@ -26,4 +26,4 @@ Use [Cloudflare DNS](../subdomain/cloudflare.md) or [Vercel DNS](../subdomain/ve
 
 Check for conflicting records at the chosen hostname and allow DNS caches to update. Make sure you edited the authoritative DNS zone. If TLS or DNS checks fail, read the displayed reason before switching the installed tag.
 
-A tracking domain does not provide authenticated management APIs. Continue to use the main Jelto API origin for server keys, payments and crawler reporting. It does not connect browser identities across sites; see [Cookies and domains](../analytics/cookies-and-domains.md).
+A tracking domain does not provide authenticated management APIs. Continue to use the main Jelto API origin for requests that use an API key (`jk_…`), including payments and crawler reporting. It does not connect browser identities across sites; see [Cookies and domains](../analytics/cookies-and-domains.md).

@@ -46,11 +46,13 @@ import jelto from '@jelto/electron'
 
 async function startAnalytics(analyticsAllowed: boolean) {
   await app.whenReady()
-  if (analyticsAllowed) jelto.init('YOUR_PRODUCT_ID', 'desktop')
+  if (analyticsAllowed) jelto.init('YOUR_PRODUCT_ID', 'desktop', undefined, 'new')
 }
 ```
 
-Call `startAnalytics` from your app's startup flow. The app slug must match **Settings → Installation → Apps**.
+Call `startAnalytics` from your app's startup flow. Replace `YOUR_PRODUCT_ID` with your product ID (`prd_8f3kq2m9x1`); the app slug must match **Settings → Installation → Apps**.
+
+The third argument is the optional endpoint; `undefined` keeps the SDK default. Pass `'new'` as the fourth argument for an app that had no users before Jelto; otherwise see [Add Jelto to an app with existing users](../start/existing-app.md). Without it, installations are recorded as `unknown`, which Retention, Onboarding and license conversion exclude.
 
 In an existing, validated main-process action handler, report:
 
@@ -64,8 +66,9 @@ Keep the SDK in the main process. If an action starts in the renderer, expose a 
 
 ## New and existing installations
 
-When using a version with install-origin support, pass the host's classification
-at initialization. For an installation that already existed before Jelto:
+If your app had users before Jelto, derive the classification from each
+installation's saved state instead of hardcoding one value, and read that state
+before your app changes it. For an installation that already existed before Jelto:
 
 ```ts
 jelto.init('YOUR_PRODUCT_ID', 'desktop', undefined, 'existing')
@@ -73,8 +76,7 @@ jelto.init('YOUR_PRODUCT_ID', 'desktop', undefined, 'existing')
 
 Use `new` only when the host knows this is the app's first launch; use `existing`
 for a saved earlier installation and `unknown` when uncertain (the default).
-Pass the lowercase string as the fourth argument, after the optional endpoint.
-Read saved host state before changing it; never send a first-launch date.
+Never send a first-launch date.
 The first claim freezes the classification across retries and later launches.
 Older claims stay unknown and are excluded from new-install cohorts. See
 [Add Jelto to an app with existing users](../start/existing-app.md) for rollout,

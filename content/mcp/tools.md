@@ -53,7 +53,7 @@ For MCP, put these parameters inside `query`.
 
 ## Available tools
 
-OAuth exposes the tools below except the account-only operations. A `jt_` account token can use all categories when its scopes and your role permit them. A `jk_` product key is restricted to basic product metadata, analytics and funnels for its one product. Product discovery uses `analytics:read` for a product key, in place of `products:read`.
+OAuth exposes the tools below except the account-only operations. A `jt_` account token can use all categories when its scopes and your role permit them. An API key (`jk_…`) is restricted to basic product metadata, analytics and funnels for its one product. Product discovery uses `analytics:read` for an API key, in place of `products:read`.
 
 The list presented by your client depends on the credential type and the client's own tool controls. Presence in the list does not grant a missing scope or role.
 
@@ -115,7 +115,7 @@ Writes require a Member or Owner role. Read the current settings before editing,
 
 ### Funnels
 
-These tools manage saved website and app funnel definitions. Use `jelto_analytics_query` with `analytics:read` to measure a funnel. OAuth/account-token writes require a Member or Owner role; product keys need `funnels:write`.
+These tools manage saved website and app funnel definitions. Use `jelto_analytics_query` with `analytics:read` to measure a funnel. OAuth/account-token writes require a Member or Owner role; API keys need `funnels:write`.
 
 | Tool | Access and required scope | What it does |
 | --- | --- | --- |
@@ -143,13 +143,13 @@ All team tools require an **Owner** role. Team reads include email addresses; in
 
 ### Account and credentials
 
-**Account token only.** OAuth and product keys cannot call these tools. A delegated token cannot exceed its parent’s scopes or product access. Product-key creation is limited to analytics and funnel scopes the calling token already holds.
+**Account token only.** OAuth and API keys cannot call these tools. A delegated token cannot exceed its parent’s scopes or product access. API key creation is limited to analytics and funnel scopes the calling token already holds.
 
 | Tool | Access and required scope | What it does |
 | --- | --- | --- |
-| `jelto_keys_list` | Read · `keys:read` | List product-key metadata without revealing secret values. |
-| `jelto_keys_create` | Write · `keys:write` | Issue a product key with permitted analytics or funnel scopes. Return its secret once. |
-| `jelto_keys_revoke` | Write · `keys:write` | Revoke a product key. |
+| `jelto_keys_list` | Read · `keys:read` | List API key metadata without revealing secret values. |
+| `jelto_keys_create` | Write · `keys:write` | Issue an API key with permitted analytics or funnel scopes. Return its secret once. |
+| `jelto_keys_revoke` | Write · `keys:write` | Revoke an API key. |
 | `jelto_account_get` | Read · `account:read` | Read your account email, plan, usage and limits. |
 | `jelto_tokens_list` | Read · `tokens:read` | List the calling account token and tokens delegated from it. |
 | `jelto_tokens_create` | Write · `tokens:write` | Create a delegated account token with equal or narrower access. Return its secret once. |

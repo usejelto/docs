@@ -26,7 +26,7 @@ If you need to distinguish a Store build from a directly distributed build, regi
 
 ## Revenue
 
-Jelto does not automatically connect App Store purchases. Your server must verify the provider transaction before sending a payment through the authenticated [Payments API](../api/website.md). Keep the scoped key on your server, reuse the provider transaction ID when retrying and preserve the actual amount and date.
+Jelto does not automatically connect App Store purchases. Your server must verify the provider transaction before sending a payment through the authenticated [Payments API](../api/website.md). Keep the scoped API key (`jk_…`) on your server, reuse the provider transaction ID when retrying and preserve the actual amount and date.
 
 When an app payment carries an `install_id`, do not also send a website `cohort`; the two are mutually exclusive. Never send revenue amounts through the public browser/app event collector.
 

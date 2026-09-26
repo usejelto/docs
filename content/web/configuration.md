@@ -9,7 +9,7 @@ summary: "Choose script options for routes, exclusions, downloads and optional t
 
 Start with the complete tag from **Settings → Installation**. Keep one core tracker per document. This reference explains the optional changes to that tag; use [website installation](../start/website.md) for the first setup.
 
-The examples use Jelto's standard cookieless script at `https://app.jelto.io/jelto.js` and collection endpoint at `https://app.jelto.io/v1/e`. Replace `YOUR_PRODUCT_ID` with your public product ID, and preserve your dashboard's URLs if you use a custom tracking domain or cookie mode.
+The examples use Jelto's standard cookieless script at `https://app.jelto.io/jelto.js` and collection endpoint at `https://app.jelto.io/v1/e`. Replace `YOUR_PRODUCT_ID` with your public product ID (`prd_8f3kq2m9x1`), and preserve your dashboard's URLs if you use a custom tracking domain or cookie mode.
 
 ## Core options
 

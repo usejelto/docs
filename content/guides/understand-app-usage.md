@@ -206,8 +206,9 @@ To set a manual version, send `{"latest_version":"2.4.1"}`; this disconnects app
 
 ## Follow onboarding to an outcome
 
-The Onboarding card measures explicitly new install cohorts. Set the SDK's optional
-`installOrigin` from saved host state; existing and unknown origins are excluded.
+The Onboarding card measures explicitly new install cohorts. Pass the SDK's
+`installOrigin`: `new` for an app that had no users before Jelto, otherwise a value
+derived from saved host state; existing and unknown origins are excluded.
 The [existing-app adoption guide](../start/existing-app.md) explains classification
 and the effect on historical cohorts. Custom app funnels below count observed entry
 events and do not require a new-install claim.

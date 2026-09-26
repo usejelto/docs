@@ -11,7 +11,7 @@ Connect your Bolt website by adding the script to the application's shared docum
 
 ## Before you start
 
-Register your published hostname in Jelto. Copy the complete tag from **Settings → Installation**. The tag contains a public product ID; do not paste a secret server API key into a prompt or browser file.
+Register your published hostname in Jelto. Copy the complete tag from **Settings → Installation**. The tag contains your public product ID (`prd_8f3kq2m9x1`); do not paste a secret API key (`jk_…`) into a prompt or browser file.
 
 ## Add the script
 

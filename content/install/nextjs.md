@@ -39,7 +39,7 @@ export default function RootLayout({
 }
 ```
 
-Keep your existing layout content, providers and metadata. Replace `YOUR_PRODUCT_ID` with your public product ID from **Settings → Installation**. This example uses Jelto's standard cookieless script; preserve any custom tracking domain, cookie-mode script or additional options from your copied tag. Additional `data-*` attributes are forwarded by Next.js to the script.
+Keep your existing layout content, providers and metadata. Replace `YOUR_PRODUCT_ID` with your public product ID (`prd_8f3kq2m9x1`) from **Settings → Installation**. This example uses Jelto's standard cookieless script; preserve any custom tracking domain, cookie-mode script or additional options from your copied tag. Additional `data-*` attributes are forwarded by Next.js to the script.
 
 4. Build and deploy the application using your normal production workflow.
 

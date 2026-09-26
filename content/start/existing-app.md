@@ -15,7 +15,7 @@ Follow [Connect a desktop app](apps.md) and your SDK's setup guide as usual. Kee
 initialization behind your app's telemetry choice and preserve the SDK's install
 identity across launches and updates.
 
-Enable **I’m adding Jelto to an existing product** during setup to reveal the adoption guidance. The preference is saved with the product and shared with authorized team members across devices. It changes the guide, not the classification of your installations. Manual SDK examples deliberately start with `unknown`; replace it with the classification derived from each installation's saved state before distributing your build.
+Enable **I’m adding Jelto to an existing product** during setup to reveal the adoption guidance. The preference is saved with the product and shared with authorized team members across devices. It changes the guide, not the classification of your installations. Copied SDK examples pass one fixed `installOrigin` value; replace it with the classification derived from each installation's saved state before distributing your build.
 
 ## Prepare current state and verify the rollout
 
@@ -133,8 +133,9 @@ Jelto.initialize(key: "YOUR_PRODUCT_ID", app: "desktop", installOrigin: .existin
 ```
 
 Choose the value from the saved state for each installation; do not hardcode
-`existing` for every future user or `new` for every SDK initialization. See your
-SDK's guide for the corresponding argument.
+`existing` for every future user or `new` for every SDK initialization. The SDK
+guides' minimal examples pass `new`, which fits only an app that had no users
+before Jelto. See your SDK's guide for the corresponding argument.
 
 The SDK freezes the value with its first claim. Retries and later launches keep
 it even if your initialization argument changes. Claims from older SDKs remain

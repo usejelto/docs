@@ -11,11 +11,11 @@ Add one Jelto script to your site's shared HTML. It collects pageviews and suppo
 
 ## Before you start
 
-Choose **Add website**, enter your website address, and check its name and reporting timezone. Creating the website registers that hostname and opens guided setup: **Add website → Install tracking → First goal (optional) → Connect revenue (optional)**. Have permission to edit and publish your website.
+Choose **Add website**, enter your website address, and check its name and reporting timezone. Creating the website registers that hostname and its `www` or non-`www` counterpart, so `example.com` and `www.example.com` are both allowed, then opens guided setup: **Add website → Install tracking → First goal (optional) → Connect revenue (optional)**. Have permission to edit and publish your website.
 
 If your website also has a macOS, Windows or Linux app, enable **This website also has an app**. This adds an optional **Set up SDK** step after website tracking. Your choice is remembered for this product in your browser; products with a registered app include that step automatically. You can also enable it from the installation step later.
 
-You can choose **Finish later** and return through **Finish setup** in the product list. Existing websites can also use **Settings → Installation**, where you can add more allowed hostnames and change tracking preferences.
+You can choose **Finish later** and return through **Finish setup** in the product list. Existing websites can also use **Settings → Installation**, where you can add other allowed hostnames, such as `blog.example.com`, and change tracking preferences. Subdomains other than `www` are not added automatically.
 
 If the product already has users or reporting history, enable **I’m adding Jelto to an existing product**. This saves a setup preference for this product, shared with your team across devices; it does not classify app installations or change collection. Review [Plausible migration](../imports/plausible.md) before your first production visit. Match the source reporting timezone first and use a separate Jelto product for development tests. Keep your previous analytics while verifying coverage across your production pages and hostnames.
 
@@ -28,7 +28,7 @@ and optionally choose your framework; **Let my assistant detect** lets your
 coding assistant inspect the repository. Choose **Copy prompt**, then paste it
 into Cursor, Claude Code, Codex or another coding assistant with your project open.
 
-The English prompt includes your public product ID, saved tracking preferences,
+The English prompt includes your public product ID (`prd_8f3kq2m9x1`), saved tracking preferences,
 complete script, framework guidance and verification checklist. Save preference
 changes before copying an updated prompt. **View prompt** shows the full text;
 if automatic copying fails, select and copy that text manually.
@@ -58,13 +58,13 @@ This example uses Jelto's standard cookieless script. Replace `YOUR_PRODUCT_ID` 
   src="https://app.jelto.io/jelto.js"></script>
 ```
 
-The product ID is a public collection identifier. A secret `jk_` API key never belongs in this tag. Keep `data-endpoint` when your copied tag includes it, especially with a custom tracking domain.
+The product ID is a public collection identifier. A secret API key (`jk_…`) never belongs in this tag. Keep `data-endpoint` when your copied tag includes it, especially with a custom tracking domain.
 
 ## Verify
 
 Open the published website in a normal browser tab, visit a page, then follow [Check your installation](verify.md). Install the script once per HTML document; Jelto handles supported SPA history changes itself.
 
-The first-visit check within **Install tracking** updates automatically and shows the latest received pageview for the selected hostname. Once connected, choose **View dashboard** or **Continue to revenue**. You can also continue while traffic is still waiting; the installation is only marked connected after Jelto receives a pageview.
+The first-visit check within **Install tracking** updates automatically and shows the latest received pageview for the selected hostname. While it is still waiting, it also tells you if Jelto is receiving pageviews from a hostname that isn't on the website's **Allowed hostnames** list, with a link to **Allowed hostnames** where you can add it. Once connected, choose **View dashboard** or **Continue to revenue**. You can also continue while traffic is still waiting; the installation is only marked connected after Jelto receives a pageview.
 
 ## Set up an app SDK (optional)
 

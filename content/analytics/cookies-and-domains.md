@@ -25,7 +25,7 @@ To switch back, clear **Use cookie mode**, confirm, then replace the installed s
 
 ## Multiple website hosts
 
-Register every collecting hostname under **Settings → Installation → Allowed hostnames**. For aggregate channel propagation between your sites, load the optional cross-domain helper before the core tracker:
+Register every collecting hostname under **Settings → Installation → Allowed hostnames**. Creating a website registers its `www` and non-`www` pair; add other hosts, such as `shop.example.com`, yourself. For aggregate channel propagation between your sites, load the optional cross-domain helper before the core tracker:
 
 ```html
 <script defer src="https://app.jelto.io/jelto.crossdomain.js"
@@ -34,7 +34,7 @@ Register every collecting hostname under **Settings → Installation → Allowed
 <!-- Your existing core Jelto script goes next. -->
 ```
 
-Replace `YOUR_PRODUCT_ID` with your public product ID and `example.com,shop.example.com` with your registered hostnames. If you use a custom tracking domain, load `/jelto.crossdomain.js` from that same domain. The helper decorates eligible links with aggregate channel context and preserves existing explicit UTM information. It does not move a browser cookie or join sessions across hosts. Visitor cookies remain host-only.
+Replace `YOUR_PRODUCT_ID` with your public product ID (`prd_8f3kq2m9x1`) and `example.com,shop.example.com` with your registered hostnames. If you use a custom tracking domain, load `/jelto.crossdomain.js` from that same domain. The helper decorates eligible links with aggregate channel context and preserves existing explicit UTM information. It does not move a browser cookie or join sessions across hosts. Visitor cookies remain host-only.
 
 ## Verify
 

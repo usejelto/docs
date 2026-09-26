@@ -19,7 +19,7 @@ Register the published hostname in Jelto and copy the complete script from **Set
 2. Preserve the copied `data-product`, `data-endpoint` and `src` values.
 3. Choose **Save** and visit the public website.
 
-This example uses Jelto’s standard cookieless script. Replace `YOUR_PRODUCT_ID` with your public product ID from **Settings → Installation**. If your copied tag uses a custom tracking domain, cookie mode or additional options, preserve those values:
+This example uses Jelto’s standard cookieless script. Replace `YOUR_PRODUCT_ID` with your public product ID (`prd_8f3kq2m9x1`) from **Settings → Installation**. If your copied tag uses a custom tracking domain, cookie mode or additional options, preserve those values:
 
 ```html
 <script defer

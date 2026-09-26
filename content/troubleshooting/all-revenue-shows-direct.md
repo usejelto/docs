@@ -26,7 +26,7 @@ supported metadata fields. Follow the guide for [Stripe](../payments/stripe.md),
 [Paddle](../payments/paddle.md). Missing or late metadata does not justify
 assigning historical money to the current browser's channel.
 
-Custom payment adapters require a server key with `payments:write`. Verify
+Custom payment adapters require an API key (`jk_…`) with `payments:write`. Verify
 provider signatures, submit the real event timestamp and preserve the same
 transaction ID on retry. A new payment returns 201 and a duplicate returns 200.
 Refunds need their own transaction ID and `refund_of`; successful provider

@@ -27,7 +27,7 @@ The [tool reference](tools.md) covers all 43 tools and their permissions. Availa
 | --- | --- | --- |
 | OAuth | Products you explicitly approve | Connecting an assistant through browser sign-in. Analytics, diagnostics, settings, funnels and team tools are available with the relevant permissions. |
 | Account token (`jt_`) | Selected products, or **All accessible products**, including future ones | Clients with a Bearer-token setting, selected REST operations, product creation and scoped credential management. |
-| Product key (`jk_`) | One product | Basic product metadata, analytics and funnels within the key's scopes. |
+| API key (`jk_…`) | One product | Basic product metadata, analytics and funnels within the key's scopes. |
 
 Scopes describe what the connection may do. Product selection describes where it may act. Your current role still limits both. A broader token cannot make a Viewer an Owner.
 
@@ -37,7 +37,7 @@ Add the server URL in your assistant, then sign in to Jelto and review the conse
 
 ## Connect with a token
 
-Create an account token in **API / MCP**, or use a [product API key](../manage/api-keys.md). Start with read access and store the value in the client's credential settings. See [token setup](setup.md#use-a-token-instead-of-oauth) for configuration examples.
+Create an account token in **API / MCP**, or use an [API key](../manage/api-keys.md). Start with read access and store the value in the client's credential settings. See [token setup](setup.md#use-a-token-instead-of-oauth) for configuration examples.
 
 ## Try your first question
 

@@ -13,8 +13,8 @@ Start with the data source you expected to see. Website pageviews, app activity,
 
 1. Open the correct product, select dates including today and clear dashboard filters.
 2. Check account collection status and **Settings → Traffic & usage → Pause website collection**.
-3. Inspect the published page, not just an editor preview. Confirm one script uses the correct product ID.
-4. Register the hostname reached after redirects in **Installation → Allowed hostnames**.
+3. Inspect the published page, not just an editor preview. Confirm one script uses the correct product ID (such as `prd_8f3kq2m9x1`).
+4. Register the hostname reached after redirects in **Settings → Installation → Allowed hostnames**. If your site serves both `example.com` and `www.example.com`, check that both are listed; creating a website registers that pair, but other subdomains, such as `blog.example.com`, need their own entry. While the installation check is waiting, **Settings → Installation** and guided setup tell you if pageviews are arriving from a hostname that isn't on this list.
 5. Check that the script loads and CSP permits both its origin and the ingestion endpoint. Check whether a blocker or your site's consent logic prevents execution.
 6. Open a real page in a normal browser and run [Check traffic](../start/verify.md).
 

@@ -21,7 +21,7 @@ the page customers return to:
   data-product="YOUR_PRODUCT_ID"></script>
 ```
 
-Replace `YOUR_PRODUCT_ID` with your public product ID from **Settings → Installation**.
+Replace `YOUR_PRODUCT_ID` with your public product ID (`prd_8f3kq2m9x1`) from **Settings → Installation**.
 The example uses Jelto's standard script host. If you use a custom tracking domain,
 load `/jelto.checkout.js` from that same domain. The return page's domain
 must be in that website's domain list. For a first-party proxy, serve both

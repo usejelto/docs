@@ -16,7 +16,7 @@ Use Revenue to see payments and refunds alongside your website analytics. There 
 | Stripe | Restricted API key and selected merchant/products | [Connect Stripe](stripe.md) |
 | Lemon Squeezy | API key and selected store/products | [Connect Lemon Squeezy](lemon-squeezy.md) |
 | Polar | Organization token and selected products | [Connect Polar](polar.md) |
-| Paddle or a custom provider | Your server forwards verified payments with a scoped key | [Paddle and Payments API](paddle.md) |
+| Paddle or a custom provider | Your server forwards verified payments with a scoped API key (`jk_…`) | [Paddle and Payments API](paddle.md) |
 
 ## Connect an account
 

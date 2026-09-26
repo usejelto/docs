@@ -19,7 +19,7 @@ Review **Account tokens** and **Connected apps** in **Account settings → API /
 
 ## Ask questions that can be checked
 
-Include the product ID, date range, timezone, metric and desired breakdown. Let the assistant inspect the catalog and discover goal or funnel IDs before querying them. Use complete days for period comparisons when you do not want a partial current day.
+Include the product ID (such as `prd_8f3kq2m9x1`), date range, timezone, metric and desired breakdown. Let the assistant inspect the catalog and discover goal or funnel IDs before querying them. Use complete days for period comparisons when you do not want a partial current day.
 
 Keep units, filters and result states in the answer. A withheld or unavailable value is not zero. Revenue needs its currency and attribution context; app installs and website visitors are different populations. Compare the same report in the dashboard when an answer looks surprising.
 
@@ -49,7 +49,7 @@ If sign-in fails at a callback or client-registration step, update the client an
 
 ### A token is rejected
 
-For a manual connection, verify the `Authorization: Bearer` setting and remove accidental whitespace. Confirm that the credential is a `jt_` account token or a `jk_` product key, and that it has not been replaced or revoked. When using an environment variable, check its availability to the client without printing its value.
+For a manual connection, verify the `Authorization: Bearer` setting and remove accidental whitespace. Confirm that the credential is a `jt_` account token or a `jk_` API key, and that it has not been replaced or revoked. When using an environment variable, check its availability to the client without printing its value.
 
 For OAuth, let the client refresh its access token. Reconnect if refresh fails or the connection has expired; fresh consent is required after 90 days. Signing in to the dashboard alone does not authenticate an MCP client. Account suspension or a requirement to accept current agreements can also prevent access; check the dashboard.
 
@@ -61,7 +61,7 @@ OAuth and selected-product tokens do not automatically include new products. Rec
 
 ### A tool is missing or returns 403
 
-Check the [tool reference](tools.md) for the required scope, role and credential type. OAuth omits account-only tools. A product key exposes only product metadata, analytics and funnels. Clients may also hide or disable tools in their own settings.
+Check the [tool reference](tools.md) for the required scope, role and credential type. OAuth omits account-only tools. An API key exposes only product metadata, analytics and funnels. Clients may also hide or disable tools in their own settings.
 
 A listed tool can still fail its permission check. For an OAuth scope challenge, reconnect and review the requested permission. For an account token, edit its permissions. More scope cannot override a product role, and OAuth cannot be expanded to manage credentials or create products.
 

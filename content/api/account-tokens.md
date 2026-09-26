@@ -50,7 +50,7 @@ Credentials are returned only on the initial successful creation. A matching ret
 
 ## Delegate credentials
 
-`tokens:write` can create tokens with no more scope or product access than the caller. `tokens:read` lists the caller and its descendants. A token cannot inspect or revoke an unrelated sibling or broader ancestor. Delegation is limited to eight levels. Product-key creation also requires every requested analytics/funnel scope on the account token; it cannot issue payment or crawler intake keys.
+`tokens:write` can create tokens with no more scope or product access than the caller. `tokens:read` lists the caller and its descendants. A token cannot inspect or revoke an unrelated sibling or broader ancestor. Delegation is limited to eight levels. Creating an API key (`jk_…`) also requires every requested analytics/funnel scope on the account token; it cannot issue payment or crawler intake keys.
 
 Changing a parent's permissions, replacing it or revoking it disables its delegated credentials. **All accessible products** includes future accessible products and is required for `products:write`. OAuth always uses explicit product selection and cannot administer credentials.
 

@@ -22,7 +22,7 @@ The prompt names the package described below. See
 ## Setup steps
 
 1. Add the **Jelto** Swift package to your app target.
-2. Initialize it once in the app startup flow, using the product ID and registered app slug.
+2. Initialize it once in the app startup flow, using your product ID (`prd_8f3kq2m9x1`), registered app slug and install origin.
 3. Send an event from the action that succeeds, then verify it in the dashboard.
 
 ## Install
@@ -36,9 +36,11 @@ Call this once in your app startup path, after the app decides analytics may sta
 ```swift
 import Jelto
 
-Jelto.initialize(key: "YOUR_PRODUCT_ID", app: "desktop")
+Jelto.initialize(key: "YOUR_PRODUCT_ID", app: "desktop", installOrigin: .new)
 Jelto.setProps(["license": "trial"])
 ```
+
+Use `installOrigin: .new` for an app that had no users before Jelto; otherwise see [Add Jelto to an app with existing users](../start/existing-app.md). Without it, installations are recorded as `unknown`, which Retention, Onboarding and license conversion exclude.
 
 In the successful export action:
 
@@ -50,8 +52,9 @@ Calls before initialization do not start collection. The default ingestion endpo
 
 ## New and existing installations
 
-When using a version with install-origin support, pass the host's classification
-at initialization. For an installation that already existed before Jelto:
+If your app had users before Jelto, derive the classification from each
+installation's saved state instead of hardcoding one value, and read that state
+before your app changes it. For an installation that already existed before Jelto:
 
 ```swift
 Jelto.initialize(key: "YOUR_PRODUCT_ID", app: "desktop", installOrigin: .existing)
@@ -59,7 +62,7 @@ Jelto.initialize(key: "YOUR_PRODUCT_ID", app: "desktop", installOrigin: .existin
 
 Use `.new` only when the host knows this is the app's first launch; use
 `.existing` for a saved earlier installation and `.unknown` when uncertain (the default).
-Read saved host state before changing it; never send a first-launch date.
+Never send a first-launch date.
 The first claim freezes the classification across retries and later launches.
 Older claims stay unknown and are excluded from new-install cohorts. See
 [Add Jelto to an app with existing users](../start/existing-app.md) for rollout,

@@ -7,7 +7,7 @@ summary: "Grant a server only the product permissions it needs."
 
 # Create and manage API keys
 
-A website script uses a public product ID. Authenticated APIs use secret, product-scoped keys beginning with `jk_`. Keep those keys on your server.
+A website script uses a public product ID (`prd_8f3kq2m9x1`). Authenticated APIs use secret, website-scoped API keys (`jk_…`). Keep those keys on your server.
 
 ## Create a key
 
@@ -38,4 +38,4 @@ In **Settings → Developer → API keys**, choose **Delete** next to a revoked 
 
 ## Connect an assistant
 
-Use [MCP](../mcp/introduction.md) for analytics and authorized product tools. A product key grants only that product's basic metadata, analytics and funnels. For selected products, OAuth sign-in avoids manual credential handling. Account tokens beginning with `jt_` can additionally authorize product creation and scoped credential management; create them in **Account settings → API / MCP**.
+Use [MCP](../mcp/introduction.md) for analytics and authorized product tools. An API key grants only that product's basic metadata, analytics and funnels. For selected products, OAuth sign-in avoids manual credential handling. Account tokens beginning with `jt_` can additionally authorize product creation and scoped credential management; create them in **Account settings → API / MCP**.

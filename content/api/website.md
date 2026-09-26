@@ -2,14 +2,14 @@
 title: "Website and app API recipes"
 group: api
 slug: api/website
-summary: "Use scoped server keys to read analytics, manage funnels, or post payments."
+summary: "Use scoped API keys to read analytics, manage funnels, or post payments."
 ---
 
 # Website and app API
 
-Open Settings → Developer to mint a product-scoped `jk_` key. The full key is
+Open Settings → Developer to mint a website-scoped API key (`jk_…`). The full key is
 shown once. Choose only the needed permissions, store it in your server's
-environment and revoke it when no longer needed. Public `prd_` keys are for the
+environment and revoke it when no longer needed. Public product IDs (`prd_…`) are for the
 browser snippet and cannot authenticate these APIs. Existing keys gain no new
 permissions automatically.
 

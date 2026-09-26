@@ -25,4 +25,4 @@ Disabling overages stops excess admission; already accrued usage remains payable
 
 Usage is an accepted-request meter, not a sum of visible chart rows. Dashboard filters, date ranges and coverage can differ. Deleting analytics, a product or crawler history does not reduce already consumed billing usage or remove required financial records.
 
-Read [Bot activity](../guides/understand-bot-activity.md) for interpretation and [server tracking setup](../sdk/crawler.md) for collection. If an invoice appears wrong, contact the Jelto team with its reference and period; do not send server keys or raw request logs.
+Read [Bot activity](../guides/understand-bot-activity.md) for interpretation and [server tracking setup](../sdk/crawler.md) for collection. If an invoice appears wrong, contact the Jelto team with its reference and period; do not send API keys or raw request logs.

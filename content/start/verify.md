@@ -27,10 +27,11 @@ A recent pageview from the selected hostname confirms collection for that page. 
 
 ## Still waiting for traffic
 
-- Check the live site's HTML for your product ID and the script URL.
+- Check the live site's HTML for your product ID (`prd_8f3kq2m9x1`) and the script URL.
 - Confirm the script loads and the collection request is allowed by the site's CSP.
 - Try a browser without a blocker affecting the tracking host.
-- Register the hostname actually shown in the address bar. Redirects may change it. In guided setup, choose **Add hostname** beside the installation check; existing hostnames are kept, and the new hostname is selected for its own check.
+- While the check is waiting, **Settings → Installation** and guided setup tell you if Jelto is receiving pageviews from a hostname that isn't on the website's **Allowed hostnames** list. Follow the link to **Allowed hostnames** and add that hostname if it belongs to this website.
+- Register the hostname actually shown in the address bar. Redirects may change it. A newly created website already allows both `example.com` and `www.example.com`, but another subdomain, such as `blog.example.com`, needs its own entry. In guided setup, choose **Add hostname** beside the installation check; existing hostnames are kept, and the new hostname is selected for its own check.
 - Localhost, `file:` pages, automation and `?jelto_ignore=1` are excluded by default. Use the explicit [local testing option](../web/configuration.md#local-testing) for localhost; automated visits are not a substitute for this check.
 
 See [No data arriving](../troubleshooting/no-data.md) for a focused checklist.

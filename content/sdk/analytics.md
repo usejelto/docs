@@ -26,7 +26,7 @@ npm install @jelto/analytics
 
 ## Browser setup
 
-Use this installation instead of a separate HTML tracker tag. Call it once after the application mounts in the browser. Replace `YOUR_PRODUCT_ID` with your public product ID from **Settings → Installation**. The example uses Jelto's standard cookieless script; preserve the copied script URL and collection endpoint if you use a custom tracking domain or cookie mode:
+Use this installation instead of a separate HTML tracker tag. Call it once after the application mounts in the browser. Replace `YOUR_PRODUCT_ID` with your public product ID (`prd_8f3kq2m9x1`) from **Settings → Installation**. The example uses Jelto's standard cookieless script; preserve the copied script URL and collection endpoint if you use a custom tracking domain or cookie mode:
 
 ```ts
 import { initialize } from '@jelto/analytics/browser'
@@ -47,7 +47,7 @@ Identical repeated initialization shares the initial load, while conflicting opt
 
 ## Server setup
 
-Keep the key in your server environment. Use Jelto's **API origin**, `https://app.jelto.io`, as the endpoint, and replace `YOUR_PRODUCT_ID` with your public product ID.
+Keep your secret API key (`jk_…`) in the server environment as `JELTO_API_KEY`. Use Jelto's **API origin**, `https://app.jelto.io`, as the endpoint, and replace `YOUR_PRODUCT_ID` with your public product ID.
 
 ```ts
 import { createClient } from '@jelto/analytics/server'

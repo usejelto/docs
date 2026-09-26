@@ -2,13 +2,13 @@
 title: "Paddle custom Payments API adapter"
 group: payments
 slug: payments/paddle
-summary: "Forward verified Paddle transactions and refunds with an explicitly scoped server key."
+summary: "Forward verified Paddle transactions and refunds with an explicitly scoped API key."
 ---
 
 # Paddle
 
 This guide uses Paddle Billing, not Paddle Classic. Paddle uses a custom server adapter. Stripe, Lemon Squeezy and Polar can instead
-be connected directly under Settings → Revenue. For Paddle, mint a key under
+be connected directly under Settings → Revenue. For Paddle, mint an API key (`jk_…`) under
 Developer with **payments:write**, and save it as `JELTO_KEY` in your webhook
 server. A default analytics-only key cannot write payments. The key is shown
 once; manage or revoke it from the same screen.

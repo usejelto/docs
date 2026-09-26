@@ -19,7 +19,7 @@ When adding a website, enable **This website also has an app** to include **Set 
 1. Open your product's **Settings → Installation → Apps**.
 2. Register a short app slug for each app you want to distinguish, such as `desktop`. Use the exact registered slug in initialization.
 3. Choose [Swift](../sdk/swift.md), [Electron Forge](../sdk/electron-forge.md), [Electron Vite](../sdk/electron-vite.md), [Tauri](../sdk/tauri.md), or [.NET](../sdk/dotnet.md).
-4. Initialize once when your app decides telemetry may start. Classify the installation with `installOrigin` from saved host state: `new`, `existing`, or `unknown`; see [the adoption guide](existing-app.md). Keep secret server API keys out of desktop binaries.
+4. Initialize once when your app decides telemetry may start, and pass `installOrigin`: `new` for an app that had no users before Jelto; otherwise see [Add Jelto to an app with existing users](existing-app.md) to derive `new`, `existing` or `unknown` from each installation's saved state. Installations initialized without it are recorded as `unknown`, which Retention, Onboarding and license conversion exclude. Keep secret API keys (`jk_…`) out of desktop binaries.
 5. Send custom events for actions you want to measure. Jelto discovers valid event names and property keys on first receipt; no preregistration is needed. See [custom goals](../goals/create-goal.md).
 
 ## Set up with AI
@@ -29,11 +29,11 @@ Choose **Swift**, **Electron**, **Tauri**, or **.NET**, then select **Copy promp
 under **Set up with AI**. Swift is available for macOS apps. Paste the prompt
 into a coding assistant with your app project open.
 
-The English prompt includes your public product ID, registered app identifier,
+The English prompt includes your public product ID (`prd_8f3kq2m9x1`), registered app identifier,
 tracking endpoint, initialization example and SDK guides. It asks the assistant
 to inspect your project, preserve telemetry choices, initialize once in the right
 startup flow, check builds and explain how to verify app activity. It contains
-no secret server API key.
+no secret API key.
 
 **Packages come from public registries.** The prompt names the published
 package for the selected SDK: the **Jelto** Swift package from GitHub,
@@ -49,7 +49,7 @@ prompt or passing a build does not verify incoming app activity.
 
 ## Verify app activity
 
-Use a separate Jelto product for development tests. The trial includes two product slots for this purpose; use a different product key in development. Before choosing Starter, remove the test product and wait for deletion to finish, or choose Growth to keep both. For production, launch each packaged app with telemetry allowed and keep it open long enough to send queued activity. In **Settings → Installation → Apps**, choose **Check app activity**. Each registered app shows its own retained heartbeat receipt and observed version; a receipt from macOS does not verify Windows. A quiet receipt still verifies the SDK but does not claim current activity. No retained heartbeat means unverified, not proof that an app has never reported. Failed checks remain unknown and can be retried.
+Use a separate Jelto product for development tests. The trial includes two product slots for this purpose; use the development product's product ID in development builds. Before choosing Starter, remove the test product and wait for deletion to finish, or choose Growth to keep both. For production, launch each packaged app with telemetry allowed and keep it open long enough to send queued activity. In **Settings → Installation → Apps**, choose **Check app activity**. Each registered app shows its own retained heartbeat receipt and observed version; a receipt from macOS does not verify Windows. A quiet receipt still verifies the SDK but does not claim current activity. No retained heartbeat means unverified, not proof that an app has never reported. Failed checks remain unknown and can be retried.
 
 The SDK queues daily activity and the first install claim immediately on first initialization. Do not repeatedly reset an install ID to test counts.
 

@@ -11,7 +11,7 @@ Install the website tracker in the App Router root layout so it runs across your
 
 ## Before you start
 
-Register your production hostname and copy the script values from **Settings → Installation**. This guide uses Next.js App Router; you only edit your own Next.js project.
+If you don't have a Jelto account yet, [create one](https://app.jelto.io/login). Register your production hostname. In **Settings → Installation** or guided setup, choose **Install manually** and select **Next.js** under **Your platform** to copy ready-to-paste `next/script` code for the root layout. This guide uses Next.js App Router; you only edit your own Next.js project.
 
 ## Add the script
 
@@ -49,6 +49,6 @@ Open the published homepage, use a Next.js link to open another route, and use B
 
 ## Common problems
 
-Do not add the tracker to each page or send an extra manual pageview for navigation already handled by Jelto. Code that sends a custom goal must run in the browser after the script has loaded; it cannot run in a Server Component. If you enforce CSP, permit the actual script and ingestion hosts and preserve your nonce policy.
+Do not add the tracker to each page or send an extra manual pageview for navigation already handled by Jelto. Code that sends a custom goal must run in the browser after the script has loaded; it cannot run in a Server Component. If you enforce a content security policy, add the script and ingestion hosts from your copied values as shown in [Endpoints and content security policy](../web/configuration.md#endpoints-and-content-security-policy), and preserve your nonce policy.
 
 Platform reference: [Next.js script loading](https://nextjs.org/docs/app/guides/scripts).

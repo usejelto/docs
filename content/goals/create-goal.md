@@ -38,7 +38,7 @@ In Events settings, expand **Send this event** to see examples for Browser, Swif
 
 *Use the example for your platform after the action succeeds. The example shown uses an existing demo event.*
 
-For a button click, use [HTML events](html-events.md). For a browser form submission or section appearing on screen, use [Forms and visibility](forms-and-visibility.md).
+For a button click, use [HTML events](html-events.md). For a browser form submission or section appearing on screen, use [Forms and visibility](forms-and-visibility.md). In guided setup's **First goal** step, **Website HTML attribute (no code)** under **Where the action happens** copies click markup such as `<a href="/signup" data-jelto-event="signup">Sign up</a>`.
 
 ## Verify and read the result
 

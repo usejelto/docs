@@ -11,7 +11,7 @@ Measure visits to your SvelteKit website using the script from your Jelto produc
 
 ## Before you start
 
-Register the published hostname in Jelto and copy the complete script from **Settings → Installation**. You need permission to edit and publish the site. If your platform restricts custom scripts, confirm that your plan provides this feature.
+If you don't have a Jelto account yet, [create one](https://app.jelto.io/login). Register the published hostname in Jelto and copy the complete script from **Settings → Installation**. You need permission to edit and publish the site. If your platform restricts custom scripts, confirm that your plan provides this feature.
 
 ## Add the script
 
@@ -34,7 +34,7 @@ Open the published homepage in a normal browser, navigate to another page, then 
 
 ## Common problems
 
-Do not add another tracker to `+page.svelte` or reinitialize it on each route change. Allow the tracking host in your CSP.
+Do not add another tracker to `+page.svelte` or reinitialize it on each route change. Allow the tracking host in your CSP as shown in [Endpoints and content security policy](../web/configuration.md#endpoints-and-content-security-policy).
 
 If traffic is still missing, check [collection troubleshooting](../troubleshooting/no-data.md). For optional route, exclusion and download settings, use [Script configuration](../web/configuration.md).
 

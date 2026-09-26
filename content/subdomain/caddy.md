@@ -20,7 +20,7 @@ Use Jelto's managed tracking domain with a Caddy-hosted website. You need permis
 
 This managed setup does not need a Caddy reverse proxy to Jelto, a local Jelto server, or changes to your application routes.
 
-If your website uses CSP, add the new tracking origin to the relevant script and connection permissions. Update optional helper URLs to use the same host.
+If your website uses a content security policy, add the new tracking origin to `script-src` and `connect-src`, as shown in [Endpoints and content security policy](../web/configuration.md#endpoints-and-content-security-policy). Update optional helper URLs to use the same host.
 
 ## Verify
 

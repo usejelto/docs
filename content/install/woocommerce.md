@@ -11,7 +11,7 @@ Measure visits to your WooCommerce storefront website using the script from your
 
 ## Before you start
 
-Register the published hostname in Jelto and copy the complete script from **Settings → Installation**. You need permission to edit and publish the site. If your platform restricts custom scripts, confirm that your plan provides this feature.
+If you don't have a Jelto account yet, [create one](https://app.jelto.io/login). Register the published hostname in Jelto and copy the complete script from **Settings → Installation**. You need permission to edit and publish the site. If your platform restricts custom scripts, confirm that your plan provides this feature.
 
 ## Add the script
 

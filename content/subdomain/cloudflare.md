@@ -20,7 +20,7 @@ Use Jelto's managed tracking domain with Cloudflare DNS. You need permission to 
 
 The DNS-only choice applies to this dedicated tracking subdomain. You do not need to change the proxy status of your main website.
 
-If your website uses CSP, add the new tracking origin to the relevant script and connection permissions. Update optional helper URLs to use the same host.
+If your website uses a content security policy, add the new tracking origin to `script-src` and `connect-src`, as shown in [Endpoints and content security policy](../web/configuration.md#endpoints-and-content-security-policy). Update optional helper URLs to use the same host.
 
 ## Verify
 

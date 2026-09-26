@@ -51,7 +51,7 @@ prompt or passing a build does not verify incoming app activity.
 
 Use a separate Jelto product for development tests. The trial includes two product slots for this purpose; use the development product's product ID in development builds. Before choosing Starter, remove the test product and wait for deletion to finish, or choose Growth to keep both. For production, launch each packaged app with telemetry allowed and keep it open long enough to send queued activity. In **Settings → Installation → Apps**, choose **Check app activity**. Each registered app shows its own retained heartbeat receipt and observed version; a receipt from macOS does not verify Windows. A quiet receipt still verifies the SDK but does not claim current activity. No retained heartbeat means unverified, not proof that an app has never reported. Failed checks remain unknown and can be retried.
 
-The SDK queues daily activity and the first install claim immediately on first initialization. Do not repeatedly reset an install ID to test counts.
+The SDK sends its first batch, the install claim and a heartbeat, about 2 seconds after initialization, and later events about 5 seconds after they are tracked; offline sends retry with backoff. Jelto stores events within about a second, so that app's check shows **Receiving app activity** a few seconds later. Do not repeatedly reset an install ID to test counts.
 
 Version adoption requires known app versions. Retention needs time and a sufficiently mature sample. Read [Understand app usage](../guides/understand-app-usage.md) before interpreting an empty or unavailable metric.
 
@@ -68,6 +68,7 @@ Apps page. Choose an event name and SDK, place the call after the action succeed
 publish the app, and perform that action with telemetry allowed. **Check goal**
 checks the app event catalog independently of website events. Use the dashboard’s
 Goals card to verify the latest completion. License and published-version steps
-are optional; mark them **Not applicable** in the setup checklist when appropriate.
+are optional; choose **Skip** in the setup checklist when they don't apply, and
+the step shows **Skipped**.
 
 Product deletion has a seven-day cancellation window. Allow at least seven days for the development product to be deleted before switching to a one-product plan.

@@ -11,7 +11,7 @@ Connect your Lovable website by adding the script to the application's shared do
 
 ## Before you start
 
-Register your published hostname in Jelto. Copy the complete tag from **Settings → Installation**. The tag contains your public product ID (`prd_8f3kq2m9x1`); do not paste a secret API key (`jk_…`) into a prompt or browser file.
+If you don't have a Jelto account yet, [create one](https://app.jelto.io/login). Register your published hostname in Jelto. Copy the complete tag from **Settings → Installation**. The tag contains your public product ID (`prd_8f3kq2m9x1`); do not paste a secret API key (`jk_…`) into a prompt or browser file.
 
 ## Add the script
 

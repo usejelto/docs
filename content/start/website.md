@@ -13,11 +13,13 @@ Add one Jelto script to your site's shared HTML. It collects pageviews and suppo
 
 Choose **Add website**, enter your website address, and check its name and reporting timezone. Creating the website registers that hostname and its `www` or non-`www` counterpart, so `example.com` and `www.example.com` are both allowed, then opens guided setup: **Add website → Install tracking → First goal (optional) → Connect revenue (optional)**. Have permission to edit and publish your website.
 
-If your website also has a macOS, Windows or Linux app, enable **This website also has an app**. This adds an optional **Set up SDK** step after website tracking. Your choice is remembered for this product in your browser; products with a registered app include that step automatically. You can also enable it from the installation step later.
+If your website also has a macOS, Windows or Linux app, enable **This website also has an app**. This adds an optional **Set up SDK** step after website tracking. Your choice is remembered for this product in your browser; products with a registered app include that step automatically.
 
 You can choose **Finish later** and return through **Finish setup** in the product list. Existing websites can also use **Settings → Installation**, where you can add other allowed hostnames, such as `blog.example.com`, and change tracking preferences. Subdomains other than `www` are not added automatically.
 
 If the product already has users or reporting history, enable **I’m adding Jelto to an existing product**. This saves a setup preference for this product, shared with your team across devices; it does not classify app installations or change collection. Review [Plausible migration](../imports/plausible.md) before your first production visit. Match the source reporting timezone first and use a separate Jelto product for development tests. Keep your previous analytics while verifying coverage across your production pages and hostnames.
+
+The **Install tracking** step shows both choices in a one-line **Setup choices** summary; choose **Change** to revise them.
 
 ## Install the script
 
@@ -40,7 +42,7 @@ not confirm that Jelto has received traffic.
 ### Install manually
 
 1. Open the **Install tracking** step, or **Settings → Installation**.
-2. Choose **Install manually**, select your platform for matching instructions, then choose **Copy code**.
+2. Choose **Install manually**, select **Your platform** for matching instructions, then choose **Copy code**. **Settings → Installation** has the same picker as guided setup; **Next.js** shows ready-to-paste `next/script` code for the root layout.
 3. Paste the complete tag inside the shared `<head>` of your site, or into your platform's site-wide custom-code field. Use the [platform guides](../README.md#install) for the exact location.
 4. Save and publish the website. A change in an editor preview is not necessarily live.
 
@@ -80,7 +82,7 @@ For Paddle or another provider, choose **Other / Payments API** for the server i
 
 ## Common problems
 
-If only the homepage appears, move the tag to the shared layout. If nothing arrives, check the hostname, content security policy, blocker extensions and [missing-data guide](../troubleshooting/no-data.md). If counts look doubled, check for [duplicate installations](../troubleshooting/duplicate-pageviews.md).
+If only the homepage appears, move the tag to the shared layout. If nothing arrives, check the hostname, your [content security policy](../web/configuration.md#endpoints-and-content-security-policy), blocker extensions and the [missing-data guide](../troubleshooting/no-data.md). If counts look doubled, check for [duplicate installations](../troubleshooting/duplicate-pageviews.md).
 
 For optional behavior, use [Script configuration](../web/configuration.md).
 
@@ -88,12 +90,17 @@ For optional behavior, use [Script configuration](../web/configuration.md).
 
 After the installation check, choose **Continue to your first goal**. Name a
 successful action, such as `signup`, and add the generated call after that action
-succeeds. Publish, perform the action in your site, then choose **Check goal**.
+succeeds. For a click, you can instead choose **Website HTML attribute (no code)**
+under **Where the action happens** and copy markup such as
+`<a href="/signup" data-jelto-event="signup">Sign up</a>`: the core script handles the click,
+while a form also needs the [goals helper](../goals/forms-and-visibility.md).
+Publish, perform the action in your site, then choose **Check goal**.
 The check confirms discovery of that custom event on the selected surface; check
 the Goals card with today included and filters cleared to verify the latest
 completion. Copying code alone does not verify a goal. This step is optional.
 
 Your required setup is complete once website collection is verified. Revenue and
-checkout remain optional next steps. Choose **Not applicable** for a feature you
-do not need; that choice is saved in this browser and can be reversed. SDK and
-revenue checkmarks in guided setup use actual receipts and connections.
+checkout remain optional next steps. Choose **Skip** for a feature you do not
+need, and the step shows **Skipped**; that choice is saved in this browser and
+can be reversed. SDK and revenue checkmarks in guided setup use actual receipts
+and connections.

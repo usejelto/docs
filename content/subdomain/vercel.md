@@ -20,7 +20,7 @@ Use Jelto's managed tracking domain with Vercel DNS. You need permission to edit
 
 Manage this record in Vercel only when the domain uses Vercel's authoritative DNS. Hosting the website on Vercel alone does not mean that Vercel manages its DNS.
 
-If your website uses CSP, add the new tracking origin to the relevant script and connection permissions. Update optional helper URLs to use the same host.
+If your website uses a content security policy, add the new tracking origin to `script-src` and `connect-src`, as shown in [Endpoints and content security policy](../web/configuration.md#endpoints-and-content-security-policy). Update optional helper URLs to use the same host.
 
 ## Verify
 

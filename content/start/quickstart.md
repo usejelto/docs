@@ -9,13 +9,11 @@ summary: "Choose a product, register its website or app, and connect the first d
 
 A product is the place where you view analytics for one business or application. It can contain a website, a desktop app, or both. Website visitors and app installs remain separate audiences.
 
-## Before you start
-
-Have access to your Jelto account and to the website or app you want to measure. You only need your own project's code or site-builder settings. The 14-day trial includes two products: use one for production and name the other something like **My app — Development**. Use that product's product ID (a public value such as `prd_8f3kq2m9x1`) in development builds so test events stay out of production reports. Both products share the trial’s usage allowances. Starter includes one product after the trial; remove the development product and wait for deletion to finish before choosing Starter, or choose Growth to keep both.
-
 ## Set up the product
 
-1. Open **All products → New product**. The initial form is **Add a website**.
+You need access to the website or app you want to measure: your own project's code or site-builder settings. If you don't have a Jelto account yet, [create one](https://app.jelto.io/login).
+
+1. Open **All products → New product**; an account with no products opens **New product** directly. The initial form is **Add a website**.
 2. For a website, enter **Website URL** and **Website name**, check **Reporting timezone**, then choose **Create website**. The URL accepts a full address or hostname; use the main published host. Jelto also registers the matching `www` or non-`www` hostname: entering `example.com` or `www.example.com` allows both. No extra hostname is added for other subdomains (such as `blog.example.com`), IP addresses or localhost.
 3. If you only have a desktop app, choose **I only have an app**, enter the app product name, check its reporting timezone and choose **Create an app product**. You can add a website later.
 4. Website creation opens the guided **Install tracking** step, followed by optional **First goal** and revenue setup. Enable **This website also has an app** to include **Set up SDK**. You can finish later and return through **Finish setup** in the product list.
@@ -30,10 +28,12 @@ Have access to your Jelto account and to the website or app you want to measure.
 
 ## Check the result
 
-Follow [Verify website tracking](verify.md) or the [per-app activity checks](apps.md#verify-app-activity). Then [read your dashboard](../guides/read-your-dashboard.md). Empty cards before any data arrives do not mean that you need to create another product.
+Follow [Verify website tracking](verify.md) or the [per-app activity checks](apps.md#verify-app-activity). Then [read your dashboard](../guides/read-your-dashboard.md). Until the first pageview arrives, its website section reads **No web data yet**, with links to **Add the snippet** and **Check Allowed hostnames**. Empty cards before any data arrives do not mean that you need to create another product.
+
+## Trial and development products
+
+The 14-day trial includes two products, which share the trial’s usage allowances. Use the second for development: name it something like **My app — Development** and put its product ID (a public value such as `prd_8f3kq2m9x1`) in development builds so test events stay out of production reports. Starter includes one product after the trial. Product deletion has a seven-day cancellation window, so before choosing Starter, delete the development product and allow at least seven days for deletion to finish, or choose Growth to keep both.
 
 ## Next steps
 
 [Create a goal](../goals/create-goal.md) for an action such as signup, then [build a funnel](../web/funnels.md) to see how website visits reach it. Invite collaborators through [Team](../manage/team.md).
-
-Product deletion has a seven-day cancellation window. Allow at least seven days for the development product to be deleted before switching to a one-product plan.

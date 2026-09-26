@@ -90,7 +90,21 @@ Use the same script host as your dashboard's installation. Keep dependent tags i
 
 A configured endpoint must resolve to HTTP or HTTPS. Credentials, fragments, an empty value or a malformed URL disable initialization instead of silently collecting elsewhere. A relative endpoint resolves against your page URL.
 
-Your site's CSP must permit the actual script origin in `script-src` and the ingestion origin in `connect-src`. Add the specific origins to your existing policy rather than replacing it with wildcards. For nonce-based policies, pass the site's current nonce through your framework.
+If your site sends a content security policy (CSP), it must allow the host in your tag's `src` in `script-src` and the host in its `data-endpoint` in `connect-src`. The tag copied from the dashboard loads the script from, and posts events to, the same host, so the standard tag needs:
+
+```text
+script-src 'self' https://app.jelto.io;
+connect-src 'self' https://app.jelto.io;
+```
+
+With a [custom tracking domain](../integrations/tracking-domain.md), both directives use that hostname instead:
+
+```text
+script-src 'self' https://analytics.example.com;
+connect-src 'self' https://analytics.example.com;
+```
+
+Use the hosts your copied tag contains; a tag without `data-endpoint` posts to `https://in.jelto.io`. Merge them into your existing `script-src` and `connect-src` directives rather than replacing them: keep every source already listed (`'self'` stands in for those here) and avoid wildcards. Optional helpers such as `jelto.goals.js` load from the same host and need no extra entry. For nonce-based policies, pass the site's current nonce through your framework.
 
 ## Verify after changing an option
 

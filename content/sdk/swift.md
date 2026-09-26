@@ -101,7 +101,7 @@ Accepted license values are strings matching `^[a-z0-9_.-]{1,24}$`, such as `fre
 
 Launch the app after enabling telemetry in your own app. Trigger an export, then inspect the product's app activity and Goals for the current date. Jelto discovers `export_finished` and its `format` property when it receives the event; no event registration is required.
 
-The SDK sends daily activity and queues the first install claim immediately on first initialization. Release versions support version-adoption reporting; later version changes are reported without creating a new install. Retention requires elapsed time and a mature sample.
+The SDK sends its first batch, the install claim and a heartbeat, about 2 seconds after initialization, and later events about 5 seconds after they are tracked; if the device is offline or Jelto asks it to retry later, it retries with backoff. Jelto stores events within about a second, so **Settings → Installation → Apps** shows **Receiving app activity** a few seconds later; choose **Check app activity** to refresh. Release versions support version-adoption reporting; later version changes are reported without creating a new install. Retention requires elapsed time and a mature sample.
 
 If data is missing, check the product ID, registered app slug, collection permission and network access. Debug payload logging is for local diagnosis only; turn it off before distributing a build. Do not reset the install ID on each launch. See [Understand app usage](../guides/understand-app-usage.md).
 

@@ -13,6 +13,6 @@
   }}
   aria-pressed={pressed ?? rest['aria-pressed']} data-layout={layout} aria-busy={loading || undefined} data-static={stationary || undefined}
   class={`${actionClass(variant, size)} ${className}`}>
-  {#if loading}<LoaderCircle class="ui-loading-icon" size={16} strokeWidth={2} aria-hidden="true" />{/if}
+  {#if loading}<LoaderCircle class="ui-loading-icon" size={16} aria-hidden="true" />{/if}
   {@render children?.()}
 </button>

@@ -60,6 +60,12 @@ if (typeof HTMLHeadElement !== 'undefined' && typeof HTMLStyleElement !== 'undef
   }
 }
 
+// jsdom reports scrollTo as not implemented; navigation starts a new path at
+// the top of the page (navigationSettle.ts), so give it a silent no-op.
+if (typeof window !== 'undefined') {
+  Object.defineProperty(window, 'scrollTo', { configurable: true, writable: true, value: () => {} })
+}
+
 if (typeof globalThis.matchMedia !== 'function') {
   Object.defineProperty(globalThis, 'matchMedia', {
     configurable: true,

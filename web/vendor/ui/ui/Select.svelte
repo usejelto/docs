@@ -15,6 +15,7 @@
   import type { HTMLButtonAttributes } from 'svelte/elements'
   import { FIELD, type FieldContext } from './field'
   import SelectionInput from './SelectionInput.svelte'
+  import { trackInputModality } from './modality'
 
   let {
     options,
@@ -42,7 +43,7 @@
     placeholder?: string
     /** Optional compact trigger label; the menu retains each complete option. */
     displayLabel?: string
-    appearance?: 'field' | 'compact' | 'pill' | 'quiet'
+    appearance?: 'field' | 'compact' | 'pill' | 'quiet' | 'toolbar'
     optionIcon?: Snippet<[SelectOption]>
     icon?: Snippet
     align?: 'start' | 'end'
@@ -57,6 +58,7 @@
 
   const field = getContext<FieldContext | undefined>(FIELD)
   const uid = $props.id()
+  trackInputModality()
   let missingRequired = $state(false)
   $effect(() => { if (value || disabled || !required) missingRequired = false })
 
@@ -85,8 +87,8 @@
     bind:ref
     id={id ?? field?.id}
     class={`card-select__trigger ${triggerProps.class ?? ''}`}
-    aria-label={labelledby ? undefined : label}
-    aria-labelledby={labelledby}
+    aria-label={labelledby || field ? undefined : label}
+    aria-labelledby={labelledby ?? (field ? `${field.id}-label` : undefined)}
     aria-describedby={[triggerProps['aria-describedby'] ?? field?.describedby, required ? `${uid}-required` : undefined].filter(Boolean).join(' ') || undefined}
     aria-invalid={triggerProps['aria-invalid'] ?? (field?.invalid || missingRequired || undefined)}
     title={triggerProps.title ?? text}
@@ -95,7 +97,7 @@
   >
     {#if icon}<span class="card-select__icon" aria-hidden="true">{@render icon()}</span>{/if}
     <span class="card-select__value">{text}</span>
-    <ChevronDown size={14} strokeWidth={1.5} class="card-select__chevron" aria-hidden="true" />
+    <ChevronDown size={14} class="card-select__chevron" aria-hidden="true" />
   </Select.Trigger>
   <Select.Portal>
     <Select.Content
@@ -120,7 +122,7 @@
                   {item.label}
                 </span>
                 <span class="card-select__check" aria-hidden="true">
-                  {#if selected}<Check size={16} strokeWidth={2} />{/if}
+                  {#if selected}<Check size={16} />{/if}
                 </span>
               {/snippet}
             </Select.Item>
@@ -133,5 +135,5 @@
     </Select.Content>
   </Select.Portal>
 </Select.Root>
-{#if required}<span class="sr-only" id={`${uid}-required`}>Required</span>{/if}
+{#if required}<span class={missingRequired ? 'ui-error' : 'sr-only'} id={`${uid}-required`}>Required</span>{/if}
 <SelectionInput {name} {value} {disabled} {required} trigger={ref} oninvalid={() => missingRequired = true} />

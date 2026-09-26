@@ -30,14 +30,14 @@
   </Button>
   <figcaption class="ui-image-preview__footer">
     {#if caption}<span class="ui-image-preview__caption">{caption}</span>{/if}
-    <Button variant="ghost" size="compact" static class="ui-image-preview__enlarge" aria-haspopup="dialog" onclick={show}><Maximize2 size={14} strokeWidth={1.5} aria-hidden="true" />Enlarge image</Button>
+    <Button variant="ghost" size="compact" static class="ui-image-preview__enlarge" aria-haspopup="dialog" onclick={show}><Maximize2 size={14} aria-hidden="true" />Enlarge image</Button>
   </figcaption>
 </figure>
 
 <Dialog bind:open {title} hideTitle size="image" dismissOnBackdrop>
   {#snippet headerActions()}
     <Button size="compact" disabled={!loaded || failed} pressed={zoomed} onclick={() => { zoomed = !zoomed }}>
-      {#if zoomed}<ZoomOut size={16} strokeWidth={1.5} aria-hidden="true" />Fit to screen{:else}<ZoomIn size={16} strokeWidth={1.5} aria-hidden="true" />Actual size{/if}
+      {#if zoomed}<ZoomOut size={16} aria-hidden="true" />Fit to screen{:else}<ZoomIn size={16} aria-hidden="true" />Actual size{/if}
     </Button>
   {/snippet}
   {#if open}

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Tabs } from 'bits-ui'
-  let { class: className = '', ref = $bindable(null), variant = 'plain', children, ...rest }: Tabs.ListProps & { variant?: 'plain' | 'segmented' } = $props()
+  let { class: className = '', ref = $bindable(null), variant = 'plain', stretch = false, children, ...rest }: Tabs.ListProps & { variant?: 'plain' | 'segmented'; stretch?: boolean } = $props()
   type Indicator = { x: number; y: number; width: number; height: number }
   let indicator = $state<Indicator | null>(null)
   let moving = $state(false)
@@ -72,7 +72,7 @@
     }
   })
 </script>
-<Tabs.List {...rest} bind:ref class={`ui-tabs ui-pill-group${variant === 'segmented' ? ' ui-pill-group--seg' : ''} ${className}`} data-indicator-ready={indicator !== null || undefined} data-indicator-motion={moving || undefined}>
+<Tabs.List {...rest} bind:ref class={`ui-tabs ui-pill-group${variant === 'segmented' ? ' ui-pill-group--seg' : ''} ${className}`} data-stretch={stretch || undefined} data-indicator-ready={indicator !== null || undefined} data-indicator-motion={moving || undefined}>
   {#if variant === 'segmented'}
     <span class="ui-tabs__indicator" aria-hidden="true"
       style:transform={`translate(${indicator?.x ?? 0}px, ${indicator?.y ?? 0}px)`}

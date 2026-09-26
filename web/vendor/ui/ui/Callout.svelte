@@ -11,6 +11,6 @@
   const ToneIcon = $derived(icons[tone])
 </script>
 <div class={`ui-callout ${className}`} data-tone={tone} role={live === 'assertive' ? 'alert' : live === 'polite' ? 'status' : undefined}>
-  <span class="ui-callout__icon" aria-hidden="true">{#if icon}{@render icon()}{:else}<ToneIcon size={16} strokeWidth={1.5} />{/if}</span
+  <span class="ui-callout__icon" aria-hidden="true">{#if icon}{@render icon()}{:else}<ToneIcon size={16} />{/if}</span
   ><div class="ui-callout__content">{@render children()}</div>
 </div>

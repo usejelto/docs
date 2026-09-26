@@ -14,7 +14,7 @@
       {@render actions?.()}
       {#if hintDisclosure && hint}
         <Popover label={`About ${title ?? 'this card'}`} tooltip={`About ${title ?? 'this card'}`} align="end" triggerProps={{ class: 'ui-btn--ghost ui-icon-btn', 'aria-label': `About ${title ?? 'this card'}` }}>
-          {#snippet trigger()}<Info size="var(--icon-standard)" strokeWidth={1.5} aria-hidden="true" />{/snippet}
+          {#snippet trigger()}<Info size="var(--icon-standard)" aria-hidden="true" />{/snippet}
           <p class="card-help">{hint}</p>
         </Popover>
       {/if}

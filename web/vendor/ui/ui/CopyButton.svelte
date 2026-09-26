@@ -42,7 +42,8 @@
 </script>
 <div class={`ui-copy-action ${className}`}>
   <Button size="compact" {variant} {disabled} loading={pending} onclick={copy}>
-    {#if outcome === 'copied'}<Check size={14} aria-hidden="true" />{:else}<Copy size={14} aria-hidden="true" />{/if}
+    <!-- §13 v1.133: the confirmation crossfades in place of the copy glyph. -->
+    <span class="ui-icon-swap" aria-hidden="true"><span data-hidden={outcome === 'copied' || undefined}><Copy size={14} /></span><span data-hidden={outcome !== 'copied' || undefined}><Check size={14} /></span></span>
     {outcome === 'copied' ? copiedLabel : label}
   </Button>
   <StatusMessage live="polite" tone={outcome === 'failed' ? 'danger' : 'success'} class={outcome === 'failed' ? '' : 'sr-only'}>{outcome === 'failed' ? failureLabel : outcome === 'copied' && announceCopied ? copiedLabel : ''}</StatusMessage>

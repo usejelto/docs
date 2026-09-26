@@ -66,9 +66,10 @@
     visibility: hidden;
     pointer-events: none;
     transform: translate3d(0, 8px, 0);
+    /* Opening is immediate (bot-exploration v0.3); closing accelerates away. */
     transition:
-      opacity var(--motion-fast) var(--ease),
-      transform var(--motion-fast) var(--ease),
+      opacity var(--motion-fast) var(--ease-exit),
+      transform var(--motion-fast) var(--ease-exit),
       visibility 0s linear var(--motion-fast);
   }
 
@@ -85,7 +86,7 @@
 
   .hover-card--still {
     transform: none;
-    transition: opacity var(--motion-fast) var(--ease), visibility 0s linear var(--motion-fast);
+    transition: opacity var(--motion-fast) var(--ease-exit), visibility 0s linear var(--motion-fast);
   }
 
   .hover-card--still.hover-card--open {
@@ -145,7 +146,7 @@
   @media (prefers-reduced-motion: reduce) {
     .hover-card {
       transform: none;
-      transition: opacity var(--motion-fast) var(--ease), visibility 0s linear var(--motion-fast) !important;
+      transition: opacity var(--motion-fast) var(--ease-exit), visibility 0s linear var(--motion-fast) !important;
     }
 
     .hover-card--open {

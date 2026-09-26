@@ -23,8 +23,8 @@
   }}>
   {#snippet icon()}
     {#if iconSrc}<img src={iconSrc} width="15" height="15" alt="" />
-    {:else if variant === 'host'}<Globe size={15} strokeWidth={1.5} />
-    {:else if variant === 'view'}<Layers size={15} strokeWidth={2} />
-    {:else if variant === 'metric'}<ArrowDownWideNarrow size={15} strokeWidth={1.5} />{/if}
+    {:else if variant === 'host'}<Globe size={15} />
+    {:else if variant === 'view'}<Layers size={15} />
+    {:else if variant === 'metric'}<ArrowDownWideNarrow size={15} />{/if}
   {/snippet}
 </Select>

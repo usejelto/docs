@@ -5,7 +5,7 @@
   import IconButton from './IconButton.svelte'
 
   let { open = $bindable(false), title, hideTitle = false, headerActions, size = 'default', dismissOnBackdrop = false, children }:
-    { open?: boolean; title: string; hideTitle?: boolean; headerActions?: Snippet; size?: 'default' | 'compact' | 'image'; dismissOnBackdrop?: boolean; children: Snippet } = $props()
+    { open?: boolean; title: string; hideTitle?: boolean; headerActions?: Snippet; size?: 'default' | 'form' | 'compact' | 'image'; dismissOnBackdrop?: boolean; children: Snippet } = $props()
   const id = $props.id()
   let element: HTMLDialogElement
   let opener: HTMLElement | null = null

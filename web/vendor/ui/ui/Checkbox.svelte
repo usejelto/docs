@@ -41,7 +41,7 @@
 <div class="ui-check-row" data-compact={compact || undefined}>
   <Checkbox.Root {id} {name} bind:checked {disabled} {onCheckedChange} class="ui-checkbox" aria-labelledby={`${id}-label`} aria-invalid={invalid} aria-describedby={descriptionIds}>
     {#snippet children({ checked: isChecked })}
-      {#if isChecked}<Check size={12} strokeWidth={3} />{/if}
+      {#if isChecked}<Check size={12} />{/if}
     {/snippet}
   </Checkbox.Root>
   <label class="ui-check-row__text" for={id}>

@@ -2,7 +2,7 @@
   "name": "docs-fonts",
   "version": "0.1.1",
   "producer": "frontend",
-  "producer_commit": "e4a90e0d58aa6618250edaf29f228b2184e8a959",
+  "producer_commit": "d3226ab1c2892c5954b4460832ba14f7164c0bdd",
   "files": {
     "dm-sans-latin.woff2": {
       "source": "src/shared/assets/fonts/dm-sans-latin.woff2",

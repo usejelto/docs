@@ -25,6 +25,7 @@
   import LinkButton from './LinkButton.svelte'
   import { FIELD, type FieldContext } from './field'
   import SelectionInput from './SelectionInput.svelte'
+  import { trackInputModality } from './modality'
   import './selection.css'
 
   let {
@@ -53,6 +54,7 @@
   let missingRequired = $state(false)
   $effect(() => { if (value || disabled || !required) missingRequired = false })
   const uid = $props.id()
+  trackInputModality()
   const listId = `${uid}-options`
   let open = $state(false)
   $effect(() => { if (disabled) open = false })
@@ -109,7 +111,8 @@
     id={id ?? field?.id}
     {disabled}
     class={`card-select__trigger ui-combobox__trigger ${triggerProps.class ?? ''}`}
-    aria-label={label}
+    aria-label={field ? undefined : label}
+    aria-labelledby={field ? `${field.id}-label` : undefined}
     aria-describedby={[triggerProps['aria-describedby'] ?? field?.describedby, selected ? `${uid}-value` : undefined, required ? `${uid}-required` : undefined].filter(Boolean).join(' ') || undefined}
     aria-invalid={triggerProps['aria-invalid'] ?? (field?.invalid || missingRequired || undefined)}
     title={[text, selected?.description, selected?.trailingText].filter(Boolean).join(' · ')}
@@ -129,7 +132,7 @@
     {:else}
       <span id={`${uid}-value`} class="card-select__value">{text}</span>
     {/if}
-    <ChevronDown size={14} strokeWidth={1.5} class="card-select__chevron" aria-hidden="true" />
+    <ChevronDown size={14} class="card-select__chevron" aria-hidden="true" />
   </Popover.Trigger>
   <Popover.Portal>
     <Popover.Content
@@ -160,7 +163,7 @@
         onOpenChange={(next) => { if (!next) open = false }}
       >
         <div class="ui-combobox__search">
-          <Search size={16} strokeWidth={1.5} aria-hidden="true" />
+          <Search size={16} aria-hidden="true" />
           <Combobox.Input
             bind:ref={input}
             class="ui-combobox__input"
@@ -198,7 +201,7 @@
                         <span class="card-select__option-label">{item.label}</span>
                       {/if}
                       <span class="card-select__check" aria-hidden="true">
-                        {#if selected}<Check size={16} strokeWidth={2} />{/if}
+                        {#if selected}<Check size={16} />{/if}
                       </span>
                     {/snippet}
                   </Combobox.Item>
@@ -222,13 +225,13 @@
               createAction?.onclick?.(event)
               if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) open = false
             }}
-          ><Plus size={16} strokeWidth={1.5} aria-hidden="true" /><span>{createAction.label}</span></LinkButton>
+          ><Plus size={16} aria-hidden="true" /><span>{createAction.label}</span></LinkButton>
         </div>
       {/if}
     </Popover.Content>
   </Popover.Portal>
 </Popover.Root>
-{#if required}<span class="sr-only" id={`${uid}-required`}>Required</span>{/if}
+{#if required}<span class={missingRequired ? 'ui-error' : 'sr-only'} id={`${uid}-required`}>Required</span>{/if}
 <SelectionInput {name} {value} {disabled} {required} trigger={ref} oninvalid={() => missingRequired = true} />
 
 <style>
@@ -253,10 +256,16 @@
     max-inline-size: var(--bits-popover-content-available-width);
   }
   .ui-combobox__rich-value { flex: 1; min-inline-size: 0; }
+  /* Design system §10: a closed field trigger stays one control-height line —
+     the description sits inline after the label and truncates; the list keeps
+     its two-line rows for browsing. */
+  .ui-combobox__rich-value .ui-combobox__copy { display: flex; align-items: baseline; gap: var(--space-2); }
+  .ui-combobox__rich-value .ui-combobox__copy > * { min-inline-size: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ui-combobox__rich-value .ui-combobox__copy > :first-child { flex: none; max-inline-size: 60%; }
   .ui-combobox__summary { display: flex; flex: 1; align-items: center; gap: var(--space-3); min-inline-size: 0; }
   .ui-combobox__copy { display: grid; flex: 1; gap: var(--space-half); min-inline-size: 0; overflow-wrap: anywhere; text-align: start; font-size: var(--text-base); }
-  .ui-combobox__description { color: var(--muted); font-size: var(--text-sm); font-weight: 400; line-height: 1.4; }
-  .ui-combobox__trailing { flex: none; color: var(--muted); font-size: var(--text-sm); font-weight: 400; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ui-combobox__description { color: var(--muted); font-size: var(--text-sm); font-weight: var(--weight-regular); line-height: 1.4; }
+  .ui-combobox__trailing { flex: none; color: var(--muted); font-size: var(--text-sm); font-weight: var(--weight-regular); font-variant-numeric: tabular-nums; white-space: nowrap; }
   :global(.ui-combobox__trigger[data-state='open']) .ui-combobox__description,
   :global(.ui-combobox__trigger[data-state='open']) .ui-combobox__trailing,
   :global(.ui-combobox__menu [data-selected]) .ui-combobox__description,
@@ -287,11 +296,11 @@
   }
   :global(.ui-combobox__input::placeholder) { color: var(--muted); }
   :global(.ui-combobox__input:focus-visible) { outline: none; }
-  .ui-combobox__search:has(:global(input:focus-visible)) { outline: 2px solid var(--accent); outline-offset: 0; }
+  .ui-combobox__search:has(:global(input:focus-visible)) { outline: var(--focus-width) solid var(--accent); outline-offset: var(--focus-offset); }
   :global(.ui-combobox__list) { min-block-size: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; scroll-padding-block: var(--space-1); }
   .ui-combobox__empty { margin: 0; padding: var(--space-4) var(--space-2); color: var(--muted); font-size: var(--text-sm); }
   .ui-combobox__footer { flex: none; margin-block-start: var(--space-1); padding-block-start: var(--space-1); border-block-start: 1px solid var(--rule); }
-  :global(.ui-combobox__create) { inline-size: 100%; min-block-size: var(--control-select); justify-content: flex-start; font-size: var(--text-sm); font-weight: 500; color: var(--ink); }
+  :global(.ui-combobox__create) { inline-size: 100%; min-block-size: var(--control-select); justify-content: flex-start; font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--ink); }
   @media (hover: hover) {
     :global(.ui-combobox__trigger[data-appearance='quiet']:hover:not(:disabled)) { background: var(--hover); }
   }

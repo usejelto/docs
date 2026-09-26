@@ -15,5 +15,5 @@
     aria-invalid={rest['aria-invalid'] ?? (field?.invalid || undefined)} aria-describedby={rest['aria-describedby'] ?? field?.describedby}>
     {@render children()}
   </select>
-  <ChevronDown size={14} strokeWidth={1.5} aria-hidden="true" />
+  <ChevronDown size={14} aria-hidden="true" />
 </span>

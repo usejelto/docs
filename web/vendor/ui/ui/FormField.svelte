@@ -12,7 +12,7 @@
   setContext(FIELD, field)
 </script>
 <div class={`ui-form-field ${className}`}>
-  <label class="ui-label" for={id}>{label}{#if required}<span aria-hidden="true"> *</span>{/if}</label>
+  <label class="ui-label" id={`${id}-label`} for={id}>{label}{#if required}<span aria-hidden="true"> *</span>{/if}</label>
   {@render children(field)}
   {#if hint}<p class="ui-hint" id={hintId ?? `${id}-hint`}>{hint}</p>{/if}
   {#if error}<p class="ui-error" id={errorId ?? `${id}-error`}>{error}</p>{/if}

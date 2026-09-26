@@ -79,7 +79,7 @@
       <div class="ui-dialog__actions">
         <AlertDialog.Cancel class={actionClass('secondary', 'default')} disabled={busy}>{cancelLabel}</AlertDialog.Cancel>
         <AlertDialog.Action class={actionClass('danger', 'default')} disabled={busy} aria-busy={busy || undefined} onclick={() => { if (!busy) onconfirm() }}>
-          {#if busy}<LoaderCircle class="ui-loading-icon" size={16} strokeWidth={2} aria-hidden="true" />{/if}
+          {#if busy}<LoaderCircle class="ui-loading-icon" size={16} aria-hidden="true" />{/if}
           {confirmLabel}
         </AlertDialog.Action>
       </div>

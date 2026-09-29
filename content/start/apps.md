@@ -2,7 +2,7 @@
 title: "Connect a desktop app"
 group: start
 slug: start/apps
-summary: "Register an app slug, choose an SDK, and verify the first app activity."
+summary: "Register every operating system you release, choose an SDK, and verify the first app activity."
 ---
 
 # Connect a desktop app
@@ -17,7 +17,7 @@ for install coverage, the first version baseline and cohort limits after adoptio
 When adding a website, enable **This website also has an app** to include **Set up SDK** in the guided setup. You can register the app and copy its SDK prompt there, or skip it and return through Settings later.
 
 1. Open your product's **Settings → Installation → Apps**.
-2. Register a short app slug for each app you want to distinguish, such as `desktop`. Use the exact registered slug in initialization.
+2. Choose **Add app**, then the framework your app is built with. Swift apps run on macOS; for Electron, Tauri or .NET, select every operating system you release. Each operating system becomes its own app, identified by its platform (`macos`, `windows`, `linux`), and one initialization without an app argument serves every build. Set a custom identifier only for a second app on the same operating system, and pass it at initialization.
 3. Choose [Swift](../sdk/swift.md), [Electron Forge](../sdk/electron-forge.md), [Electron Vite](../sdk/electron-vite.md), [Tauri](../sdk/tauri.md), or [.NET](../sdk/dotnet.md).
 4. Initialize once when your app decides telemetry may start, and pass `installOrigin`: `new` for an app that had no users before Jelto; otherwise see [Add Jelto to an app with existing users](existing-app.md) to derive `new`, `existing` or `unknown` from each installation's saved state. Installations initialized without it are recorded as `unknown`, which Retention, Onboarding and license conversion exclude. Keep secret API keys (`jk_…`) out of desktop binaries.
 5. Send custom events for actions you want to measure. Jelto discovers valid event names and property keys on first receipt; no preregistration is needed. See [custom goals](../goals/create-goal.md).

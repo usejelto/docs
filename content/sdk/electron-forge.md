@@ -46,11 +46,11 @@ import jelto from '@jelto/electron'
 
 async function startAnalytics(analyticsAllowed: boolean) {
   await app.whenReady()
-  if (analyticsAllowed) jelto.init('YOUR_PRODUCT_ID', 'desktop', undefined, 'new')
+  if (analyticsAllowed) jelto.init('YOUR_PRODUCT_ID', undefined, undefined, 'new')
 }
 ```
 
-Call `startAnalytics` from your app's startup flow. Replace `YOUR_PRODUCT_ID` with your product ID (`prd_8f3kq2m9x1`); the app slug must match **Settings → Installation → Apps**.
+Call `startAnalytics` from your app's startup flow. Replace `YOUR_PRODUCT_ID` with your product ID (`prd_8f3kq2m9x1`). Register the app in **Settings → Installation → Apps** for every operating system you release. Without an app argument, each build reports under its own operating system's app (`macos`, `windows` or `linux`), so one initialization serves all of them. If you registered a custom identifier, pass it as the second argument.
 
 The third argument is the optional endpoint; `undefined` keeps the SDK default. Pass `'new'` as the fourth argument for an app that had no users before Jelto; otherwise see [Add Jelto to an app with existing users](../start/existing-app.md). Without it, installations are recorded as `unknown`, which Retention, Onboarding and license conversion exclude.
 
@@ -71,11 +71,12 @@ installation's saved state instead of hardcoding one value, and read that state
 before your app changes it. For an installation that already existed before Jelto:
 
 ```ts
-jelto.init('YOUR_PRODUCT_ID', 'desktop', undefined, 'existing')
+jelto.init('YOUR_PRODUCT_ID', undefined, undefined, 'existing')
 ```
 
 Use `new` only when the host knows this is the app's first launch; use `existing`
 for a saved earlier installation and `unknown` when uncertain (the default).
+Pass the lowercase string as the fourth argument, after the optional app and endpoint.
 Never send a first-launch date.
 The first claim freezes the classification across retries and later launches.
 Older claims stay unknown and are excluded from new-install cohorts. See

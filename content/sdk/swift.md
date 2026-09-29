@@ -22,7 +22,7 @@ The prompt names the package described below. See
 ## Setup steps
 
 1. Add the **Jelto** Swift package to your app target.
-2. Initialize it once in the app startup flow, using your product ID (`prd_8f3kq2m9x1`), registered app slug and install origin.
+2. Initialize it once in the app startup flow, using your product ID (`prd_8f3kq2m9x1`) and install origin.
 3. Send an event from the action that succeeds, then verify it in the dashboard.
 
 ## Install
@@ -31,12 +31,12 @@ Requires macOS 12 or later. In Xcode, open **File → Add Package Dependencies**
 
 ## Initialize in your app
 
-Call this once in your app startup path, after the app decides analytics may start. Use the app slug registered under **Settings → Installation → Apps**.
+Call this once in your app startup path, after the app decides analytics may start. Without an app argument, the app reports under the `macos` app registered in **Settings → Installation → Apps**; pass `app:` only if you registered a custom identifier.
 
 ```swift
 import Jelto
 
-Jelto.initialize(key: "YOUR_PRODUCT_ID", app: "desktop", installOrigin: .new)
+Jelto.initialize(key: "YOUR_PRODUCT_ID", installOrigin: .new)
 Jelto.setProps(["license": "trial"])
 ```
 
@@ -57,7 +57,7 @@ installation's saved state instead of hardcoding one value, and read that state
 before your app changes it. For an installation that already existed before Jelto:
 
 ```swift
-Jelto.initialize(key: "YOUR_PRODUCT_ID", app: "desktop", installOrigin: .existing)
+Jelto.initialize(key: "YOUR_PRODUCT_ID", installOrigin: .existing)
 ```
 
 Use `.new` only when the host knows this is the app's first launch; use

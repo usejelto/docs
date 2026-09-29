@@ -129,7 +129,7 @@ Only this coarse classification is sent; do not send the date or elapsed age.
 For an existing Swift installation, for example:
 
 ```swift
-Jelto.initialize(key: "YOUR_PRODUCT_ID", app: "desktop", installOrigin: .existing)
+Jelto.initialize(key: "YOUR_PRODUCT_ID", installOrigin: .existing)
 ```
 
 Choose the value from the saved state for each installation; do not hardcode

@@ -15,7 +15,7 @@ Follow [Connect a desktop app](apps.md) and your SDK's setup guide as usual. Kee
 initialization behind your app's telemetry choice and preserve the SDK's install
 identity across launches and updates.
 
-Enable **I’m adding Jelto to an existing product** during setup to reveal the adoption guidance. The preference is saved with the product and shared with authorized team members across devices. It changes the guide, not the classification of your installations. Copied SDK examples pass one fixed `installOrigin` value; replace it with the classification derived from each installation's saved state before distributing your build.
+Select **I’m adding Jelto to an existing product** when you create the product to reveal the adoption guidance. The preference is saved with the product and shared with authorized team members across devices. It changes the guide, not the classification of your installations. Copied SDK examples pass one fixed `installOrigin` value; replace it with the classification derived from each installation's saved state before distributing your build.
 
 ## Prepare current state and verify the rollout
 

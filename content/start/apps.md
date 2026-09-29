@@ -14,7 +14,7 @@ for install coverage, the first version baseline and cohort limits after adoptio
 
 ## Connect the app
 
-When adding a website, enable **This website also has an app** to include **Set up SDK** in the guided setup. You can register the app and copy its SDK prompt there, or skip it and return through Settings later.
+When adding a website, select **This website also has an app** to include **Set up SDK** in the guided setup. You can register the app and copy its SDK prompt there, or skip it and return through Settings later.
 
 1. Open your product's **Settings → Installation → Apps**.
 2. Choose **Add app**, then the framework your app is built with. Swift apps run on macOS; for Electron, Tauri or .NET, select every operating system you release. Each operating system becomes its own app, identified by its platform (`macos`, `windows`, `linux`), and one initialization without an app argument serves every build. Set a custom identifier only for a second app on the same operating system, and pass it at initialization.

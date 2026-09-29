@@ -11,13 +11,13 @@ Add one Jelto script to your site's shared HTML. It collects pageviews and suppo
 
 ## Before you start
 
-Choose **Add website**, enter your website address, and check its name and reporting timezone. Creating the website registers that hostname and its `www` or non-`www` counterpart, so `example.com` and `www.example.com` are both allowed, then opens guided setup: **Add website → Install tracking → First goal (optional) → Connect revenue (optional)**. Have permission to edit and publish your website.
+Choose **Add website** and enter your website address. Jelto fills in the website name and your browser's reporting timezone; choose **Edit** to change either. Creating the website registers that hostname and its `www` or non-`www` counterpart, so `example.com` and `www.example.com` are both allowed, then opens guided setup: **Add website → Install tracking → First goal (optional) → Connect revenue (optional)**. Have permission to edit and publish your website.
 
-If your website also has a macOS, Windows or Linux app, enable **This website also has an app**. This adds an optional **Set up SDK** step after website tracking. Your choice is remembered for this product in your browser; products with a registered app include that step automatically.
+If your website also has a macOS, Windows or Linux app, select **This website also has an app** under **Optional**. This adds an optional **Set up SDK** step after website tracking. Your choice is remembered for this product in your browser; products with a registered app include that step automatically. You can also enable it from the installation step later.
 
 You can choose **Finish later** and return through **Finish setup** in the product list. Existing websites can also use **Settings → Installation**, where you can add other allowed hostnames, such as `blog.example.com`, and change tracking preferences. Subdomains other than `www` are not added automatically.
 
-If the product already has users or reporting history, enable **I’m adding Jelto to an existing product**. This saves a setup preference for this product, shared with your team across devices; it does not classify app installations or change collection. Review [Plausible migration](../imports/plausible.md) before your first production visit. Match the source reporting timezone first and use a separate Jelto product for development tests. Keep your previous analytics while verifying coverage across your production pages and hostnames.
+If the product already has users or reporting history, select **I’m adding Jelto to an existing product**. This saves a setup preference for this product, shared with your team across devices; it does not classify app installations or change collection. Review [Plausible migration](../imports/plausible.md) before your first production visit. Match the source reporting timezone first and use a separate Jelto product for development tests. Keep your previous analytics while verifying coverage across your production pages and hostnames.
 
 The **Install tracking** step shows both choices in a one-line **Setup choices** summary; choose **Change** to revise them.
 
@@ -66,19 +66,19 @@ The product ID is a public collection identifier. A secret API key (`jk_…`) ne
 
 Open the published website in a normal browser tab, visit a page, then follow [Check your installation](verify.md). Install the script once per HTML document; Jelto handles supported SPA history changes itself.
 
-The first-visit check within **Install tracking** updates automatically and shows the latest received pageview for the selected hostname. While it is still waiting, it also tells you if Jelto is receiving pageviews from a hostname that isn't on the website's **Allowed hostnames** list, with a link to **Allowed hostnames** where you can add it. Once connected, choose **View dashboard** or **Continue to revenue**. You can also continue while traffic is still waiting; the installation is only marked connected after Jelto receives a pageview.
+The first-visit check within **Install tracking** updates automatically and shows the latest received pageview for the selected hostname. While it is still waiting, it also tells you if Jelto is receiving pageviews from a hostname that isn't on the website's **Allowed hostnames** list, with a link to **Allowed hostnames** where you can add it. Once connected, choose **View dashboard** or **Continue to your first goal**. You can also continue while traffic is still waiting; the installation is only marked connected after Jelto receives a pageview. If nothing arrives, open **Still waiting for a visit?** below the check for troubleshooting tips.
 
 ## Set up an app SDK (optional)
 
 In **Set up SDK**, enter your app's name and platform, then choose **Add app**. Its SDK instructions open after registration. Choose your SDK and use **Copy prompt** with a coding agent, or switch to **Install manually**. See [Connect a desktop app](apps.md) for SDK availability and verification.
 
-Choose **Continue to revenue** when you're ready, or **Skip for now** to leave SDK setup for later. Skipping does not register an app or mark its SDK as installed.
+Choose **Continue to your first goal** when you're ready, or **Skip for now** to leave SDK setup for later. Skipping does not register an app or mark its SDK as installed.
 
 ## Connect revenue (optional)
 
 Choose Stripe, Lemon Squeezy or Polar and follow the provider guide to create a key. Review the account and product scope before connecting, then follow **Set up checkout** to link payments to traffic. Payment history and checkout attribution are verified separately.
 
-For Paddle or another provider, choose **Other / Payments API** for the server integration guide. Choose **Skip for now** to open your dashboard without connecting a provider; you can return through **Settings → Revenue** anytime. See [Connect revenue](../payments/connect.md) for details.
+For Paddle or another provider, choose **Other / Payments API** for the server integration guide. Choose **Go to dashboard** to finish without connecting a provider; you can return through **Settings → Revenue** anytime. See [Connect revenue](../payments/connect.md) for details.
 
 ## Common problems
 
@@ -97,7 +97,8 @@ while a form also needs the [goals helper](../goals/forms-and-visibility.md).
 Publish, perform the action in your site, then choose **Check goal**.
 The check confirms discovery of that custom event on the selected surface; check
 the Goals card with today included and filters cleared to verify the latest
-completion. Copying code alone does not verify a goal. This step is optional.
+completion. Copying code alone does not verify a goal. This step is optional:
+choose **Continue to revenue** to move on, or **Go to dashboard** to finish setup.
 
 Your required setup is complete once website collection is verified. Revenue and
 checkout remain optional next steps. Choose **Skip** for a feature you do not

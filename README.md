@@ -30,6 +30,12 @@ Use the same Go flags as CI. The root `vendor/` holds packaging tools, not Go
 dependencies; `-mod=readonly` keeps Go from treating it as a Go vendor tree.
 `GOWORK=off` keeps checks independent of any parent workspace.
 
+GitHub Actions runs `docs checks` for pull requests, manual dispatch and
+reusable calls; branch pushes do not start it. To publish the docs package, run
+`docs checks` manually on `main` with `publish` enabled; it defaults to false.
+A published version is immutable, so changed content needs a new version in
+`package.json` first.
+
 `agents/`, `llms.txt` and `dist/` are generated outputs. Only manifest-listed
 guides and approved assets are served: this README, the server sources and the
 tests are part of the repository but are never published as documentation pages.

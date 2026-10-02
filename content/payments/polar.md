@@ -125,12 +125,12 @@ A valid receipt proves webhook delivery; an attributed payment proves that
 checkout metadata completed the journey. Retry resumes failed history.
 Disconnect stops intake and keeps previously imported records.
 
-## Reporting currency
+## Currency
 
-Original signed amounts and currencies remain available. Dashboard estimates use the selected reporting currency and ECB historical cross-rates on each monetary event's UTC date, including
-refund-date rates. A quote can be carried forward at most seven calendar days.
-Missing currencies make converted totals **Incomplete**. These estimates are not
-provider payout totals.
+Dashboard money is shown in the currency Polar reports for each payment, with
+its original signed amount; refunds use refund dates. Nothing is converted: a
+range whose payments span currencies shows one total per currency. These are
+not provider payout totals.
 
 Primary references: [authentication](https://polar.sh/docs/integrate/authentication),
 [checkout success URLs](https://polar.sh/docs/features/checkout/links),

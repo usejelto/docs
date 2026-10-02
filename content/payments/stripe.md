@@ -156,19 +156,17 @@ Use **Retry** to continue an interrupted history import or recheck imported
 payments. Disconnecting stops new updates and keeps existing history. Reconnecting
 the same merchant and product selection does not count those payments again.
 
-Dashboard money uses the selected reporting currency and historical ECB cross-rates
-on each monetary event's UTC date. Refunds use refund dates. Original signed
-amounts and currencies remain available. Rates can be carried forward at most
-seven calendar days; missing currencies make converted totals **Incomplete**. These
-estimates are not Stripe settlement or payout values.
+Dashboard money is shown in the currency Stripe reports for each payment, with
+its original signed amount; refunds use refund dates. Nothing is converted: a
+range whose payments span currencies shows one total per currency. These are
+not Stripe settlement or payout values.
 
 
 Primary references: [invoice payment relationships](https://docs.stripe.com/changelog/basil/2025-03-31/add-support-for-multiple-partial-payments-on-invoices),
 [refunds](https://docs.stripe.com/refunds),
 [Checkout Session references](https://docs.stripe.com/payments/checkout/custom-success-page),
 [restricted API keys](https://docs.stripe.com/keys/restricted-api-keys),
-[webhook endpoint creation](https://docs.stripe.com/api/webhook_endpoints/create),
-[ECB rates](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html).
+[webhook endpoint creation](https://docs.stripe.com/api/webhook_endpoints/create).
 
 ## Verify the connection
 

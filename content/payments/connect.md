@@ -53,7 +53,7 @@ Keep amounts and dates from the provider. Historical payments without attributio
 
 ## Read the result
 
-[Understand revenue](../guides/understand-revenue.md) explains the card and channel breakdown. Reporting currency and renewal preferences change presentation; provider amounts remain preserved. For missing labels, use [Revenue shows Direct](../troubleshooting/all-revenue-shows-direct.md).
+[Understand revenue](../guides/understand-revenue.md) explains the card and channel breakdown. Renewal preferences change presentation; provider amounts and currencies remain as sent. For missing labels, use [Revenue shows Direct](../troubleshooting/all-revenue-shows-direct.md).
 
 ## Automatic goals
 

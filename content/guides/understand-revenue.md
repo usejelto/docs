@@ -29,6 +29,6 @@ A high-traffic source is not necessarily the largest revenue source. Look at bot
 
 A dash can mean that no matching revenue rows exist for a source. Missing attribution is not proof that the traffic produced no value. If revenue appears under Direct unexpectedly, see [why revenue shows Direct](../troubleshooting/all-revenue-shows-direct.md).
 
-Reporting currency and renewal preferences can affect the displayed totals. If historical exchange rates are missing, Jelto keeps that incompleteness visible.
+Renewal preferences can affect the displayed totals. Revenue is shown in the currency each payment arrived in; when a range spans currencies, Jelto shows one total per currency instead of converting them.
 
 Need to connect payments? Start with the [Stripe](../payments/stripe.md), [Lemon Squeezy](../payments/lemon-squeezy.md), or [Polar](../payments/polar.md) setup guide.

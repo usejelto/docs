@@ -108,9 +108,9 @@ supplies refund attribution; a missing original stays unknown.
 
 Confirm a new payment returns 201 and its exact retry returns 200, then inspect
 the Revenue card over the event date. Revenue is already available in the
-dashboard. It uses historical ECB cross-rates to estimate USD on the monetary
-event's UTC date, preserving original amounts and currencies. Missing rates
-are labelled incomplete; estimates are not settlement or payout amounts.
+dashboard, in the currency each payment was sent with and its original signed
+amount. Nothing is converted: a range whose payments span currencies shows one
+total per currency. These are not settlement or payout amounts.
 Historical provider imports without checkout attribution remain unknown.
 Current custom payments with missing or empty cohorts also show Unknown;
 some older payments may show Direct

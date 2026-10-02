@@ -22,7 +22,7 @@ Above the overview chart, choose **Activity**, then Calendar, Day and hour or Li
 
 [Primary metric](../analytics/kpi.md) changes the overview's emphasis. **Settings → Analytics preferences → Chart palette** changes the chart and map colors. It does not change collected data.
 
-Analytics preferences also choose the reporting currency and whether known renewals are included. Original payment amounts remain preserved; missing exchange rates can make converted totals incomplete. Named entry groups map registered hosts and path patterns to aggregate payment-entry labels; their order matters because the first matching group wins. A page-path report and an attributed payment-entry group have different coverage.
+Analytics preferences also choose whether known renewals are included. Revenue is shown in the currency each payment arrived in and is never converted; a total that spans currencies shows one amount per currency. Named entry groups map registered hosts and path patterns to aggregate payment-entry labels; their order matters because the first matching group wins. A page-path report and an attributed payment-entry group have different coverage.
 
 [Cookies and domains](../analytics/cookies-and-domains.md) explains why new/returning visitors or visit-count filters may be unavailable.
 

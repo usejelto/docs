@@ -148,13 +148,12 @@ Completing history does not prove that checkout forwarded a channel label.
 Disconnect stops intake and attempts to remove Jelto's webhook while keeping
 history. Reconnecting the same store and product selection does not count payments again.
 
-## Reporting currency
+## Currency
 
-Dashboard currency estimates use ECB rates for each monetary event's UTC date;
-refunds use their own dates. Original signed amounts and currencies are kept.
-Rates older than seven calendar days are unavailable, and missing currencies
-make converted totals **Incomplete**. Lemon Squeezy's provider USD fields are not mixed
-with ECB conversion values from other providers.
+Dashboard money is shown in the currency of each Lemon Squeezy order, with its
+original signed amount; refunds use their own dates. Nothing is converted, and
+Lemon Squeezy's USD fields are not used: a range whose payments span currencies
+shows one total per currency.
 
 Primary references: [API authentication and key expiry](https://docs.lemonsqueezy.com/api/getting-started/requests),
 [webhook creation](https://docs.lemonsqueezy.com/api/webhooks/create-webhook),

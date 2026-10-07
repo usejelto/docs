@@ -1282,6 +1282,28 @@ html:has(.ui-modal[open]) { overflow: hidden; }
 .ui-modal[data-size='compact'] .ui-modal__header { margin: 0; padding: var(--space-1) var(--space-2) var(--space-1) var(--space-4); border-bottom: 1px solid var(--rule); }
 .ui-modal[data-size='compact'] .ui-modal__header > .ui-icon-btn { min-width: var(--control-touch); min-height: var(--control-touch); }
 .ui-modal::backdrop { background: var(--backdrop); }
+/* Design system §10 (v1.13): a notice that blocks the page without replacing it
+   (dashboard §2c). The backdrop blurs the page past reading; the surface is
+   translucent over its own blur. Without blur, or when the reader prefers less
+   transparency, both layers become near-opaque fills. */
+.ui-modal[data-appearance='glass'] {
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+}
+.ui-modal[data-appearance='glass']::backdrop {
+  background: color-mix(in srgb, var(--ground) 45%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ui-modal[data-appearance='glass'] { background: var(--surface); }
+  .ui-modal[data-appearance='glass']::backdrop { background: color-mix(in srgb, var(--ground) 94%, transparent); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .ui-modal[data-appearance='glass'] { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .ui-modal[data-appearance='glass']::backdrop { background: color-mix(in srgb, var(--ground) 94%, transparent); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
 /* §13 v1.133: native dialogs follow the AlertDialog path — a backdrop fade and a
    centred 1 px rise, --motion-base in, --motion-fast out on the exit easing.
    Closing animates only where the browser can keep the dialog in the top layer

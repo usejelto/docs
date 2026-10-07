@@ -2,7 +2,7 @@
   "name": "shared-ui",
   "version": "1.0.2",
   "producer": "frontend",
-  "producer_commit": "d3226ab1c2892c5954b4460832ba14f7164c0bdd",
+  "producer_commit": "952dedecfe624bf59aa6b29d956c5b5080371ede",
   "files": {
     "package.json": {
       "source": "shared-ui.package.json",
@@ -10,7 +10,7 @@
     },
     "styles.css": {
       "source": "src/shared/styles.css",
-      "sha256": "ffb297bddf82f8bc994c79741ffd77c20d5796c40307de03ead300a5cf773e2d"
+      "sha256": "cf12f0287caa64247c7011a2fc83e870f055019d08c1f16f466cd29b0982e8be"
     },
     "test-setup.ts": {
       "source": "src/test-setup.ts",
@@ -70,7 +70,7 @@
     },
     "ui/Dialog.svelte": {
       "source": "src/shared/ui/Dialog.svelte",
-      "sha256": "a1b456d1358a2885790dee4b6ce39a8941323078bca32405b0438ee6aff12824"
+      "sha256": "22df283cce11eb401d6862381daa64b618921dd0c17dee2bb00e8eb0f8d332c8"
     },
     "ui/Disclosure.svelte": {
       "source": "src/shared/ui/Disclosure.svelte",

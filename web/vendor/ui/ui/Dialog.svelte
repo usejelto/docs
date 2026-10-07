@@ -4,8 +4,10 @@
   import X from '@lucide/svelte/icons/x'
   import IconButton from './IconButton.svelte'
 
-  let { open = $bindable(false), title, hideTitle = false, headerActions, size = 'default', dismissOnBackdrop = false, children }:
-    { open?: boolean; title: string; hideTitle?: boolean; headerActions?: Snippet; size?: 'default' | 'form' | 'compact' | 'image'; dismissOnBackdrop?: boolean; children: Snippet } = $props()
+  // Design system §10 (v1.13): `glass` and `dismissible={false}` exist for a notice
+  // that blocks the page without replacing it (dashboard §2c).
+  let { open = $bindable(false), title, hideTitle = false, headerActions, size = 'default', appearance = 'default', dismissible = true, dismissOnBackdrop = false, children }:
+    { open?: boolean; title: string; hideTitle?: boolean; headerActions?: Snippet; size?: 'default' | 'form' | 'compact' | 'image'; appearance?: 'default' | 'glass'; dismissible?: boolean; dismissOnBackdrop?: boolean; children: Snippet } = $props()
   const id = $props.id()
   let element: HTMLDialogElement
   let opener: HTMLElement | null = null
@@ -36,15 +38,19 @@
     } else if (!open && element.open) element.close()
   })
   function closed() {
+    // Chrome skips a prevented `cancel` on a second Escape without user activation
+    // and closes the dialog anyway; a notice that cannot be dismissed reopens.
+    if (!dismissible && open && element.isConnected) { element.showModal(); return }
     open = false
     opener?.focus()
   }
   onDestroy(() => { if (element?.open) { element.close(); opener?.focus() } })
 </script>
-<dialog bind:this={element} class="ui-modal" data-size={size} aria-labelledby={`${id}-title`} onclose={closed} oncancel={() => { open = false }}
+<dialog bind:this={element} class="ui-modal" data-size={size} data-appearance={appearance === 'default' ? undefined : appearance} aria-labelledby={`${id}-title`} onclose={closed}
+  oncancel={(event) => { if (dismissible) open = false; else event.preventDefault() }}
   onkeydown={containFocus}
   onpointerdown={(event) => { pointerStartedOutside = event.button === 0 && outside(event) }}
-  onclick={(event) => { if (dismissOnBackdrop && pointerStartedOutside && outside(event)) open = false; pointerStartedOutside = false }}>
-  <div class="ui-modal__header"><h2 id={`${id}-title`} class:sr-only={hideTitle}>{title}</h2>{@render headerActions?.()}<IconButton label="Close dialog" onclick={() => { open = false }}><X size={18} aria-hidden="true" /></IconButton></div>
+  onclick={(event) => { if (dismissible && dismissOnBackdrop && pointerStartedOutside && outside(event)) open = false; pointerStartedOutside = false }}>
+  <div class="ui-modal__header"><h2 id={`${id}-title`} class:sr-only={hideTitle}>{title}</h2>{@render headerActions?.()}{#if dismissible}<IconButton label="Close dialog" onclick={() => { open = false }}><X size={18} aria-hidden="true" /></IconButton>{/if}</div>
   {@render children()}
 </dialog>

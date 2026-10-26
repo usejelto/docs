@@ -45,11 +45,13 @@
   font-size: var(--text-base);
 }
 
+/* Design system v1.16: "More" sits in the card header row, so it takes the
+   control radius of the rail and selects beside it. */
 .card-select__trigger[data-appearance='pill'] {
   min-block-size: var(--control-compact);
   padding-inline: var(--space-3);
   border-color: transparent;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-control);
   font-size: var(--text-sm);
   color: var(--muted);
 }

@@ -201,7 +201,7 @@
   --control-select: 36px;
   --control-default: 40px;
   --control-touch: 44px;
-  --card-row-min: 36rem;
+  --card-row-min: 38.5rem;
   --text-input-mobile: 16px;
   --focus-width: 2px;
   --focus-offset: 2px;
@@ -529,10 +529,16 @@ svg.lucide { stroke-width: 1.5; }
    surface. The overview's pills (v1.39) keep no chrome. */
 /* Design system §10: a 2 px inset keeps 32 px tabs inside a 36 px rail, the
    height of the selects and pills that share a card's header row. */
+/* Design system v1.16: the rail takes the control radius of the selects beside
+   it, and its tabs and moving indicator sit concentrically inside the inset. */
 .ui-pill-group--seg {
   padding: var(--space-half);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-control);
   background: var(--ground);
+}
+.ui-pill-group--seg > .ui-pill,
+.ui-pill-group--seg > .ui-tabs__indicator {
+  border-radius: calc(var(--radius-control) - var(--space-half));
 }
 .ui-pill-group--seg .ui-pill[data-state='active'],
 .ui-pill-group--seg .ui-pill[aria-selected='true'] {
@@ -571,13 +577,6 @@ svg.lucide { stroke-width: 1.5; }
 
 /* The shared Tabs parts own tab geometry and the selected surface. */
 .ui-tabs { position: relative; isolation: isolate; max-inline-size: 100%; min-inline-size: 0; inline-size: fit-content; }
-.ui-tabs.ui-pill-group--seg {
-  /* Keep corners concentric with a control even when the rail wraps to rows. */
-  border-radius: calc(var(--control-compact) / 2 + var(--space-half));
-}
-@media (max-width: 560px), (pointer: coarse) {
-  .ui-tabs.ui-pill-group--seg { border-radius: calc(var(--control-touch) / 2 + var(--space-half)); }
-}
 .ui-tab {
   position: relative;
   z-index: 1;
@@ -1213,18 +1212,18 @@ svg.lucide { stroke-width: 1.5; }
 .ui-card__heading[data-layout='inline'] > .ui-card__actions { grid-column: 2; grid-row: 1; }
 .ui-card__heading[data-layout='inline'] > .ui-card__hint { grid-column: 1 / -1; }
 .ui-analytics-stack { display: flex; flex-direction: column; gap: var(--space-3); min-inline-size: 0; }
-.ui-data-row { background: transparent; font-family: inherit; position: relative; align-items: center; gap: var(--space-2); min-block-size: 1.75rem; padding-inline: var(--space-2); border-radius: var(--radius-control); color: var(--ink); font-size: var(--text-sm); transition: background-color var(--motion-fast) var(--ease); }
-button.ui-data-row { min-block-size: var(--control-compact); }
-.ui-data-row:has(.row-filter) { min-block-size: var(--control-compact); }
+.ui-data-row { background: transparent; font-family: inherit; position: relative; align-items: center; gap: var(--space-2); min-block-size: var(--control-compact); padding-inline: var(--space-2); border-radius: var(--radius-control); color: var(--ink); font-size: var(--text-base); transition: background-color var(--motion-fast) var(--ease); }
+button.ui-data-row { min-block-size: var(--control-select); }
+.ui-data-row:has(.row-filter) { min-block-size: var(--control-select); }
 .ui-data-row .value .value__number.is-muted, .ui-data-row .value .value__sub,
 .ui-data-row [data-label]::before { color: var(--ink); }
 .ui-data-row > :where(:not(.ui-data-bar)) { position: relative; }
 .ui-data-row[data-highlighted='true'] { background: var(--hover); }
 .ui-data-row:focus-visible { outline: var(--focus-width) solid var(--accent); outline-offset: var(--focus-offset); }
 @media (hover: hover) { .ui-data-row:hover { background: var(--hover); } }
-.ui-data-bar { position: absolute; inset-block: 0; inset-inline-start: 0; z-index: 0; display: block; pointer-events: none; border-radius: var(--radius-control); background: color-mix(in srgb, var(--accent) 18%, transparent); }
+.ui-data-bar { position: absolute; inset-block: 0; inset-inline-start: 0; z-index: 0; display: block; pointer-events: none; border-radius: var(--radius-control); background: color-mix(in srgb, var(--brand) 24%, transparent); }
 .ui-data-bar--categorical { background: color-mix(in srgb, var(--bar-color, var(--accent)) 14%, transparent); }
-.ui-data-label { min-inline-size: 0; font-weight: var(--weight-medium); }
+.ui-data-label { min-inline-size: 0; font-weight: var(--weight-regular); }
 .ui-data-value { font-weight: var(--weight-semibold); font-variant-numeric: tabular-nums; }
 .ui-chart-legend { display: flex; flex-wrap: wrap; gap: var(--space-4); margin: 0; padding: 0; list-style: none; font-size: var(--text-sm); color: var(--ink); }
 .ui-chart-legend > li { display: flex; align-items: center; gap: var(--space-one-half); }

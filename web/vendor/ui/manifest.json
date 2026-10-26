@@ -2,7 +2,7 @@
   "name": "shared-ui",
   "version": "1.0.2",
   "producer": "frontend",
-  "producer_commit": "952dedecfe624bf59aa6b29d956c5b5080371ede",
+  "producer_commit": "bb8581449e8de8ccaa8e72eb7b90808df3059b98",
   "files": {
     "package.json": {
       "source": "shared-ui.package.json",
@@ -10,7 +10,7 @@
     },
     "styles.css": {
       "source": "src/shared/styles.css",
-      "sha256": "cf12f0287caa64247c7011a2fc83e870f055019d08c1f16f466cd29b0982e8be"
+      "sha256": "c4a965a77bc99f4501f00c4c8f18c4ec238895ee42f6c68666a169dbb3f6adac"
     },
     "test-setup.ts": {
       "source": "src/test-setup.ts",
@@ -182,7 +182,7 @@
     },
     "ui/selection.css": {
       "source": "src/shared/ui/selection.css",
-      "sha256": "f16b5a37559ad916d082c62dc8fe7e07fe455e6bc504c0174594f9f322627827"
+      "sha256": "a6be19668f92f7bc5a05928da9258c5fa7064ba81180307c02cba253dc821eea"
     },
     "ui/SelectionInput.svelte": {
       "source": "src/shared/ui/SelectionInput.svelte",

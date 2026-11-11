@@ -33,7 +33,11 @@
     } catch { failed = true } finally { loading = false }
   }
   $effect(() => { if (open) untrack(() => { void load() }) })
-  $effect(() => { query; selected = 0 })
+  $effect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- reading query subscribes the effect: a new query resets the selection
+    query
+    selected = 0
+  })
   function shortcut(event: KeyboardEvent) {
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k' && !event.altKey) {
       event.preventDefault()
@@ -59,7 +63,9 @@
   }
 </script>
 <svelte:window onkeydown={shortcut} />
+<!-- eslint-disable svelte/no-useless-mustaches -- the mustache keeps the leading space inside the label a narrow screen hides -->
 <Button size="compact" class="docs-search-trigger" static aria-label="Search docs" aria-keyshortcuts="Meta+K Control+K" onclick={() => { open = true }}><SearchIcon size={16} strokeWidth={1.5} aria-hidden="true" /><span>Search<span class="docs-search-label">{' docs'}</span></span><kbd class="docs-search-key" aria-hidden="true">{shortcutLabel}</kbd></Button>
+<!-- eslint-enable svelte/no-useless-mustaches -->
 <Dialog bind:open title="Search documentation">
   <div class="docs-search-input">
     <SearchField label="Search documentation" placeholder="Find a guide…" bind:value={query} bind:ref={input} onkeydown={navigate} role="combobox" aria-expanded={results.length > 0} aria-controls={`${id}-results`} aria-activedescendant={results.length ? `${id}-result-${selected}` : undefined} aria-autocomplete="list" aria-describedby={`${id}-status`} autocomplete="off" />
@@ -69,6 +75,7 @@
   {#if failed}<Button onclick={() => { void load() }}>Try again</Button>{/if}
   {#if !loading && !failed && searching && !results.length}<p class="docs-search-empty">No guides found for “{query}”. Try a feature or integration name, or clear your search.</p>{/if}
   <ul bind:this={resultList} id={`${id}-results`} class="docs-search-results" role="listbox" aria-label="Documentation results">
+    <!-- eslint-disable-next-line svelte/require-each-key -- the selection is an index, so rows update in place by position; a key would change that behaviour -->
     {#each results as result, i}
       <li id={`${id}-result-${i}`} role="option" aria-selected={i === selected}>
         <a href={result.url} tabindex="-1" onpointerenter={() => { selected = i }}>

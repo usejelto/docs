@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Shared navigation and public-source validation; generate standalone agent copies.
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs'
-import { join, dirname, relative, resolve } from 'node:path'
+import { join, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { publicBoundaryViolations } from './public-boundaries.mjs'
 

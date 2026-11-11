@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := check
-.PHONY: check vendor-check content build test typecheck go-test govulncheck npm-audit security
+.PHONY: check vendor-check lint content build test typecheck go-test govulncheck npm-audit security
 
 # vendor/ holds shared tooling snapshots, not Go dependency vendoring, so the
 # module is read with vendoring off and module edits disabled, as CI does.
@@ -19,7 +19,7 @@ include vendor/quality/quality.mk
 security: secrets workflow-audit osv npm-audit govulncheck
 
 # The whole gate: what to run before a pull request, and what CI runs.
-check: vendor-check content build test typecheck go-test security
+check: vendor-check lint content build test typecheck go-test security
 
 node_modules: package.json package-lock.json
 	npm ci --no-audit --no-fund
@@ -27,6 +27,11 @@ node_modules: package.json package-lock.json
 
 vendor-check:
 	node vendor-check.mjs
+
+# ESLint's recommended JavaScript, TypeScript and Svelte rules
+# (eslint.config.js) over web/, the tests and the scripts.
+lint: node_modules
+	npx --no-install eslint --max-warnings 0 .
 
 # Public page, metadata, link and boundary checks.
 content: node_modules

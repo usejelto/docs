@@ -28,9 +28,9 @@ make hooks   # once per clone
 make check   # the whole gate; CI runs the same command
 ```
 
-`make check` runs `vendor-check`, `lint`, `deadcode`, `content`, `build`,
-`test`, `typecheck`, `go-test` and `security`; each is also a target of its
-own.
+`make check` runs `vendor-check`, `lint`, `format-check`, `deadcode`,
+`content`, `build`, `test`, `typecheck`, `go-test` and `security`; each is also
+a target of its own.
 
 Guide prose, navigation and images live in `content/`. Go handlers, search and templates live in this directory; browser enhancements live in `web/`. Build the assets before the Go checks so the rendered-asset assertions run.
 
@@ -51,12 +51,13 @@ downloads and verifies it into `~/.cache/jelto-tools` (`JELTO_TOOLS_DIR`
 overrides the location), and `make tools` installs them all ahead of time.
 `vendor/quality/` is a checksummed snapshot of the contracts repository's
 `tools/quality/`; change it there, not here. golangci-lint is one of those
-programs; ESLint and Knip are development dependencies, pinned by
+programs; ESLint, Prettier and Knip are development dependencies, pinned by
 `package-lock.json`.
 
 | Target | Tool | What it checks |
 |---|---|---|
 | `make lint` | golangci-lint, ESLint | the standard Go linters and gofmt (`.golangci.yml`); the recommended JavaScript, TypeScript and Svelte rules (`eslint.config.js`), no warnings |
+| `make format-check` | Prettier | formatting, Svelte included: no semicolons, single quotes, 600 columns, JSON at 80 (`.prettierrc.json`, the settings that changed the fewest existing lines); `.prettierignore` names what it leaves alone; `npx prettier --write .` applies it |
 | `make deadcode` | Knip | files nothing imports, unused exports and dependencies, undeclared dependencies (`knip.config.ts`; `web/vendor/` is left to its producer) |
 | `make secrets` | gitleaks | the whole Git history for credentials |
 | `make workflow-audit` | actionlint, zizmor | workflow syntax, script injection, permissions and pinning |
@@ -82,7 +83,10 @@ place it applies, with the reason beside it:
   reason above it, or `/** @public */` on an export something outside the
   import graph uses;
 - opengrep: `// nosemgrep: <rule-id> -- <reason>` at the end of the finding's
-  first line.
+  first line;
+- Prettier: `// prettier-ignore` (`<!-- prettier-ignore -->` in Svelte markup)
+  above the one statement or element it must leave as written, with the
+  reason beside it.
 
 Never disable a rule, a file or a directory wholesale, and never relax a
 threshold to make a check pass.

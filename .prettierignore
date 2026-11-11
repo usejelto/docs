@@ -1,0 +1,22 @@
+# Prettier formats every other file with .prettierrc.json, and skips what
+# .gitignore lists; CONTRIBUTING.md says how its settings were chosen. Left
+# alone:
+# build output, and the agent twins and llms.txt build-agent-twins.mjs writes,
+dist/
+agents/
+llms.txt
+coverage/
+# vendored snapshots, which their producers format,
+vendor/
+web/vendor/
+# the lockfile, which npm writes,
+package-lock.json
+# the guides, their images and navigation, published with the package as written,
+content/
+# Markdown, whose hand-wrapped prose and tables Prettier would rewrite,
+*.md
+# shell.html, a Go html/template whose actions sit inside tags and attributes,
+shell.html
+# and CSS, written one rule per line, which Prettier would expand rule by rule
+# (serve.go also inlines styles.css and footer.css into every served page).
+*.css

@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := check
-.PHONY: check vendor-check lint deadcode content build test typecheck go-test govulncheck npm-audit security
+.PHONY: check vendor-check lint format-check deadcode content build test typecheck go-test govulncheck npm-audit security
 
 # vendor/ holds shared tooling snapshots, not Go dependency vendoring, so the
 # module is read with vendoring off and module edits disabled, as CI does.
@@ -27,7 +27,7 @@ include vendor/quality/quality.mk
 security: secrets workflow-audit osv npm-audit govulncheck sast
 
 # The whole gate: what to run before a pull request, and what CI runs.
-check: vendor-check lint deadcode content build test typecheck go-test security
+check: vendor-check lint format-check deadcode content build test typecheck go-test security
 
 node_modules: package.json package-lock.json
 	npm ci --no-audit --no-fund
@@ -41,6 +41,11 @@ vendor-check:
 # (eslint.config.js) over web/, the tests and the scripts.
 lint: node_modules golangci
 	npx --no-install eslint --max-warnings 0 .
+
+# Prettier (.prettierrc.json) over every file .prettierignore leaves in;
+# `npx prettier --write .` applies it.
+format-check: node_modules
+	npx --no-install prettier --check .
 
 # Knip (knip.config.ts): files nothing imports, unused exports and
 # dependencies, and dependencies used but not declared.

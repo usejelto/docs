@@ -15,9 +15,6 @@ const config: KnipConfig = {
   // reviewed where it is produced. bits-ui and shiki are imported only there;
   // Knip counts them as peer dependencies the @jelto/ui package declares.
   project: ['web/**/*.{ts,svelte}', '!web/vendor/**', 'tests/**/*.mjs', '*.{js,mjs,ts}'],
-  // `make format-check` runs Prettier and its Svelte plugin through npx; Knip
-  // reads package.json scripts, not the Makefile.
-  ignoreDependencies: ['prettier', 'prettier-plugin-svelte'],
 }
 
 export default config

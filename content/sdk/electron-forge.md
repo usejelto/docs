@@ -28,7 +28,7 @@ The prompt names the package described below. See
 
 ## Install
 
-Node.js 18 or later is required. The package is published on npm as `@jelto/electron`; its source and releases are at [usejelto/electron-sdk](https://github.com/usejelto/electron-sdk). Install it in your app project:
+Node.js 22 or later is required. The package is published on npm as `@jelto/electron`; its source and releases are at [usejelto/electron-sdk](https://github.com/usejelto/electron-sdk). Install it in your app project:
 
 ```sh
 npm install @jelto/electron

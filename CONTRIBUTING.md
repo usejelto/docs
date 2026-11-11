@@ -15,7 +15,8 @@ For setup and account help, see [SUPPORT.md](SUPPORT.md).
 
 ## Local development
 
-Node 24 or later, Go 1.26.8 or later, and Make. The Go requirement is recorded in `go.mod`.
+Node 24.22.2 (the release `.nvmrc` pins), the Go release `go.mod` names
+(`make` selects it through `GOTOOLCHAIN`), and Make.
 
 Fork and clone this repository, create a branch from `main`, and run commands
 from this repository's root. A standalone checkout contains its build inputs;

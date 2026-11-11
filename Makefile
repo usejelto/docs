@@ -6,6 +6,11 @@
 export GOFLAGS := -mod=readonly
 export GOWORK := off
 
+# Build, test and scan with the Go release go.mod names rather than whatever
+# newer one is installed: govulncheck judges the standard library by the
+# toolchain that runs it, so a newer local Go hides advisories CI reports.
+export GOTOOLCHAIN := go$(shell sed -n 's/^go //p' go.mod)
+
 # The shared quality targets (hooks, tools, secrets, osv, workflow-audit, sast)
 # arrive from the contracts repository as a checksummed snapshot; `make inputs`
 # in the backend refreshes it, and nothing edits it here.

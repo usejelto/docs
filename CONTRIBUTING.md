@@ -23,19 +23,52 @@ you do not need the private Jelto backend, and no instruction here should ask
 you for it.
 
 ```sh
-npm ci
-npm run build
-npm test
-npm run check
-npm run check:content
-GOFLAGS=-mod=readonly GOWORK=off go test ./... -count=1
+make hooks   # once per clone
+make check   # the whole gate; CI runs the same command
 ```
+
+`make check` runs `vendor-check`, `content`, `build`, `test`, `typecheck`,
+`go-test` and `security`; each is also a target of its own.
 
 Guide prose, navigation and images live in `content/`. Go handlers, search and templates live in this directory; browser enhancements live in `web/`. Build the assets before the Go checks so the rendered-asset assertions run.
 
 Vendored inputs under `vendor/` are checked-in snapshots with recorded sources
 and checksums. Do not edit them by hand; they are refreshed by an explicit
 update command that reviews the pin diff.
+
+## Checks and exceptions
+
+`make check` is the whole gate, and the command CI runs on Linux. `make hooks`
+enables two Git hooks once per clone: `commit-msg` rejects a subject that is
+not a Conventional Commit, and `pre-commit` runs gitleaks over the staged
+changes. Do not bypass them with `--no-verify`.
+
+The security targets run separate programs, not project dependencies.
+`vendor/quality/tools.json` pins each one's exact version and SHA-256; the first run
+downloads and verifies it into `~/.cache/jelto-tools` (`JELTO_TOOLS_DIR`
+overrides the location), and `make tools` installs them all ahead of time.
+`vendor/quality/` is a checksummed snapshot of the contracts repository's
+`tools/quality/`; change it there, not here.
+
+| Target | Tool | What it checks |
+|---|---|---|
+| `make secrets` | gitleaks | the whole Git history for credentials |
+| `make workflow-audit` | actionlint, zizmor | workflow syntax, script injection, permissions and pinning |
+| `make osv` | OSV-Scanner | `package-lock.json` and `go.sum` against the OSV database, downloaded and matched locally |
+| `make npm-audit` | npm audit | `package-lock.json` against the npm advisory database |
+| `make govulncheck` | govulncheck | Go code paths that reach a known vulnerability |
+
+When a check reports something, fix a real problem in the same change. A
+deliberate exception, or a finding the tool got wrong, is marked at the one
+place it applies, with the reason beside it:
+
+- gitleaks: a `.gitleaks.toml` allowlist entry naming the one literal and why;
+- zizmor: `# zizmor: ignore[<audit>]` on the line, with the reason above it;
+- OSV-Scanner: an `[[IgnoredVulns]]` entry in `osv-scanner.toml` with a
+  `reason` and an `ignoreUntil` date.
+
+Never disable a rule, a file or a directory wholesale, and never relax a
+threshold to make a check pass.
 
 ## Review and acceptance
 

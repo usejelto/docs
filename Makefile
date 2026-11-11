@@ -11,4 +11,37 @@ export GOWORK := off
 # in the backend refreshes it, and nothing edits it here.
 include vendor/quality/quality.mk
 
-security: secrets workflow-audit osv
+security: secrets workflow-audit osv npm-audit govulncheck
+
+# The whole gate: what to run before a pull request, and what CI runs.
+check: vendor-check content build test typecheck go-test security
+
+node_modules: package.json package-lock.json
+	npm ci --no-audit --no-fund
+	@touch $@
+
+vendor-check:
+	node vendor-check.mjs
+
+# Public page, metadata, link and boundary checks.
+content: node_modules
+	npm run check:content
+
+build: node_modules
+	npm run build
+
+test: node_modules
+	npm test
+
+typecheck: node_modules
+	npm run check
+
+# Assets are built first: the Go tests assert the rendered output.
+go-test: build
+	go test ./... -count=1
+
+govulncheck:
+	go run golang.org/x/vuln/cmd/govulncheck@v1.8.0 ./...
+
+npm-audit:
+	npm audit --audit-level=moderate --package-lock-only

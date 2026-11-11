@@ -11,4 +11,4 @@ export GOWORK := off
 # in the backend refreshes it, and nothing edits it here.
 include vendor/quality/quality.mk
 
-security: secrets workflow-audit
+security: secrets workflow-audit osv

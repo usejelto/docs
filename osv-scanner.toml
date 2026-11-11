@@ -1,0 +1,7 @@
+# OSV-Scanner exceptions. Each entry names one advisory, why it does not apply
+# here, and a date after which it stops applying and is reviewed again.
+
+[[IgnoredVulns]]
+id = "GHSA-gcqx-w48m-w2h4"
+ignoreUntil = 2027-02-01T00:00:00Z
+reason = "deepmerge 4.3.1 has no fixed release. It reaches this repository only through @sveltejs/vite-plugin-svelte, which runs at build time and merges this repository's own Vite and Svelte configuration, never request or page data; nothing that ships includes it."

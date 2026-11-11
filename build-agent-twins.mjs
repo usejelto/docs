@@ -12,17 +12,27 @@ const OUT = join(DOCS, 'agents')
 const groups = JSON.parse(readFileSync(join(CONTENT, 'navigation.json'), 'utf8'))
 const problems = []
 const fail = (file, message) => problems.push(`${file}: ${message}`)
-const unquote = value => value.trim().replace(/^["'](.*)["']$/, '$1')
+const unquote = (value) => value.trim().replace(/^["'](.*)["']$/, '$1')
 function frontMatter(text, file) {
   const match = text.match(/^---\n([\s\S]*?)\n---\n/)
-  if (!match) { fail(file, 'missing or unclosed front matter'); return null }
-  const meta = {}; let list = null
+  if (!match) {
+    fail(file, 'missing or unclosed front matter')
+    return null
+  }
+  const meta = {}
+  let list = null
   for (const line of match[1].split('\n')) {
     if (!line.trim()) continue
     const item = line.match(/^\s+-\s+(.*)$/)
-    if (item && list) { meta[list].push(unquote(item[1])); continue }
+    if (item && list) {
+      meta[list].push(unquote(item[1]))
+      continue
+    }
     const pair = line.match(/^([a-z_]+):\s*(.*)$/)
-    if (!pair) { fail(file, `invalid metadata: ${line}`); continue }
+    if (!pair) {
+      fail(file, `invalid metadata: ${line}`)
+      continue
+    }
     const [, key, value] = pair
     meta[key] = value ? unquote(value) : []
     list = value ? null : key
@@ -40,7 +50,7 @@ function frontMatter(text, file) {
   return { meta, body: text.slice(match[0].length) }
 }
 function pageFiles(dir = CONTENT) {
-  return readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     if (entry.name.startsWith('.') || ['agents', 'diagrams'].includes(entry.name)) return []
     const file = join(dir, entry.name)
     return entry.isDirectory() ? pageFiles(file) : entry.name.endsWith('.md') && file !== join(CONTENT, 'README.md') ? [file] : []
@@ -55,9 +65,15 @@ for (const group of groups) {
   for (const violation of publicBoundaryViolations(`${group.title}\n${group.description}`)) fail('navigation.json', violation)
   groupIDs.add(group.id)
   for (const slug of group.pages) {
-    if (!/^[a-z0-9-]+\/[a-z0-9-]+$/.test(slug) || pages.has(slug)) { fail('navigation.json', `invalid or duplicate page ${slug}`); continue }
+    if (!/^[a-z0-9-]+\/[a-z0-9-]+$/.test(slug) || pages.has(slug)) {
+      fail('navigation.json', `invalid or duplicate page ${slug}`)
+      continue
+    }
     const file = join(CONTENT, slug + '.md')
-    if (!existsSync(file)) { fail(slug, 'manifest page is missing'); continue }
+    if (!existsSync(file)) {
+      fail(slug, 'manifest page is missing')
+      continue
+    }
     const parsed = frontMatter(readFileSync(file, 'utf8'), slug)
     if (!parsed) continue
     if (parsed.meta.slug !== slug || parsed.meta.group !== group.id) fail(slug, 'metadata disagrees with navigation manifest')
@@ -73,9 +89,16 @@ function anchors(body) {
   const used = new Set()
   for (const match of body.replace(/```[\s\S]*?```/g, '').matchAll(/^#{1,6}\s+(.+)$/gm)) {
     // Goldmark's default heading IDs keep ASCII letters/digits and replace whitespace with dashes.
-    let id = match[1].replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[`*_]/g, '').trim().toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s/g, '-')
+    let id = match[1]
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/[`*_]/g, '')
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s/g, '-')
     if (!id) id = 'heading'
-    const base = id; let n = 1
+    const base = id
+    let n = 1
     while (used.has(id)) id = `${base}-${n++}`
     used.add(id)
   }
@@ -88,7 +111,10 @@ function absoluteLinks(body, page) {
   return body.replace(/\]\(([^)\s]+)\)/g, (whole, href) => {
     if (/^(https?:|mailto:)/.test(href)) return whole
     const parsed = new URL(href, `${SITE}/${page.slug === 'README' ? '' : page.slug}`)
-    if (parsed.origin !== 'https://jelto.io' || /%2f|%5c/i.test(parsed.pathname)) { fail(page.slug, `unsafe link ${href}`); return whole }
+    if (parsed.origin !== 'https://jelto.io' || /%2f|%5c/i.test(parsed.pathname)) {
+      fail(page.slug, `unsafe link ${href}`)
+      return whole
+    }
     if (!parsed.pathname.startsWith('/docs/')) {
       if (href !== '/') fail(page.slug, `unexpected root link ${href}`)
       return `](${parsed.href})`
@@ -113,7 +139,7 @@ for (const page of all.values()) {
   for (const violation of publicBoundaryViolations(publicText)) fail(page.slug, violation)
 }
 if (problems.length) {
-  console.error('docs: validation failed\n' + problems.map(p => `  ${p}`).join('\n'))
+  console.error('docs: validation failed\n' + problems.map((p) => `  ${p}`).join('\n'))
   process.exit(1)
 }
 if (process.argv.includes('--check')) {
@@ -123,7 +149,8 @@ if (process.argv.includes('--check')) {
 if (existsSync(OUT)) rmSync(OUT, { recursive: true })
 mkdirSync(OUT, { recursive: true })
 for (const page of pages.values()) {
-  const out = join(OUT, page.slug + '.md'); mkdirSync(dirname(out), { recursive: true })
+  const out = join(OUT, page.slug + '.md')
+  mkdirSync(dirname(out), { recursive: true })
   const header = `# ${page.meta.title}\n\n${page.meta.summary}\n\nCanonical page: ${SITE}/${page.slug}\nSection: ${page.group.title}\n\n---\n\n`
   writeFileSync(out, header + page.absolute.replace(/^\s*#\s+.*\n+/, ''), 'utf8')
 }

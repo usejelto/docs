@@ -28,7 +28,10 @@ function verify(snapshot) {
   if (!expected.size) problems.push(`${relative(root, snapshot)}: manifest records no files`)
   for (const [name, entry] of Object.entries(manifest.files ?? {})) {
     const file = join(snapshot, name)
-    if (!existsSync(file)) { problems.push(`${relative(root, file)}: missing`); continue }
+    if (!existsSync(file)) {
+      problems.push(`${relative(root, file)}: missing`)
+      continue
+    }
     if (sha256(readFileSync(file)) !== entry.sha256) problems.push(`${relative(root, file)}: checksum mismatch`)
     checked += 1
   }

@@ -4,26 +4,29 @@ import { defineConfig } from 'vitest/config'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 export default defineConfig({
-  plugins: [svelte(), {
-    name: 'docs-embed-assets',
-    generateBundle() {
-      this.emitFile({ type: 'asset', fileName: 'PLACEHOLDER', source: 'Run npm run build in docs to build the documentation assets.\n' })
-      for (const [name, source] of [
-        ['mascot-mark.svg', 'brand/mascot-mark.svg'],
-        ['favicon.svg', 'brand/favicon.svg'],
-        ['favicon.ico', 'brand/favicon.ico'],
-        ['JELTO-BRAND-NOTICE.txt', 'brand/NOTICE.txt'],
-        ['OFL-DM-Sans.txt', 'fonts/OFL-DM-Sans.txt'],
-      ]) {
-        this.emitFile({
-          type: 'asset',
-          name,
-          originalFileName: 'web/vendor/' + source,
-          source: readFileSync(new URL('./web/vendor/' + source, import.meta.url)),
-        })
-      }
+  plugins: [
+    svelte(),
+    {
+      name: 'docs-embed-assets',
+      generateBundle() {
+        this.emitFile({ type: 'asset', fileName: 'PLACEHOLDER', source: 'Run npm run build in docs to build the documentation assets.\n' })
+        for (const [name, source] of [
+          ['mascot-mark.svg', 'brand/mascot-mark.svg'],
+          ['favicon.svg', 'brand/favicon.svg'],
+          ['favicon.ico', 'brand/favicon.ico'],
+          ['JELTO-BRAND-NOTICE.txt', 'brand/NOTICE.txt'],
+          ['OFL-DM-Sans.txt', 'fonts/OFL-DM-Sans.txt'],
+        ]) {
+          this.emitFile({
+            type: 'asset',
+            name,
+            originalFileName: 'web/vendor/' + source,
+            source: readFileSync(new URL('./web/vendor/' + source, import.meta.url)),
+          })
+        }
+      },
     },
-  }],
+  ],
   resolve: { conditions: ['browser'], dedupe: ['svelte'] },
   base: '/docs/',
   build: {

@@ -3,15 +3,8 @@ import assert from 'node:assert/strict'
 import { publicBoundaryViolations } from './public-boundaries.mjs'
 
 test('rejects private platform instructions and previously exposed mechanisms', () => {
-  for (const text of [
-    'Edit web/dashboard/src/app/App.svelte.', 'Run go run ./cmd/jelto serve.',
-    'See internal/store and spec/api.yaml.', 'Run make fixtures.',
-    'Set JELTO_LS_SECRET before starting.', 'Open the Operator setup guide.',
-    "Clone Jelto's private backend.", "You do not need Jelto's backend source.",
-    'The worker removes expired rows.', 'The durable revenue ledger stores the payment.',
-    'Retained history has a resumable cursor.', 'Raw email is used to calculate a keyed HMAC.',
-    'Session mutations also require the deployment Origin for CSRF protection.',
-  ]) assert.notDeepEqual(publicBoundaryViolations(text), [], text)
+  for (const text of ['Edit web/dashboard/src/app/App.svelte.', 'Run go run ./cmd/jelto serve.', 'See internal/store and spec/api.yaml.', 'Run make fixtures.', 'Set JELTO_LS_SECRET before starting.', 'Open the Operator setup guide.', "Clone Jelto's private backend.", "You do not need Jelto's backend source.", 'The worker removes expired rows.', 'The durable revenue ledger stores the payment.', 'Retained history has a resumable cursor.', 'Raw email is used to calculate a keyed HMAC.', 'Session mutations also require the deployment Origin for CSRF protection.'])
+    assert.notDeepEqual(publicBoundaryViolations(text), [], text)
 })
 
 test('allows customer integrations, SDK contracts, privacy outcomes and public APIs', () => {
@@ -20,12 +13,13 @@ test('allows customer integrations, SDK contracts, privacy outcomes and public A
     "import { createClient } from '@jelto/analytics/server'",
     'Set JELTO_API_KEY on your application server and POST /api/v1/payments.',
     'Keep JELTO_CRAWLER_KEY on your server; call trackResponse and flush the SDK queue.',
-    "Connect your private GitHub repository in Settings.",
+    'Connect your private GitHub repository in Settings.',
     "Verify your provider webhook's HMAC signature on your server.",
     'The SDK stores unsent activity locally and queues the first install claim immediately.',
     'Raw email is not stored in analytics or logs. Matching expires after 24 hours.',
     'Set a CNAME in Cloudflare DNS for your custom tracking domain.',
-  ]) assert.deepEqual(publicBoundaryViolations(text), [], text)
+  ])
+    assert.deepEqual(publicBoundaryViolations(text), [], text)
 })
 
 test('allows the reviewed public wire contract link without allowing private specifications', () => {
@@ -37,7 +31,8 @@ test('allows the reviewed public wire contract link without allowing private spe
     link.replace('/contracts/', '/jelto/'),
     link.replaceAll('wire-v1.md', 'api.yaml'), // nosemgrep: no-replaceall -- Node 24 runs this test, and replaceAll is ES2021
     'See spec/wire-v1.md §4.',
-  ]) assert.ok(publicBoundaryViolations(text).includes('private source path'), text)
+  ])
+    assert.ok(publicBoundaryViolations(text).includes('private source path'), text)
 })
 
 // The whole repository is public, not only content/. build-agent-twins.mjs scans
@@ -58,7 +53,11 @@ test('every tracked file outside content/ stays inside the public boundary', asy
   for (const file of files) {
     if (file.startsWith('content/') || scanner.has(file)) continue
     let text
-    try { text = readFileSync(file, 'utf8') } catch { continue }
+    try {
+      text = readFileSync(file, 'utf8')
+    } catch {
+      continue
+    }
     if (text.slice(0, 1024).includes('\0')) continue
     for (const { literal, under } of allowed) if (file.startsWith(under)) text = text.split(literal).join('')
     const found = publicBoundaryViolations(text)

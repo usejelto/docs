@@ -16,7 +16,9 @@ export function rememberNavigationGroups() {
     if (Array.isArray(saved) && saved.every((id) => typeof id === 'string')) {
       open = new Set(saved.filter((id) => groups.has(id)))
     }
-  } catch { /* Native navigation remains usable when storage is unavailable. */ }
+  } catch {
+    /* Native navigation remains usable when storage is unavailable. */
+  }
 
   for (const [id, copies] of groups) {
     if (copies.some((element) => element.querySelector('[aria-current="page"]'))) open.add(id)
@@ -24,8 +26,11 @@ export function rememberNavigationGroups() {
   }
 
   const save = () => {
-    try { sessionStorage.setItem(navigationStorageKey, JSON.stringify([...open])) }
-    catch { /* Remember state in the current page even when storage is disabled. */ }
+    try {
+      sessionStorage.setItem(navigationStorageKey, JSON.stringify([...open]))
+    } catch {
+      /* Remember state in the current page even when storage is disabled. */
+    }
   }
   save()
 
@@ -43,13 +48,19 @@ export function rememberNavigationGroups() {
       cleanup.push(() => element.removeEventListener('toggle', onToggle))
     }
   }
-  return () => { for (const remove of cleanup) remove() }
+  return () => {
+    for (const remove of cleanup) remove()
+  }
 }
 
 // Keep existing /docs/#category links useful when the directory is collapsed.
 export function revealDirectoryTarget() {
   let id: string
-  try { id = decodeURIComponent(window.location.hash.slice(1)) } catch { return }
+  try {
+    id = decodeURIComponent(window.location.hash.slice(1))
+  } catch {
+    return
+  }
   const target = document.getElementById(id)
   if (target instanceof HTMLDetailsElement && target.classList.contains('directory-group')) {
     target.open = true

@@ -2,7 +2,7 @@
 # twins and frontend-manifest code the backend imports, and their tests.
 # `make lint` runs it with the Makefile's GOFLAGS=-mod=readonly, because
 # vendor/ holds tooling snapshots, not Go dependency vendoring.
-version: "2"
+version: '2'
 
 linters:
   # errcheck, govet, ineffassign, staticcheck and unused.

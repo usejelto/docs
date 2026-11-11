@@ -27,7 +27,9 @@ for (const pre of document.querySelectorAll<HTMLPreElement>('.docs-prose pre')) 
   try {
     mount(CodeExample, { target: wrapper, props: { text, language: languages[name] ?? 'text', wrap: name === 'text' } })
     pre.remove()
-  } catch { wrapper.remove() }
+  } catch {
+    wrapper.remove()
+  }
 }
 const updateTables = () => {
   for (const table of document.querySelectorAll<HTMLElement>('.docs-table')) {

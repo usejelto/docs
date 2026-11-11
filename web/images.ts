@@ -18,7 +18,11 @@ export function enhanceImages() {
       previews.push(mount(ImagePreview, { target, props: { src: link.href, thumbnailSrc: image.src, alt: image.alt, caption: caption?.textContent?.trim() ?? '' } }))
       paragraph.remove()
       caption?.remove()
-    } catch { target.remove() }
+    } catch {
+      target.remove()
+    }
   }
-  return async () => { await Promise.all(previews.map((preview) => unmount(preview))) }
+  return async () => {
+    await Promise.all(previews.map((preview) => unmount(preview)))
+  }
 }

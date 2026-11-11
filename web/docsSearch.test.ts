@@ -4,10 +4,19 @@ import Search from './Search.svelte'
 
 beforeEach(() => {
   vi.stubGlobal('HTMLDialogElement', HTMLDialogElement)
-  HTMLDialogElement.prototype.showModal = vi.fn(function (this: HTMLDialogElement) { this.open = true })
-  HTMLDialogElement.prototype.close = vi.fn(function (this: HTMLDialogElement) { this.open = false; this.dispatchEvent(new Event('close')) })
+  HTMLDialogElement.prototype.showModal = vi.fn(function (this: HTMLDialogElement) {
+    this.open = true
+  })
+  HTMLDialogElement.prototype.close = vi.fn(function (this: HTMLDialogElement) {
+    this.open = false
+    this.dispatchEvent(new Event('close'))
+  })
 })
-afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals() })
+afterEach(() => {
+  cleanup()
+  vi.restoreAllMocks()
+  vi.unstubAllGlobals()
+})
 const data = [{ title: 'Install tracking', category: 'Get started', heading: 'Verify', text: 'Verify checkout_started events.', url: '/docs/start/website#verify' }]
 
 test('loads on open, searches body text locally, navigates with arrows and restores focus', async () => {
@@ -33,7 +42,10 @@ test('loads on open, searches body text locally, navigates with arrows and resto
 })
 
 test('failed index fetch waits for an explicit retry and reports no results', async () => {
-  const fetch = vi.fn().mockRejectedValueOnce(new Error('Offline')).mockResolvedValue({ ok: true, json: async () => data })
+  const fetch = vi
+    .fn()
+    .mockRejectedValueOnce(new Error('Offline'))
+    .mockResolvedValue({ ok: true, json: async () => data })
   vi.stubGlobal('fetch', fetch)
   render(Search)
   await fireEvent.keyDown(window, { key: 'k', metaKey: true })

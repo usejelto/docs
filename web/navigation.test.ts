@@ -61,8 +61,12 @@ test.each(['{', '{"start":true}', '["start",5]'])('invalid stored navigation %s 
 })
 
 test('blocked storage leaves categories independently usable', async () => {
-  vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => { throw new Error('Storage disabled') })
-  vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('Storage disabled') })
+  vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+    throw new Error('Storage disabled')
+  })
+  vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+    throw new Error('Storage disabled')
+  })
   renderNavigation('start')
   document.querySelector<HTMLElement>('.desktop-nav [data-nav-group="sdk"] > summary')!.click()
   await waitFor(() => expectGroupOpen('sdk', true))

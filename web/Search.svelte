@@ -30,9 +30,18 @@
       const response = await fetch('/docs/search-index.json', { credentials: 'omit', signal: AbortSignal.timeout(10000) })
       if (!response.ok) throw new Error('Index unavailable')
       index = parseIndex(await response.json())
-    } catch { failed = true } finally { loading = false }
+    } catch {
+      failed = true
+    } finally {
+      loading = false
+    }
   }
-  $effect(() => { if (open) untrack(() => { void load() }) })
+  $effect(() => {
+    if (open)
+      untrack(() => {
+        void load()
+      })
+  })
   $effect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- reading query subscribes the effect: a new query resets the selection
     query
@@ -62,9 +71,18 @@
     }
   }
 </script>
+
 <svelte:window onkeydown={shortcut} />
 <!-- eslint-disable svelte/no-useless-mustaches -- the mustache keeps the leading space inside the label a narrow screen hides -->
-<Button size="compact" class="docs-search-trigger" static aria-label="Search docs" aria-keyshortcuts="Meta+K Control+K" onclick={() => { open = true }}><SearchIcon size={16} strokeWidth={1.5} aria-hidden="true" /><span>Search<span class="docs-search-label">{' docs'}</span></span><kbd class="docs-search-key" aria-hidden="true">{shortcutLabel}</kbd></Button>
+<Button
+  size="compact"
+  class="docs-search-trigger"
+  static
+  aria-label="Search docs"
+  aria-keyshortcuts="Meta+K Control+K"
+  onclick={() => {
+    open = true
+  }}><SearchIcon size={16} strokeWidth={1.5} aria-hidden="true" /><span>Search<span class="docs-search-label">{' docs'}</span></span><kbd class="docs-search-key" aria-hidden="true">{shortcutLabel}</kbd></Button>
 <!-- eslint-enable svelte/no-useless-mustaches -->
 <Dialog bind:open title="Search documentation">
   <div class="docs-search-input">
@@ -72,13 +90,22 @@
     {#if query}<IconButton label="Clear search" onclick={clear}><X size={16} aria-hidden="true" /></IconButton>{/if}
   </div>
   <div id={`${id}-status`} class="docs-search-status"><StatusMessage live="polite">{loading ? 'Loading documentation…' : failed ? 'Search could not load. Check your connection and try again.' : searching ? `${results.length}${results.length === 20 ? '+' : ''} ${results.length === 1 ? 'result' : 'results'}` : 'Suggested guides'}</StatusMessage></div>
-  {#if failed}<Button onclick={() => { void load() }}>Try again</Button>{/if}
+  {#if failed}<Button
+      onclick={() => {
+        void load()
+      }}>Try again</Button
+    >{/if}
   {#if !loading && !failed && searching && !results.length}<p class="docs-search-empty">No guides found for “{query}”. Try a feature or integration name, or clear your search.</p>{/if}
   <ul bind:this={resultList} id={`${id}-results`} class="docs-search-results" role="listbox" aria-label="Documentation results">
     <!-- eslint-disable-next-line svelte/require-each-key -- the selection is an index, so rows update in place by position; a key would change that behaviour -->
     {#each results as result, i}
       <li id={`${id}-result-${i}`} role="option" aria-selected={i === selected}>
-        <a href={result.url} tabindex="-1" onpointerenter={() => { selected = i }}>
+        <a
+          href={result.url}
+          tabindex="-1"
+          onpointerenter={() => {
+            selected = i
+          }}>
           {#if searching}<span class="docs-result-category">{result.category}</span>{/if}
           <strong>{result.title}<ArrowRight size={16} aria-hidden="true" /></strong>
           {#if result.heading}<span class="docs-result-heading">{result.heading}</span>{/if}

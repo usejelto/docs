@@ -14,9 +14,17 @@ export GOTOOLCHAIN := go$(shell sed -n 's/^go //p' go.mod)
 # The shared quality targets (hooks, tools, secrets, osv, workflow-audit, sast)
 # arrive from the contracts repository as a checksummed snapshot; `make inputs`
 # in the backend refreshes it, and nothing edits it here.
+# sast: the community rules for Go, TypeScript, JavaScript and browser
+# JavaScript, and the Unicode (bidirectional text) rule for the code, JSON and
+# YAML. quality.mk skips every vendor/ directory, so the shared UI under
+# web/vendor/ is left to the repository that produces it.
+QUALITY_COMMUNITY_RULES := go/lang/security go/lang/correctness \
+	typescript/lang/security typescript/lang/correctness \
+	javascript/lang/security javascript/lang/correctness javascript/browser/security \
+	generic/unicode/security
 include vendor/quality/quality.mk
 
-security: secrets workflow-audit osv npm-audit govulncheck
+security: secrets workflow-audit osv npm-audit govulncheck sast
 
 # The whole gate: what to run before a pull request, and what CI runs.
 check: vendor-check lint deadcode content build test typecheck go-test security

@@ -63,6 +63,7 @@ programs; ESLint and Knip are development dependencies, pinned by
 | `make osv` | OSV-Scanner | `package-lock.json` and `go.sum` against the OSV database, downloaded and matched locally |
 | `make npm-audit` | npm audit | `package-lock.json` against the npm advisory database |
 | `make govulncheck` | govulncheck | Go code paths that reach a known vulnerability |
+| `make sast` | opengrep | the community Go, TypeScript, JavaScript, browser and Unicode rules |
 
 When a check reports something, fix a real problem in the same change. A
 deliberate exception, or a finding the tool got wrong, is marked at the one
@@ -79,7 +80,9 @@ place it applies, with the reason beside it:
   spreads over several lines);
 - Knip: an entry or `ignoreDependencies` line in `knip.config.ts` with the
   reason above it, or `/** @public */` on an export something outside the
-  import graph uses.
+  import graph uses;
+- opengrep: `// nosemgrep: <rule-id> -- <reason>` at the end of the finding's
+  first line.
 
 Never disable a rule, a file or a directory wholesale, and never relax a
 threshold to make a check pass.

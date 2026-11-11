@@ -13,8 +13,8 @@ afterEach(() => {
 
 function renderNavigation(active: string) {
   stopRemembering()
-  const groups = ['start', 'install', 'sdk'].map((id) => `<details class="nav-group" data-nav-group="${id}"${id === active ? ' open' : ''}><summary>${id}</summary><a href="/docs/${id}/guide"${id === active ? ' aria-current="page"' : ''}>Guide</a></details>`).join('')
-  document.body.innerHTML = `<aside class="docs-sidebar"><div class="desktop-nav">${groups}</div><details class="mobile-nav"><summary>Browse documentation</summary>${groups}</details></aside>`
+  const groups = ['start', 'install', 'sdk'].map((id) => `<details class="nav-group" data-nav-group="${id}"${id === active ? ' open' : ''}><summary>${id}</summary><a href="/docs/${id}/guide"${id === active ? ' aria-current="page"' : ''}>Guide</a></details>`).join('') // nosemgrep: html-in-template-string -- a test fixture built from constant group ids
+  document.body.innerHTML = `<aside class="docs-sidebar"><div class="desktop-nav">${groups}</div><details class="mobile-nav"><summary>Browse documentation</summary>${groups}</details></aside>` // nosemgrep: insecure-document-method, insecure-innerhtml, html-in-template-string -- a test fixture built from constant group ids
   stopRemembering = rememberNavigationGroups()
 }
 

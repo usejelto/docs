@@ -35,7 +35,7 @@ test('allows the reviewed public wire contract link without allowing private spe
     `${link} and spec/api.yaml`,
     `${link} and internal/store`,
     link.replace('/contracts/', '/jelto/'),
-    link.replaceAll('wire-v1.md', 'api.yaml'),
+    link.replaceAll('wire-v1.md', 'api.yaml'), // nosemgrep: no-replaceall -- Node 24 runs this test, and replaceAll is ES2021
     'See spec/wire-v1.md §4.',
   ]) assert.ok(publicBoundaryViolations(text).includes('private source path'), text)
 })

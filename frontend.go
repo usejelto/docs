@@ -84,6 +84,6 @@ func serveFrontend(w http.ResponseWriter, r *http.Request, name string) {
 	w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
 	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
 	if r.Method == http.MethodGet {
-		_, _ = w.Write(data)
+		_, _ = w.Write(data) // nosemgrep: no-direct-write-to-responsewriter -- a built asset under its own Content-Type, with nosniff and a sandbox CSP; no HTML is assembled here
 	}
 }

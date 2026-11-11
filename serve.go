@@ -169,7 +169,7 @@ func NewHandler() http.Handler {
 			w.Header().Set("Content-Security-Policy", policy)
 			w.Header().Set("Content-Length", strconv.Itoa(len(index)))
 			if r.Method == http.MethodGet {
-				_, _ = w.Write(index)
+				_, _ = w.Write(index) // nosemgrep: no-direct-write-to-responsewriter -- the search index built from the embedded guides, served as JSON with nosniff
 			}
 			return
 		}
@@ -186,7 +186,7 @@ func NewHandler() http.Handler {
 			w.Header().Set("Cache-Control", "no-cache")
 			w.Header().Set("Content-Length", strconv.Itoa(len(data)))
 			if r.Method == http.MethodGet {
-				_, _ = w.Write(data)
+				_, _ = w.Write(data) // nosemgrep: no-direct-write-to-responsewriter -- a generated agent copy, served as text/plain with nosniff
 			}
 			return
 		}
@@ -206,7 +206,7 @@ func NewHandler() http.Handler {
 			w.Header().Set("Cache-Control", "no-cache")
 			w.Header().Set("Content-Length", strconv.Itoa(len(data)))
 			if r.Method == http.MethodGet {
-				_, _ = w.Write(data)
+				_, _ = w.Write(data) // nosemgrep: no-direct-write-to-responsewriter -- an embedded guide image, served as image/png with nosniff
 			}
 			return
 		}
@@ -282,7 +282,7 @@ func NewHandler() http.Handler {
 			Styles         template.CSS
 			Icon           string
 			IconFallback   string
-		}{title, template.HTML(rendered), navigation(path), path == "README.md", headings, category, previous, next, script, logo, css, summary, canonical, template.CSS(styles), icon, iconFallback}); err != nil {
+		}{title, template.HTML(rendered), navigation(path), path == "README.md", headings, category, previous, next, script, logo, css, summary, canonical, template.CSS(styles), icon, iconFallback}); err != nil { // nosemgrep: unsafe-template-type -- the body is goldmark HTML for the embedded guides, raw HTML and unsafe links off (a test pins it); the styles are the embedded stylesheets
 			http.Error(w, "Guide unavailable", http.StatusInternalServerError)
 			return
 		}
@@ -292,7 +292,7 @@ func NewHandler() http.Handler {
 		w.Header().Set("Cache-Control", "no-cache")
 		w.Header().Set("Content-Length", strconv.Itoa(out.Len()))
 		if r.Method == http.MethodGet {
-			_, _ = w.Write(out.Bytes())
+			_, _ = w.Write(out.Bytes()) // nosemgrep: no-direct-write-to-responsewriter -- html/template output, escaped when the shell executed
 		}
 	})
 }

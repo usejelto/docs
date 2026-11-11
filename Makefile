@@ -10,3 +10,5 @@ export GOWORK := off
 # arrive from the contracts repository as a checksummed snapshot; `make inputs`
 # in the backend refreshes it, and nothing edits it here.
 include vendor/quality/quality.mk
+
+security: secrets

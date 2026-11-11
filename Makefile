@@ -28,9 +28,10 @@ node_modules: package.json package-lock.json
 vendor-check:
 	node vendor-check.mjs
 
-# ESLint's recommended JavaScript, TypeScript and Svelte rules
+# golangci-lint (.golangci.yml) over the Go module, under the GOFLAGS exported
+# above, then ESLint's recommended JavaScript, TypeScript and Svelte rules
 # (eslint.config.js) over web/, the tests and the scripts.
-lint: node_modules
+lint: node_modules golangci
 	npx --no-install eslint --max-warnings 0 .
 
 # Knip (knip.config.ts): files nothing imports, unused exports and

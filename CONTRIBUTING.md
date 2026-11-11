@@ -50,12 +50,13 @@ The security targets run separate programs, not project dependencies.
 downloads and verifies it into `~/.cache/jelto-tools` (`JELTO_TOOLS_DIR`
 overrides the location), and `make tools` installs them all ahead of time.
 `vendor/quality/` is a checksummed snapshot of the contracts repository's
-`tools/quality/`; change it there, not here. ESLint and Knip are development
-dependencies, pinned by `package-lock.json`.
+`tools/quality/`; change it there, not here. golangci-lint is one of those
+programs; ESLint and Knip are development dependencies, pinned by
+`package-lock.json`.
 
 | Target | Tool | What it checks |
 |---|---|---|
-| `make lint` | ESLint | the recommended JavaScript, TypeScript and Svelte rules (`eslint.config.js`), no warnings |
+| `make lint` | golangci-lint, ESLint | the standard Go linters and gofmt (`.golangci.yml`); the recommended JavaScript, TypeScript and Svelte rules (`eslint.config.js`), no warnings |
 | `make deadcode` | Knip | files nothing imports, unused exports and dependencies, undeclared dependencies (`knip.config.ts`; `web/vendor/` is left to its producer) |
 | `make secrets` | gitleaks | the whole Git history for credentials |
 | `make workflow-audit` | actionlint, zizmor | workflow syntax, script injection, permissions and pinning |
@@ -71,6 +72,7 @@ place it applies, with the reason beside it:
 - zizmor: `# zizmor: ignore[<audit>]` on the line, with the reason above it;
 - OSV-Scanner: an `[[IgnoredVulns]]` entry in `osv-scanner.toml` with a
   `reason` and an `ignoreUntil` date;
+- golangci-lint: `//nolint:<linter> // <reason>` at the end of the line;
 - ESLint: `// eslint-disable-next-line <rule> -- <reason>` above the line, or
   `<!-- eslint-disable-next-line <rule> -- <reason> -->` in Svelte markup (an
   `eslint-disable`/`eslint-enable` pair around one element that Prettier

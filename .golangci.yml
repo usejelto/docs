@@ -1,0 +1,29 @@
+# golangci-lint for the documentation module: the handlers, search, agent
+# twins and frontend-manifest code the backend imports, and their tests.
+# `make lint` runs it with the Makefile's GOFLAGS=-mod=readonly, because
+# vendor/ holds tooling snapshots, not Go dependency vendoring.
+version: "2"
+
+linters:
+  # errcheck, govet, ineffassign, staticcheck and unused.
+  default: standard
+  exclusions:
+    paths:
+      # The module root holds node_modules/, and npm's flatted package ships a
+      # Go package there that ./... reaches: a dependency's code, not ours.
+      - ^node_modules/
+
+formatters:
+  # Go code is gofmt-formatted.
+  enable:
+    - gofmt
+  exclusions:
+    paths:
+      # The same dependency code as above.
+      - ^node_modules/
+
+issues:
+  # Report every finding, including two on one line.
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  uniq-by-line: false

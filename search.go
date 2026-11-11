@@ -42,7 +42,7 @@ func documentSections(doc ast.Node, source []byte, page navPage, category string
 			return ast.WalkContinue, nil
 		}
 		if h, ok := n.(*ast.Heading); ok {
-			title := string(h.Text(source))
+			title := string(h.Text(source)) //nolint:staticcheck // SA1019: goldmark offers no replacement for a heading's plain text; rebuilding it from the child nodes could change search titles
 			id, _ := h.AttributeString("id")
 			anchor, _ := id.([]byte)
 			if h.Level > 1 {

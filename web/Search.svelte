@@ -97,8 +97,7 @@
     >{/if}
   {#if !loading && !failed && searching && !results.length}<p class="docs-search-empty">No guides found for “{query}”. Try a feature or integration name, or clear your search.</p>{/if}
   <ul bind:this={resultList} id={`${id}-results`} class="docs-search-results" role="listbox" aria-label="Documentation results">
-    <!-- eslint-disable-next-line svelte/require-each-key -- the selection is an index, so rows update in place by position; a key would change that behaviour -->
-    {#each results as result, i}
+    {#each results as result, i (result.url)}
       <li id={`${id}-result-${i}`} role="option" aria-selected={i === selected}>
         <a
           href={result.url}

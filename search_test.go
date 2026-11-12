@@ -94,6 +94,24 @@ func TestSearchIndexContainsOnlyPublicSectionsWithWorkingAnchors(t *testing.T) {
 	}
 }
 
+// Search.svelte keys its result rows by URL, and Svelte throws on a duplicate
+// key, so no two sections may share one.
+func TestSearchIndexURLsAreUnique(t *testing.T) {
+	w := httptest.NewRecorder()
+	NewHandler().ServeHTTP(w, httptest.NewRequest("GET", "/docs/search-index.json", nil))
+	var sections []searchSection
+	if err := json.Unmarshal(w.Body.Bytes(), &sections); err != nil {
+		t.Fatal(err)
+	}
+	seen := map[string]bool{}
+	for _, section := range sections {
+		if seen[section.URL] {
+			t.Fatalf("two search sections share the URL %s", section.URL)
+		}
+		seen[section.URL] = true
+	}
+}
+
 func TestSearchHeadingIDsShareGoldmarkDuplicateRules(t *testing.T) {
 	source := []byte("# Guide\n\nIntroduction.\n\n## Setup!\n\nUse checkout_started.\n\n## Setup!\n\nMore code.\n")
 	renderer := goldmark.New(goldmark.WithParserOptions(parser.WithAutoHeadingID()))

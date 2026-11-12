@@ -22,18 +22,20 @@ function getHighlighter(): Promise<HighlighterCore> {
   highlighter ??= createHighlighterCore({
     engine: createJavaScriptRegexEngine(),
     langs: [],
-    themes: [{
-      name: 'jelto',
-      colors: { 'editor.foreground': 'var(--ink)', 'editor.background': 'var(--ground)' },
-      tokenColors: [
-        { scope: ['comment'], settings: { foreground: 'var(--muted)' } },
-        { scope: ['keyword', 'storage'], settings: { foreground: 'var(--web)' } },
-        { scope: ['string'], settings: { foreground: 'var(--good)' } },
-        { scope: ['constant', 'variable.other.constant'], settings: { foreground: 'var(--warn)' } },
-        { scope: ['entity.name.function', 'support.function', 'entity.name.tag'], settings: { foreground: 'var(--accent)' } },
-        { scope: ['entity.name.type', 'support.type', 'support.class', 'entity.other.attribute-name'], settings: { foreground: 'var(--web)' } },
-      ],
-    }],
+    themes: [
+      {
+        name: 'jelto',
+        colors: { 'editor.foreground': 'var(--ink)', 'editor.background': 'var(--ground)' },
+        tokenColors: [
+          { scope: ['comment'], settings: { foreground: 'var(--muted)' } },
+          { scope: ['keyword', 'storage'], settings: { foreground: 'var(--web)' } },
+          { scope: ['string'], settings: { foreground: 'var(--good)' } },
+          { scope: ['constant', 'variable.other.constant'], settings: { foreground: 'var(--warn)' } },
+          { scope: ['entity.name.function', 'support.function', 'entity.name.tag'], settings: { foreground: 'var(--accent)' } },
+          { scope: ['entity.name.type', 'support.type', 'support.class', 'entity.other.attribute-name'], settings: { foreground: 'var(--web)' } },
+        ],
+      },
+    ],
   }).catch((error: unknown) => {
     highlighter = undefined
     throw error

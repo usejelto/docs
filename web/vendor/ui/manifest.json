@@ -2,7 +2,7 @@
   "name": "shared-ui",
   "version": "1.0.2",
   "producer": "frontend",
-  "producer_commit": "54d23f77a7c231300ef93f81575e1a29f63632be",
+  "producer_commit": "6941b8c1f0fbb486240d25ac03bc59422f84f23f",
   "files": {
     "package.json": {
       "source": "shared-ui.package.json",
@@ -82,7 +82,7 @@
     },
     "ui/field.ts": {
       "source": "src/shared/ui/field.ts",
-      "sha256": "0362a7218f05d377fe0a90fc3bd06fdf229faa35c10c4142569fdbbac8db52bb"
+      "sha256": "846c247ad44571f1fcfbcc3bdf04050ffc9b91cd53e3703a35eacc08149cf12b"
     },
     "ui/FilterChip.svelte": {
       "source": "src/shared/ui/FilterChip.svelte",
@@ -98,7 +98,7 @@
     },
     "ui/highlightCode.ts": {
       "source": "src/shared/ui/highlightCode.ts",
-      "sha256": "73ef15772da1d5c455570e3bd74cb9ad46a398416fa3fdb12e56e37707fef622"
+      "sha256": "758ca7dbce8d3b15027cc9c3074e7538d004a675efebfd057f2932a885594371"
     },
     "ui/HoverCard.svelte": {
       "source": "src/shared/ui/HoverCard.svelte",
@@ -106,7 +106,7 @@
     },
     "ui/hoverCard.ts": {
       "source": "src/shared/ui/hoverCard.ts",
-      "sha256": "c333e7ee05eb4122e50cf00e11cc96684f36036ba2688f5708b42484ac0c3576"
+      "sha256": "94cddf8f9b32ab8b25c1a081cbcf5bca598e03bfdc74da6595613c2ee1884283"
     },
     "ui/IconButton.svelte": {
       "source": "src/shared/ui/IconButton.svelte",
@@ -134,11 +134,11 @@
     },
     "ui/modality.ts": {
       "source": "src/shared/ui/modality.ts",
-      "sha256": "43cb8fdb0ab4d86b84a646dcfd87b748809f60aeea195ae7f577c70c85cb4762"
+      "sha256": "5f8e3359570018f2cac98d1891ccc38905a06b85b6c41edf6ba1d78755a17e25"
     },
     "ui/motion.ts": {
       "source": "src/shared/ui/motion.ts",
-      "sha256": "c4f6b60f27311075363c37ecdbacd8cdb5918e263d1ffc67b2f5d152fe680f22"
+      "sha256": "662fa661b2134c38f06916f46d1e6f72d1f67c20a0da7a43843e9e4ab6be40ca"
     },
     "ui/motionTokens.ts": {
       "source": "src/shared/ui/motionTokens.ts",
@@ -242,7 +242,7 @@
     },
     "ui/toast.ts": {
       "source": "src/shared/ui/toast.ts",
-      "sha256": "bf27ce8ad68b454887f7b10d2d37ae44bb98e953c17c25d47dc90babc5bcbc48"
+      "sha256": "8faf570d8585a2caa0f73d5929b9b9439a2b273b03413553b88d94101f9a7699"
     },
     "ui/Toolbar.svelte": {
       "source": "src/shared/ui/Toolbar.svelte",

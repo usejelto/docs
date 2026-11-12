@@ -14,8 +14,16 @@ export function trackInputModality(root: HTMLElement | null = typeof document ==
   if (installed || root === null) return
   installed = true
   const doc = root.ownerDocument
-  const set = (modality: InputModality) => { if (root.dataset.modality !== modality) root.dataset.modality = modality }
-  doc.addEventListener('keydown', (event) => { if (!event.metaKey && !event.ctrlKey && !event.altKey) set('keyboard') }, true)
+  const set = (modality: InputModality) => {
+    if (root.dataset.modality !== modality) root.dataset.modality = modality
+  }
+  doc.addEventListener(
+    'keydown',
+    (event) => {
+      if (!event.metaKey && !event.ctrlKey && !event.altKey) set('keyboard')
+    },
+    true,
+  )
   doc.addEventListener('pointerdown', () => set('pointer'), true)
   doc.addEventListener('pointermove', () => set('pointer'), { capture: true, passive: true })
 }

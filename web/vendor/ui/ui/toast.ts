@@ -22,21 +22,24 @@ export function createToastQueue() {
   let sequence = 0
   function show(message: string, { tone = 'neutral', duration = tone === 'danger' || tone === 'warning' ? 0 : 5000 }: ToastOptions = {}) {
     if (!message.trim()) return undefined
-    const existing = get(notices).find(notice => notice.message === message && notice.tone === tone)
+    const existing = get(notices).find((notice) => notice.message === message && notice.tone === tone)
     const id = existing?.id ?? ++sequence
     const notice: ToastNotice = {
-      id, message, tone, duration: Number.isFinite(duration) ? Math.max(0, duration) : 0,
+      id,
+      message,
+      tone,
+      duration: Number.isFinite(duration) ? Math.max(0, duration) : 0,
       revision: (existing?.revision ?? 0) + 1,
       returnFocus: existing?.returnFocus ?? (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement ? document.activeElement : null),
     }
-    notices.update(items => existing ? items.map(item => item.id === id ? notice : item) : [...items, notice])
+    notices.update((items) => (existing ? items.map((item) => (item.id === id ? notice : item)) : [...items, notice]))
     return id
   }
   return {
     subscribe: notices.subscribe,
     show,
     success: (message: string, options: Omit<ToastOptions, 'tone'> = {}) => show(message, { ...options, tone: 'success' }),
-    dismiss: (id: number) => notices.update(items => items.filter(item => item.id !== id)),
+    dismiss: (id: number) => notices.update((items) => items.filter((item) => item.id !== id)),
     clear: () => notices.set([]),
   }
 }
@@ -60,16 +63,29 @@ export function toastLifetime(node: HTMLElement, options: { notice: ToastNotice;
   function resume() {
     if (timer !== undefined || options.notice.duration === 0 || hovered || focused || document.hidden) return
     started = Date.now()
-    timer = setTimeout(() => { timer = undefined; options.dismiss(options.notice.id) }, remaining)
+    timer = setTimeout(() => {
+      timer = undefined
+      options.dismiss(options.notice.id)
+    }, remaining)
   }
-  const enter = () => { hovered = true; pause() }
-  const leave = () => { hovered = false; resume() }
-  const focus = () => { focused = true; pause() }
+  const enter = () => {
+    hovered = true
+    pause()
+  }
+  const leave = () => {
+    hovered = false
+    resume()
+  }
+  const focus = () => {
+    focused = true
+    pause()
+  }
   const blur = (event: FocusEvent) => {
     if (event.relatedTarget instanceof Node && node.contains(event.relatedTarget)) return
-    focused = false; resume()
+    focused = false
+    resume()
   }
-  const visibility = () => document.hidden ? pause() : resume()
+  const visibility = () => (document.hidden ? pause() : resume())
   node.addEventListener('mouseenter', enter)
   node.addEventListener('mouseleave', leave)
   node.addEventListener('focusin', focus)
@@ -79,7 +95,10 @@ export function toastLifetime(node: HTMLElement, options: { notice: ToastNotice;
   return {
     update(next: typeof options) {
       if (next.notice === options.notice) return
-      pause(); options = next; remaining = next.notice.duration; resume()
+      pause()
+      options = next
+      remaining = next.notice.duration
+      resume()
     },
     destroy() {
       pause()

@@ -127,7 +127,8 @@ export function revealHeight(
   return {
     duration: exit ? FAST_MS : ENTER_MS,
     easing,
-    css: (t, u) => `overflow: clip; opacity: ${t * resting}; min-height: 0; height: ${t * height}px; ` +
+    css: (t, u) =>
+      `overflow: clip; opacity: ${t * resting}; min-height: 0; height: ${t * height}px; ` +
       `padding-top: ${t * padding[0]!}px; padding-bottom: ${t * padding[1]!}px; ` +
       `border-top-width: ${t * border[0]!}px; border-bottom-width: ${t * border[1]!}px; ` +
       `margin-top: ${t * margin[0]!}px; margin-bottom: ${t * margin[1]! - u * gap}px`,
@@ -153,11 +154,10 @@ export function animatePanel(node: HTMLElement): Animation | undefined {
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
   if (preference.matches || !node.animate) return
   const { transform } = restingStyles(node)
-  const animation = node.animate([
-    { transform: translated(transform, 2) },
-    { transform: translated(transform, 0) },
-  ], { ...timing, duration: FAST_MS })
-  function stop() { if (preference.matches) animation.cancel() }
+  const animation = node.animate([{ transform: translated(transform, 2) }, { transform: translated(transform, 0) }], { ...timing, duration: FAST_MS })
+  function stop() {
+    if (preference.matches) animation.cancel()
+  }
   function cleanup() {
     preference.removeEventListener('change', stop)
     animation.removeEventListener('finish', cleanup)
@@ -199,12 +199,14 @@ export function animateHeight(node: HTMLElement) {
     }
     if (preference.matches || !node.animate || !previous || Math.abs(from - next) < 1) return
     const css = getComputedStyle(node)
-    const inset = css.boxSizing === 'border-box' ? 0 :
-      parseFloat(css.paddingTop) + parseFloat(css.paddingBottom) + parseFloat(css.borderTopWidth) + parseFloat(css.borderBottomWidth)
-    const nextAnimation = node.animate([
-      { height: `${Math.max(0, from - inset)}px`, overflow: 'clip' },
-      { height: `${Math.max(0, next - inset)}px`, overflow: 'clip' },
-    ], timing)
+    const inset = css.boxSizing === 'border-box' ? 0 : parseFloat(css.paddingTop) + parseFloat(css.paddingBottom) + parseFloat(css.borderTopWidth) + parseFloat(css.borderBottomWidth)
+    const nextAnimation = node.animate(
+      [
+        { height: `${Math.max(0, from - inset)}px`, overflow: 'clip' },
+        { height: `${Math.max(0, next - inset)}px`, overflow: 'clip' },
+      ],
+      timing,
+    )
     animation = nextAnimation
     nextAnimation.onfinish = () => {
       if (animation !== nextAnimation) return
@@ -229,13 +231,15 @@ export function animateHeight(node: HTMLElement) {
   })
   mutation.observe(node, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['hidden', 'open', 'data-state'] })
   preference.addEventListener('change', schedule)
-  return { destroy() {
-    cancelAnimationFrame(frame)
-    animation?.cancel()
-    resize.disconnect()
-    mutation.disconnect()
-    preference.removeEventListener('change', schedule)
-  } }
+  return {
+    destroy() {
+      cancelAnimationFrame(frame)
+      animation?.cancel()
+      resize.disconnect()
+      mutation.disconnect()
+      preference.removeEventListener('change', schedule)
+    },
+  }
 }
 
 const PLACEHOLDER = '.ui-skeleton, .ui-loading-state'
@@ -272,15 +276,18 @@ export function revealContent(node: HTMLElement) {
     }
   })
   observer.observe(node, { childList: true, subtree: true })
-  return { destroy() { observer.disconnect() } }
+  return {
+    destroy() {
+      observer.disconnect()
+    },
+  }
 }
 
 /** Degrees of soft edge on the sweep, so its leading line is not a hard cut. */
 const SWEEP_FEATHER = 12
 
 function canSweep(): boolean {
-  return typeof CSS !== 'undefined' && typeof CSS.registerProperty === 'function'
-    && CSS.supports('mask-image', 'conic-gradient(#000, #0000)')
+  return typeof CSS !== 'undefined' && typeof CSS.registerProperty === 'function' && CSS.supports('mask-image', 'conic-gradient(#000, #0000)')
 }
 
 /** §13 v1.134: a radial chart opens with one clockwise sweep from twelve
@@ -318,14 +325,13 @@ export function sweepChart(node: HTMLElement, selector: string) {
     if (plot && plot.width && plot.height) {
       node.style.setProperty('--ui-sweep-at', `${plot.left - box.left + plot.width / 2}px ${plot.top - box.top + plot.height / 2}px`)
     }
-    animation = node.animate([
-      { '--ui-sweep': '0deg' },
-      { '--ui-sweep': `${360 + SWEEP_FEATHER}deg` },
-    ], { duration: ENTER_MS, easing: EASE })
+    animation = node.animate([{ '--ui-sweep': '0deg' }, { '--ui-sweep': `${360 + SWEEP_FEATHER}deg` }], { duration: ENTER_MS, easing: EASE })
     animation.onfinish = end
     animation.oncancel = end
   }
-  function schedule() { if (!frame) frame = requestAnimationFrame(start) }
+  function schedule() {
+    if (!frame) frame = requestAnimationFrame(start)
+  }
   const observer = new MutationObserver(schedule)
   observer.observe(node, { subtree: true, childList: true, attributes: true, attributeFilter: ['d'] })
   schedule()
@@ -335,13 +341,15 @@ export function sweepChart(node: HTMLElement, selector: string) {
     observer.disconnect()
     end()
   }, 1000)
-  return { destroy() {
-    cancelAnimationFrame(frame)
-    clearTimeout(fallback)
-    observer.disconnect()
-    animation?.cancel()
-    end()
-  } }
+  return {
+    destroy() {
+      cancelAnimationFrame(frame)
+      clearTimeout(fallback)
+      observer.disconnect()
+      animation?.cancel()
+      end()
+    },
+  }
 }
 
 /** Watch only mark geometry: pointer highlights and tooltip text never redraw
@@ -354,35 +362,44 @@ export function drawChart(node: HTMLElement | SVGElement, selector: string) {
   function draw() {
     frame = 0
     const marks = new Set(node.querySelectorAll<Element>(selector))
-    for (const mark of geometry.keys()) if (!marks.has(mark)) {
-      animations.get(mark)?.cancel()
-      animations.delete(mark)
-      geometry.delete(mark)
-    }
+    for (const mark of geometry.keys())
+      if (!marks.has(mark)) {
+        animations.get(mark)?.cancel()
+        animations.delete(mark)
+        geometry.delete(mark)
+      }
     for (const mark of marks) {
       const key = ['d', 'x', 'y', 'width', 'height'].map((name) => mark.getAttribute(name)).join('|')
       if (geometry.get(mark) === key) continue
       geometry.set(mark, key)
       animations.get(mark)?.cancel()
       if (preference.matches || !mark.animate) continue
-      const animation = mark.animate([
-        { clipPath: 'inset(-2px calc(100% + 2px) -2px -2px)' },
-        { clipPath: 'inset(-2px -2px -2px -2px)' },
-      ], timing)
+      const animation = mark.animate([{ clipPath: 'inset(-2px calc(100% + 2px) -2px -2px)' }, { clipPath: 'inset(-2px -2px -2px -2px)' }], timing)
       animations.set(mark, animation)
-      animation.onfinish = () => { if (animations.get(mark) === animation) animations.delete(mark) }
+      animation.onfinish = () => {
+        if (animations.get(mark) === animation) animations.delete(mark)
+      }
     }
   }
-  function schedule() { if (!frame) frame = requestAnimationFrame(draw) }
-  function stop() { if (preference.matches) { for (const animation of animations.values()) animation.cancel(); animations.clear() } }
+  function schedule() {
+    if (!frame) frame = requestAnimationFrame(draw)
+  }
+  function stop() {
+    if (preference.matches) {
+      for (const animation of animations.values()) animation.cancel()
+      animations.clear()
+    }
+  }
   const observer = new MutationObserver(schedule)
   observer.observe(node, { subtree: true, childList: true, attributes: true, attributeFilter: ['d', 'x', 'y', 'width', 'height'] })
   preference.addEventListener('change', stop)
   schedule()
-  return { destroy() {
-    cancelAnimationFrame(frame)
-    observer.disconnect()
-    for (const animation of animations.values()) animation.cancel()
-    preference.removeEventListener('change', stop)
-  } }
+  return {
+    destroy() {
+      cancelAnimationFrame(frame)
+      observer.disconnect()
+      for (const animation of animations.values()) animation.cancel()
+      preference.removeEventListener('change', stop)
+    },
+  }
 }

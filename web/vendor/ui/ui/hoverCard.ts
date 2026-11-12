@@ -39,12 +39,7 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), Math.max(min, max))
 }
 
-function horizontalPlacement(
-  preferredX: number,
-  fallbackX: number,
-  size: HoverCardSize,
-  viewport: HoverCardViewport,
-): Pick<HoverCardPlacement, 'x' | 'align'> {
+function horizontalPlacement(preferredX: number, fallbackX: number, size: HoverCardSize, viewport: HoverCardViewport): Pick<HoverCardPlacement, 'x' | 'align'> {
   const maxX = viewport.width - size.width - HOVER_CARD_EDGE
   if (preferredX + size.width <= viewport.width - HOVER_CARD_EDGE) {
     return { x: clamp(preferredX, HOVER_CARD_EDGE, maxX), align: 'start' }
@@ -56,17 +51,8 @@ function horizontalPlacement(
 }
 
 /** Pointer cards prefer the upper-right quadrant, then flip only to remain visible. */
-export function placeHoverCardAtPoint(
-  point: HoverCardPoint,
-  size: HoverCardSize,
-  viewport: HoverCardViewport,
-): HoverCardPlacement {
-  const horizontal = horizontalPlacement(
-    point.x + HOVER_CARD_GAP,
-    point.x - HOVER_CARD_GAP - size.width,
-    size,
-    viewport,
-  )
+export function placeHoverCardAtPoint(point: HoverCardPoint, size: HoverCardSize, viewport: HoverCardViewport): HoverCardPlacement {
+  const horizontal = horizontalPlacement(point.x + HOVER_CARD_GAP, point.x - HOVER_CARD_GAP - size.width, size, viewport)
   const above = point.y - HOVER_CARD_GAP - size.height
   const fitsAbove = above >= HOVER_CARD_EDGE
   const side: HoverCardSide = fitsAbove ? 'top' : 'bottom'
@@ -79,11 +65,7 @@ export function placeHoverCardAtPoint(
 }
 
 /** Keyboard cards centre on their trigger and prefer above it. */
-export function placeHoverCardAtElement(
-  rect: HoverCardRect,
-  size: HoverCardSize,
-  viewport: HoverCardViewport,
-): HoverCardPlacement {
+export function placeHoverCardAtElement(rect: HoverCardRect, size: HoverCardSize, viewport: HoverCardViewport): HoverCardPlacement {
   const centered = rect.left + rect.width / 2 - size.width / 2
   const clampedX = clamp(centered, HOVER_CARD_EDGE, viewport.width - size.width - HOVER_CARD_EDGE)
   const above = rect.top - HOVER_CARD_GAP - size.height
@@ -100,10 +82,7 @@ export function placeHoverCardAtElement(
   }
 }
 
-export function hoverCardSize(
-  element: HTMLElement | null | undefined,
-  fallback: HoverCardSize = { width: 224, height: 152 },
-): HoverCardSize {
+export function hoverCardSize(element: HTMLElement | null | undefined, fallback: HoverCardSize = { width: 224, height: 152 }): HoverCardSize {
   return {
     width: element?.offsetWidth || fallback.width,
     height: element?.offsetHeight || fallback.height,

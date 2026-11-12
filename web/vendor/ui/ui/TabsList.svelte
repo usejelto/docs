@@ -16,6 +16,7 @@
     let frame = 0
     let previousTab: HTMLElement | null = null
     let previousBox: Indicator | null = null
+    // eslint-disable-next-line svelte/prefer-svelte-reactivity -- the elements handed to the ResizeObserver; nothing renders it
     const observed = new Set<Element>()
     function measure() {
       const active = list.querySelector<HTMLElement>(':scope > [role="tab"][data-state="active"]')

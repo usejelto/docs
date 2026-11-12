@@ -40,7 +40,7 @@
     <Textarea readonly value={text} aria-label={label} rows={Math.min(12, text.split('\n').length + 2)} />
   {:else}
     <!-- svelte-ignore a11y_no_noninteractive_tabindex (Scrollable code is keyboard accessible.) -->
-    <pre {...rest} tabindex="0" aria-label={label} onkeydown={selectCode}><code data-language={language} data-highlighted={tokens ? true : undefined}>{#if tokens}{#each tokens as token}<span class={token.color ? `ui-code-syntax-${token.color.slice(6, -1)}` : undefined}>{token.content}</span>{/each}{:else}{text}{/if}</code></pre>
+    <pre {...rest} tabindex="0" aria-label={label} onkeydown={selectCode}><code data-language={language} data-highlighted={tokens ? true : undefined}>{#if tokens}{#each tokens as token}<!-- eslint-disable-line svelte/require-each-key -- syntax tokens repeat and are replaced wholesale on each highlight --><span class={token.color ? `ui-code-syntax-${token.color.slice(6, -1)}` : undefined}>{token.content}</span>{/each}{:else}{text}{/if}</code></pre>
   {/if}
   {#if actions}<div class="ui-code-block__actions">{@render actions()}</div>{/if}
 </div>

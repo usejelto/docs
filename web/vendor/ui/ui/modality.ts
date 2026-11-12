@@ -8,7 +8,7 @@
  */
 let installed = false
 
-export type InputModality = 'keyboard' | 'pointer'
+type InputModality = 'keyboard' | 'pointer'
 
 export function trackInputModality(root: HTMLElement | null = typeof document === 'undefined' ? null : document.documentElement): void {
   if (installed || root === null) return

@@ -86,7 +86,7 @@
               <span class="ui-tooltip__row">
                 <span>{label}</span>
                 {#if shortcut.length}
-                  <span class="ui-tooltip__shortcut" aria-hidden="true">{#each shortcut as key}<kbd>{key}</kbd>{/each}</span>
+                  <span class="ui-tooltip__shortcut" aria-hidden="true">{#each shortcut as key}<!-- eslint-disable-line svelte/require-each-key -- shortcut keys may repeat, as in a G G chord --><kbd>{key}</kbd>{/each}</span>
                 {/if}
               </span>
               {#if hint}<span class="ui-tooltip__hint">{hint}</span>{/if}

@@ -13,7 +13,7 @@
   let pending = $state(false)
   let version = 0
   let timer: ReturnType<typeof setTimeout> | undefined
-  $effect(() => { text; version++; outcome = null; pending = false; clearTimeout(timer) })
+  $effect(() => { void text; version++; outcome = null; pending = false; clearTimeout(timer) })
   onDestroy(() => { version++; clearTimeout(timer) })
   async function copy(event: MouseEvent) {
     if (disabled || pending) return

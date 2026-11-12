@@ -13,7 +13,7 @@
   let failed = $state(false)
   let attempt = $state(0)
   $effect(() => {
-    src
+    void src
     if (open) { zoomed = false; loaded = false; failed = false; attempt = 0 }
   })
   function show(event: MouseEvent) {

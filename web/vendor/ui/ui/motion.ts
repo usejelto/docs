@@ -25,7 +25,7 @@ function sampleCurveSlope(t: number, p1: number, p2: number): number {
 }
 
 /** A CSS `cubic-bezier()` as a Svelte easing function. */
-export function cubicBezier(x1: number, y1: number, x2: number, y2: number): (value: number) => number {
+function cubicBezier(x1: number, y1: number, x2: number, y2: number): (value: number) => number {
   return (value) => {
     if (value <= 0 || value >= 1) return value
 
@@ -103,6 +103,7 @@ export function exitFast(node: Element, { y = 1 }: BoundaryParams = {}): Transit
  * motion keeps a fast opacity change. */
 export function revealHeight(
   node: Element,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Svelte passes transition params second and the options third
   _params: Record<string, never> = {},
   { direction = 'both' }: { direction?: 'in' | 'out' | 'both' } = {},
 ): TransitionConfig {
@@ -138,7 +139,11 @@ export function moveItem(node: Element, positions: { from: DOMRect; to: DOMRect 
   return flip(node, positions, { duration: prefersReducedMotion() ? 0 : BASE_MS, easing: uiEase })
 }
 
-/** Keep the notification stack together as its visible items change. */
+/**
+ * Keep the notification stack together as its visible items change. The
+ * second name for moveItem is deliberate: toasts read as their own motion.
+ * @alias
+ */
 export const moveToast = moveItem
 
 /** Shared, interruptible dashboard motion. No animation owns persistent styles. */

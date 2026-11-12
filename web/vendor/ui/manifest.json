@@ -2,7 +2,7 @@
   "name": "shared-ui",
   "version": "1.0.2",
   "producer": "frontend",
-  "producer_commit": "bb8581449e8de8ccaa8e72eb7b90808df3059b98",
+  "producer_commit": "54d23f77a7c231300ef93f81575e1a29f63632be",
   "files": {
     "package.json": {
       "source": "shared-ui.package.json",
@@ -42,7 +42,7 @@
     },
     "ui/CardSelect.svelte": {
       "source": "src/shared/ui/CardSelect.svelte",
-      "sha256": "065b058d131b5b1aaebbeb159e837cb74d09eff6d9d6568b3c12101b6dcb85e5"
+      "sha256": "7cf5f4ecac477ef268c3a544e3446e80a6bd90e3e350bbc3e07143ca636e44b2"
     },
     "ui/ChartSplit.svelte": {
       "source": "src/shared/ui/ChartSplit.svelte",
@@ -54,7 +54,7 @@
     },
     "ui/CodeBlock.svelte": {
       "source": "src/shared/ui/CodeBlock.svelte",
-      "sha256": "ec258b7f02b7f1f155254c5f5e90e8cfc768c2198da4a32b049bceeb653de38b"
+      "sha256": "b609ef3270ec200df863edd398bb4ecada0237012461ed9f2417fb4b48455f25"
     },
     "ui/Combobox.svelte": {
       "source": "src/shared/ui/Combobox.svelte",
@@ -66,7 +66,7 @@
     },
     "ui/CopyButton.svelte": {
       "source": "src/shared/ui/CopyButton.svelte",
-      "sha256": "deefa5f87fb7053015bef170dfb1d33a01a4689420ada369ade343b4f4b9141b"
+      "sha256": "9c794887506db425c2572c3f65b0288b9f86b7c601bc989470fa58bfce5abe4c"
     },
     "ui/Dialog.svelte": {
       "source": "src/shared/ui/Dialog.svelte",
@@ -114,7 +114,7 @@
     },
     "ui/ImagePreview.svelte": {
       "source": "src/shared/ui/ImagePreview.svelte",
-      "sha256": "5e7ef4ee8b60b85686800ccdb3f3e8d32f6281fa230ff2bd2504ec4aecf947c2"
+      "sha256": "afb0f6f4439942e379d326121122493b9d33f3631d0b17441795faa553eea9db"
     },
     "ui/index.ts": {
       "source": "src/shared/ui/index.ts",
@@ -134,11 +134,11 @@
     },
     "ui/modality.ts": {
       "source": "src/shared/ui/modality.ts",
-      "sha256": "5660f8bab64acce041ff363f8b1a98cded092d2b5ef42ed1c67474f4505290cb"
+      "sha256": "43cb8fdb0ab4d86b84a646dcfd87b748809f60aeea195ae7f577c70c85cb4762"
     },
     "ui/motion.ts": {
       "source": "src/shared/ui/motion.ts",
-      "sha256": "74fa25d9d4b844bafc7819f98ed7e94b6875ed2594c38cb97f584b6e8fd207ed"
+      "sha256": "c4f6b60f27311075363c37ecdbacd8cdb5918e263d1ffc67b2f5d152fe680f22"
     },
     "ui/motionTokens.ts": {
       "source": "src/shared/ui/motionTokens.ts",
@@ -214,7 +214,7 @@
     },
     "ui/TabsList.svelte": {
       "source": "src/shared/ui/TabsList.svelte",
-      "sha256": "87529ce48b833461c0c0d375e2708c7d05389d5359733b913475a7821786e80c"
+      "sha256": "d13db451599349d6745fa3671ec88749f67d76bea6e133abfa7b99988ebfa255"
     },
     "ui/TabsRoot.svelte": {
       "source": "src/shared/ui/TabsRoot.svelte",
@@ -250,7 +250,7 @@
     },
     "ui/Tooltip.svelte": {
       "source": "src/shared/ui/Tooltip.svelte",
-      "sha256": "ec2e43a6b978b31b6e597986411f71edc11d3367b9ac820e30dbbcffa9603988"
+      "sha256": "620fd4337721e2861945b921f07ef2f555945fccfd241383641758bbec8a9cd4"
     },
     "ui/TooltipToggle.svelte": {
       "source": "src/shared/ui/TooltipToggle.svelte",

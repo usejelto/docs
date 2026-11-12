@@ -1,4 +1,5 @@
 <script module lang="ts">
+  // eslint-disable-next-line no-import-assign -- a type re-export, not an assignment
   export type { SelectOption as CardSelectOption } from './Select.svelte'
 </script>
 <script lang="ts">
